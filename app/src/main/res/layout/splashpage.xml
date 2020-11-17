@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:background="@drawable/gamescene">
+
+    <Button
+        android:id="@+id/btn_pause"
+        android:layout_width="105dp"
+        android:layout_height="88dp"
+        android:background="@drawable/pause"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="11dp"
+        android:layout_marginEnd="621dp"
+        android:textSize="36dp" />
+</RelativeLayout>

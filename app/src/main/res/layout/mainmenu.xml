@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:background="@drawable/blankbg">
+
+    <Button
+        android:id="@+id/btn_start"
+        android:layout_width="228dp"
+        android:layout_height="126dp"
+        android:background="@drawable/button"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="71dp"
+        android:layout_marginEnd="257dp"
+        android:text="START"
+        android:textColor="#bdfcf2"
+        android:textSize="36dp" />
+
+    <Button
+        android:id="@+id/btn_options"
+        android:layout_width="228dp"
+        android:layout_height="126dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="228dp"
+        android:layout_marginEnd="252dp"
+        android:background="@drawable/button"
+        android:text="OPTIONS"
+        android:textColor="#bdfcf2"
+        android:textSize="36dp" />
+</RelativeLayout>
