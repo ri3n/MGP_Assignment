@@ -63,6 +63,7 @@ public class Mainmenu extends Activity implements OnClickListener
         if (v == btn_options)
         {
             intent.setClass(this,Optionspage.class);
+            intent.putExtra("prevPage", 1);
         }
 
 

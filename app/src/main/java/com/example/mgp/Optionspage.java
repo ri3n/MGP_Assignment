@@ -55,7 +55,13 @@ public class Optionspage extends Activity implements View.OnClickListener
 
         if (v == btn_back)
         {
-            intent.setClass(this, Mainmenu.class); //Set the intent right
+            if(getIntent().getIntExtra("prevPage",0)==1){
+                intent.setClass(this, Mainmenu.class); //Set the intent right
+            }
+            else{
+                intent.setClass(this, Pausepage.class); //Set the intent right
+            }
+
         }
         if (v == btn_sfx)
         {
