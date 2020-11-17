@@ -39,7 +39,10 @@ public class Optionspage extends Activity implements View.OnClickListener
         //btn_resume = (Button)findViewById(R.id.btn_resume);
         //btn_resume.setOnClickListener(this);
         btn_sfx = (Button)findViewById(R.id.btn_togglesfx);
+
         btn_back = (Button)findViewById(R.id.btn_back);
+        btn_back.setOnClickListener(this);
+
         btn_vibrations = (Button)findViewById(R.id.btn_togglevibrations);
         btn_bgm = (Button)findViewById(R.id.btn_togglebgm);
 
