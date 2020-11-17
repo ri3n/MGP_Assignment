@@ -11,8 +11,8 @@ import android.widget.Button;
 
 public class Splashpage extends Activity implements View.OnClickListener {
     private boolean _active = true;
-    private int waited;
-    private float _splashTime;
+    private int waited=0;
+    private float _splashTime = 5000;
 
     private Button btn_pause;
 
