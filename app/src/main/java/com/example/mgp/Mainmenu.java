@@ -23,7 +23,7 @@ public class Mainmenu extends Activity implements OnClickListener
     //Start button
     private Button btn_start;
     private Button btn_options;
-
+//
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
