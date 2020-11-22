@@ -39,7 +39,10 @@ public class Optionspage extends Activity implements View.OnClickListener
         //btn_resume = (Button)findViewById(R.id.btn_resume);
         //btn_resume.setOnClickListener(this);
         btn_sfx = (Button)findViewById(R.id.btn_togglesfx);
+
         btn_back = (Button)findViewById(R.id.btn_back);
+        btn_back.setOnClickListener(this);
+
         btn_vibrations = (Button)findViewById(R.id.btn_togglevibrations);
         btn_bgm = (Button)findViewById(R.id.btn_togglebgm);
 
@@ -52,7 +55,13 @@ public class Optionspage extends Activity implements View.OnClickListener
 
         if (v == btn_back)
         {
-            intent.setClass(this, Mainmenu.class); //Set the intent right
+            if(getIntent().getIntExtra("prevPage",0)==1){
+                intent.setClass(this, Mainmenu.class); //Set the intent right
+            }
+            else{
+                intent.setClass(this, Pausepage.class); //Set the intent right
+            }
+
         }
         if (v == btn_sfx)
         {
