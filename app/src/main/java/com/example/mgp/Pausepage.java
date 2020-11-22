@@ -55,7 +55,7 @@ public class Pausepage extends Activity implements View.OnClickListener
 
         if (v == btn_resume) //if usr clicks on start
         {
-            intent.setClass(this,Splashpage.class); //Set the intent right
+            intent.setClass(this,Gamepage.class); //Set the intent right
         }
 
         else if (v == btn_exit)

@@ -28,8 +28,7 @@ public class Splashpage extends Activity implements View.OnClickListener {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.splashpage);
 
-        btn_pause = (Button)findViewById(R.id.btn_pause);
-        btn_pause.setOnClickListener(this);
+
 
         Thread splashTread = new Thread()
         {
@@ -53,7 +52,7 @@ public class Splashpage extends Activity implements View.OnClickListener {
                 {
                     finish();
                     //Create new activity based on and intent with CurrentActivity
-                    Intent intent = new Intent(Splashpage.this,Mainmenu.class);
+                    Intent intent = new Intent(Splashpage.this,Gamepage.class);
                     startActivity(intent);
                 }
             }
@@ -70,12 +69,6 @@ public class Splashpage extends Activity implements View.OnClickListener {
         //This function consists of: Intent of the click and the action afterwards
 
         Intent intent = new Intent();
-
-        if (v == btn_pause) //if usr clicks on start
-        {
-            intent.setClass(this,Pausepage.class); //Set the intent right
-        }
-
         //Transit the screen
         startActivity(intent);
     }
