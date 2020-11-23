@@ -56,7 +56,7 @@
         android:layout_marginEnd="50dp"
         android:background="@drawable/button"
         android:text="BACK"
-        android:textColor="#ed008a"
+        android:textColor="#bdfcf2"
         android:textSize="36dp" />
 
 </RelativeLayout>
