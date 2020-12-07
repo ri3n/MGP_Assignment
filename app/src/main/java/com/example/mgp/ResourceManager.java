@@ -31,6 +31,11 @@ public class ResourceManager
         return result;
     }
 
+    public void Create()
+    {
+
+    }
+
     // How to implement ....
     // Example logo =  ResourceManager.Instance.GetBitmap(R.drawable.helpb);
 }

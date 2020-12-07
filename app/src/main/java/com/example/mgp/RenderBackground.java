@@ -8,11 +8,20 @@ public class RenderBackground implements EntityBase{
     private Bitmap bmp = null;
     private boolean isDone = false;
 
-    public void Create()
-    {
 
+    public static RenderBackground Create ()
+    {
+        RenderBackground result = new RenderBackground();
+        EntityManager.Instance.AddEntity(result, ENTITY_TYPE.ENT_DEFAULT);
+        return result;
     }
 
+    public static RenderBackground Create ( int _layer)
+    {
+        RenderBackground result = Create();
+        result.SetRenderLayer(_layer);
+        return result;
+    }
     @Override
     public boolean IsDone() {
         return isDone;

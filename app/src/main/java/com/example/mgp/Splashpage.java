@@ -2,14 +2,16 @@ package com.example.mgp;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.view.MotionEvent;
+import android.view.SurfaceView;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 
-public class Splashpage extends Activity implements View.OnClickListener {
+public class Splashpage extends Activity implements View.OnClickListener,StateBase {
     private boolean _active = true;
     private int waited=0;
     private float _splashTime = 5000;
@@ -83,5 +85,30 @@ public class Splashpage extends Activity implements View.OnClickListener {
             _active = false;
         }
         return true;
+    }
+
+    @Override
+    public String GetName() {
+        return "Splashpage";
+    }
+
+    @Override
+    public void OnEnter(SurfaceView _view) {
+
+    }
+
+    @Override
+    public void OnExit() {
+
+    }
+
+    @Override
+    public void Render(Canvas _canvas) {
+
+    }
+
+    @Override
+    public void Update(float _dt) {
+
     }
 }
