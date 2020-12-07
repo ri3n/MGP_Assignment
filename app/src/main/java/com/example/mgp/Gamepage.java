@@ -1,42 +1,37 @@
 package com.example.mgp;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.view.MotionEvent;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 
-public class Gamepage extends Activity implements View.OnClickListener {
-    private Button btn_pause;
+public class Gamepage extends Activity {
+    public static Gamepage Instance = null;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //Hide Title
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //To make fullscreen
+        requestWindowFeature(Window.FEATURE_NO_TITLE); // Hide titlebar
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);  // Hide topbar
 
-        //Hide Top Bar
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.gamepage);
+        Instance = this;
 
-        //Init buttons
-        btn_pause = (Button)findViewById(R.id.btn_pause);
-        btn_pause.setOnClickListener(this);
+        setContentView(new GameView(this)); // Surfaceview = GameView
     }
+
     @Override
-    //Invoke a callback event in the view (something has to happen)
-    //Activity -> Intent -> Action
-    public void onClick(View v)
+    public boolean onTouchEvent(MotionEvent event)
     {
-        Intent intent = new Intent();
-        if(v == btn_pause)
-        {
-            intent.setClass(this,Pausepage.class);
-        }
-        startActivity(intent);
+        // WE are hijacking the touch event into our own system
+        int x = (int) event.getX();
+        int y = (int) event.getY();
 
+        TouchManager.Instance.Update(x, y, event.getAction());
+
+        return true;
     }
+
 }

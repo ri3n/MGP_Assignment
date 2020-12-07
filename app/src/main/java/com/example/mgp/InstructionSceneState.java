@@ -1,26 +1,21 @@
 package com.example.mgp;
 
-import android.app.Activity;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.view.SurfaceView;
 
-// Created by TanSiewLan2020
+public class InstructionSceneState implements StateBase{
 
-public class MainGameSceneState implements StateBase {
     private float timer = 0.0f;
 
     @Override
     public String GetName() {
-        return "MainGame";
+        return "InstructionP";
     }
 
     @Override
-    public void OnEnter(SurfaceView _view)
-    {
+    public void OnEnter(SurfaceView _view) {
         RenderBackground.Create();
-        // Example to include another Renderview for Pause Button
+        EntitySmurf.Create();
     }
 
     @Override
@@ -30,24 +25,28 @@ public class MainGameSceneState implements StateBase {
     }
 
     @Override
-    public void Render(Canvas _canvas)
-    {
+    public void Render(Canvas _canvas) {
         EntityManager.Instance.Render(_canvas);
-
     }
 
     @Override
     public void Update(float _dt) {
+// Other example: Set random position for image to appear randomly on the screen
+
+        // example: Set time for image smurf to appear on the screen
+        timer += _dt;
+        if (timer > 1.0f)
+        {
+            EntitySmurf.Create();  //Example: Smurf Sprite
+            timer = 0.0f;
+        }
 
         EntityManager.Instance.Update(_dt);
 
+        // If you want to transit to another scene from here, Do this below
         if (TouchManager.Instance.IsDown()) {
-			
             //Example of touch on screen in the main game to trigger back to Main menu
-            StateManager.Instance.ChangeState("Mainmenu");
+            StateManager.Instance.ChangeState("MainMenuState");
         }
     }
 }
-
-
-

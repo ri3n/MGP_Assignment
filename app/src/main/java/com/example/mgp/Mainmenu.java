@@ -2,7 +2,9 @@ package com.example.mgp;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.os.Bundle;
+import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -18,7 +20,7 @@ import android.widget.Button;
 // - Syntax Error
 // !! Never resolve an XML error with import R
 // R: Resource registry
-public class Mainmenu extends Activity implements OnClickListener
+public class Mainmenu extends Activity implements OnClickListener,StateBase
 {
     //Start button
     private Button btn_start;
@@ -58,6 +60,7 @@ public class Mainmenu extends Activity implements OnClickListener
         if (v == btn_start) //if usr clicks on start
         {
             intent.setClass(this,Splashpage.class); //Set the intent right
+            StateManager.Instance.ChangeState("Default"); // Default is like a loading page
         }
 
         if (v == btn_options)
@@ -71,6 +74,28 @@ public class Mainmenu extends Activity implements OnClickListener
         //Transit the screen
         startActivity(intent);
     }
+
+    @Override
+    public void Render(Canvas _canvas) {
+    }
+
+    @Override
+    public void OnEnter(SurfaceView _view) {
+    }
+
+    @Override
+    public void OnExit() {
+    }
+
+    @Override
+    public void Update(float _dt) {
+    }
+
+    @Override
+    public String GetName() {
+        return "Mainmenu";
+    }
+
 
     @Override
     protected void onPause()

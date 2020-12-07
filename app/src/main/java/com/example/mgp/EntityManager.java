@@ -1,4 +1,4 @@
-package com.sidm.mgp2020;
+package com.example.mgp;
 
 import android.graphics.Canvas;
 import android.view.SurfaceView;

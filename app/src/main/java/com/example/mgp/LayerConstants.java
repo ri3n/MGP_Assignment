@@ -1,4 +1,4 @@
-package com.sidm.mgp2020;
+package com.example.mgp;
 
 // Created by TanSiewLan2020
 // Able to help you do layering of different assets rendered on the screen

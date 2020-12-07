@@ -1,4 +1,4 @@
-package com.sidm.mgp2020;
+package com.example.mgp;
 
 // Created by TanSiewLan2020
 // StateManager to deal with which state is current or next.

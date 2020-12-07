@@ -1,4 +1,4 @@
-package com.sidm.mgp2020;
+package com.example.mgp;
 
 // Created by TanSiewLan2020
 // Create an interface "StateBase". That is what a state will need.

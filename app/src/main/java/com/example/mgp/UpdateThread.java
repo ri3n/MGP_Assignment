@@ -1,4 +1,4 @@
-package com.sidm.mgp2020;
+package com.example.mgp;
 
 // Created by TanSiewLan2020
 // Need a delicated thread to run Surfaceview's update method
