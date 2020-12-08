@@ -7,19 +7,21 @@ import android.graphics.Rect;
 import android.view.SurfaceView;
 
 public class RenderBackground implements EntityBase{
-    private Bitmap bmp = null;
+    private static Bitmap bmp = null;
     private boolean isDone = false;
     private int renderLayer = 1;
+    private int maxX,maxY;
+    private int width,height;
+    private boolean IsInit = false;
 
-    public RenderBackground Create ()
+    public static RenderBackground Create ()
     {
         RenderBackground result = new RenderBackground();
-        bmp = ResourceManager.Instance.GetBitmap(R.drawable.gamepage);
         EntityManager.Instance.AddEntity(result, ENTITY_TYPE.ENT_DEFAULT);
         return result;
     }
 
-    public RenderBackground Create ( int _layer)
+    public static RenderBackground Create ( int _layer)
     {
         RenderBackground result = Create();
         result.SetRenderLayer(_layer);
@@ -37,7 +39,15 @@ public class RenderBackground implements EntityBase{
 
     @Override
     public void Init(SurfaceView _view) {
+        //Define which image / png u want to use for this entity
+        // Using ResourceManager
+        bmp = ResourceManager.Instance.GetBitmap(R.drawable.gamepage);
+        maxX = _view.getWidth();
+        maxY = _view.getHeight();
 
+        width = bmp.getWidth();
+        height = bmp.getHeight();
+        IsInit = true;
     }
 
     @Override
@@ -50,9 +60,10 @@ public class RenderBackground implements EntityBase{
         // RECT
         //Rect(int left, int top, int right, int bottom)
         //Create a new rectangle with the specified coordinates.
-        Rect src = new Rect(0, 10, 10 , 0);
-        Rect dst = new Rect(0, 10, 10 , 0);
-        _canvas.drawBitmap(bmp, src, src, null);
+
+        Rect dst = new Rect(0, 0, maxX , maxY);
+        Rect src = new Rect(0,0,width,height);
+        _canvas.drawBitmap(bmp, src, dst, null);
     }
 
     @Override

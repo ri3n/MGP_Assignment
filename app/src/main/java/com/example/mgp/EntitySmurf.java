@@ -37,7 +37,6 @@ public class EntitySmurf implements EntityBase,Collidable {
         spritesheet = new Sprite(ResourceManager.Instance.GetBitmap(R.drawable.smurf_sprite), 4, 4, 16);
 
         //Define which image / png u want to use for this entity
-        bmp = BitmapFactory.decodeResource(_view.getResources(), R.drawable.smurf_sprite);
         // Using ResourceManager
         bmp = ResourceManager.Instance.GetBitmap(R.drawable.smurf_sprite);
 

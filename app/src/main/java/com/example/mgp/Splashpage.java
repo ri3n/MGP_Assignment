@@ -55,7 +55,7 @@ public class Splashpage extends Activity implements View.OnClickListener {
                     finish();
                     //Create new activity based on and intent with CurrentActivity
                     Intent intent = new Intent(Splashpage.this,Gamepage.class);
-                    StateManager.Instance.ChangeState("Default");
+                    StateManager.Instance.ChangeState("MainGame");
                     startActivity(intent);
                 }
             }
@@ -70,7 +70,7 @@ public class Splashpage extends Activity implements View.OnClickListener {
     public void onClick(View v)
     {
         //This function consists of: Intent of the click and the action afterwards
-        StateManager.Instance.ChangeState("Default");
+        StateManager.Instance.ChangeState("MainGame");
         Intent intent = new Intent(Splashpage.this,Gamepage.class);
         //Transit the screen
         startActivity(intent);

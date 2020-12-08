@@ -18,7 +18,7 @@ public class PauseButton implements EntityBase{
 
     private int ScreenWidth,ScreenHeight;
 
-    private int renderLayer = 0;
+    private int renderLayer = 1;
 
     @Override public boolean IsDone()
     {

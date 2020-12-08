@@ -66,6 +66,8 @@ public class Sprite{
         Rect src = new Rect(srcX, srcY, srcX + width, srcY + height);
         Rect dst = new Rect(_x, _y, _x + width, _y + height);
         _canvas.drawBitmap(bmp, src, dst, null);
+        //dst: the pos
+        //src: the sprite/image you want to show
     }
 
     public void SetAnimationFrames(int _start, int _end)
