@@ -20,6 +20,7 @@ public class Gamepage extends Activity {
         Instance = this;
 
         setContentView(new GameView(this)); // Surfaceview = GameView
+     //   setContentView(R.layout.gamepage);
     }
 
     @Override

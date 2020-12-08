@@ -11,7 +11,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 
-public class Splashpage extends Activity implements View.OnClickListener,StateBase {
+public class Splashpage extends Activity implements View.OnClickListener {
     private boolean _active = true;
     private int waited=0;
     private float _splashTime = 5000;
@@ -55,6 +55,7 @@ public class Splashpage extends Activity implements View.OnClickListener,StateBa
                     finish();
                     //Create new activity based on and intent with CurrentActivity
                     Intent intent = new Intent(Splashpage.this,Gamepage.class);
+                    StateManager.Instance.ChangeState("Default");
                     startActivity(intent);
                 }
             }
@@ -69,8 +70,8 @@ public class Splashpage extends Activity implements View.OnClickListener,StateBa
     public void onClick(View v)
     {
         //This function consists of: Intent of the click and the action afterwards
-
-        Intent intent = new Intent();
+        StateManager.Instance.ChangeState("Default");
+        Intent intent = new Intent(Splashpage.this,Gamepage.class);
         //Transit the screen
         startActivity(intent);
     }
@@ -85,30 +86,5 @@ public class Splashpage extends Activity implements View.OnClickListener,StateBa
             _active = false;
         }
         return true;
-    }
-
-    @Override
-    public String GetName() {
-        return "Splashpage";
-    }
-
-    @Override
-    public void OnEnter(SurfaceView _view) {
-
-    }
-
-    @Override
-    public void OnExit() {
-
-    }
-
-    @Override
-    public void Render(Canvas _canvas) {
-
-    }
-
-    @Override
-    public void Update(float _dt) {
-
     }
 }

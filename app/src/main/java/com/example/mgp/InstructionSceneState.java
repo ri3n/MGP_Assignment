@@ -14,7 +14,6 @@ public class InstructionSceneState implements StateBase{
 
     @Override
     public void OnEnter(SurfaceView _view) {
-        RenderBackground.Create();
         EntitySmurf.Create();
     }
 

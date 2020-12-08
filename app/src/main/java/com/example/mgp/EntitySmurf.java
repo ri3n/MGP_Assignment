@@ -20,7 +20,7 @@ public class EntitySmurf implements EntityBase,Collidable {
     private float xPos, yPos, xDir, yDir, lifeTime;
     private boolean hasTouched = false; // Check for ontouch events
     private boolean isDone, isInit;
-    private int renderLayer = 0;
+    private int renderLayer = 1;
     private float imgRadius = 0;
     @Override
     public boolean IsDone() {

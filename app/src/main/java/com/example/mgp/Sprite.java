@@ -60,9 +60,9 @@ public class Sprite{
 
         _x -= 0.5f * width;
         _y -= 0.5f * height;
-// RECT
-//Rect(int left, int top, int right, int bottom)
-//Create a new rectangle with the specified coordinates.
+        // RECT
+        //Rect(int left, int top, int right, int bottom)
+        //Create a new rectangle with the specified coordinates.
         Rect src = new Rect(srcX, srcY, srcX + width, srcY + height);
         Rect dst = new Rect(_x, _y, _x + width, _y + height);
         _canvas.drawBitmap(bmp, src, dst, null);

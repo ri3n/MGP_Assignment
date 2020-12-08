@@ -1,22 +1,25 @@
 package com.example.mgp;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Rect;
 import android.view.SurfaceView;
 
 public class RenderBackground implements EntityBase{
     private Bitmap bmp = null;
     private boolean isDone = false;
+    private int renderLayer = 1;
 
-
-    public static RenderBackground Create ()
+    public RenderBackground Create ()
     {
         RenderBackground result = new RenderBackground();
+        bmp = ResourceManager.Instance.GetBitmap(R.drawable.gamepage);
         EntityManager.Instance.AddEntity(result, ENTITY_TYPE.ENT_DEFAULT);
         return result;
     }
 
-    public static RenderBackground Create ( int _layer)
+    public RenderBackground Create ( int _layer)
     {
         RenderBackground result = Create();
         result.SetRenderLayer(_layer);
@@ -44,7 +47,12 @@ public class RenderBackground implements EntityBase{
 
     @Override
     public void Render(Canvas _canvas) {
-
+        // RECT
+        //Rect(int left, int top, int right, int bottom)
+        //Create a new rectangle with the specified coordinates.
+        Rect src = new Rect(0, 10, 10 , 0);
+        Rect dst = new Rect(0, 10, 10 , 0);
+        _canvas.drawBitmap(bmp, src, src, null);
     }
 
     @Override
@@ -54,12 +62,12 @@ public class RenderBackground implements EntityBase{
 
     @Override
     public int GetRenderLayer() {
-        return 0;
+        return renderLayer;
     }
 
     @Override
     public void SetRenderLayer(int _newLayer) {
-
+        renderLayer = _newLayer;
     }
 
     @Override

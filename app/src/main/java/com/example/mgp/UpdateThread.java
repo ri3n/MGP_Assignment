@@ -45,6 +45,8 @@ public class UpdateThread extends Thread {
     @Override   //Every game thread will always have a run() method
     public void run()
     {
+        System.out.println("Canvas is rendering");
+
         // This is for frame rate control
         long framePerSecond = 1000 / targetFPS;     // 1000 is milliseconds --> 1 second
         long startTime = 0;
@@ -74,7 +76,6 @@ public class UpdateThread extends Thread {
                 {
                     // Fill the background color to reset
                     canvas.drawColor(Color.BLACK);
-
                     StateManager.Instance.Render(canvas);
                 }
                 holder.unlockCanvasAndPost(canvas);
