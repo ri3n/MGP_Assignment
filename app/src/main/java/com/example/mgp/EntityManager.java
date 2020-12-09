@@ -29,6 +29,7 @@ public class EntityManager {
         LinkedList<EntityBase> removalList = new LinkedList<EntityBase>();
 
         // Update all
+ /*
         for(int i = 0; i < entityList.size(); ++i)
         {
             // Lets check if is init, initialize if not
@@ -45,6 +46,8 @@ public class EntityManager {
                 removalList.add(entityList.get(i));
             }
         }
+        */
+
 
         for (EntityBase currEntity : entityList)
         {

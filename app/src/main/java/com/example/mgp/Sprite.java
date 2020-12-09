@@ -43,6 +43,7 @@ public class Sprite{
         timeAcc += _dt;
         if (timeAcc > timePerFrame)
         {
+
             ++currentFrame;
             if (currentFrame >= endFrame)
                 currentFrame = startFrame;
