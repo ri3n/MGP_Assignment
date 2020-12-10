@@ -14,7 +14,8 @@ public class MainGameSceneState implements StateBase {
     EntitySmurf smurf;
     LeftButton left_button;
     RightButton right_button;
-
+    EntityPortal portal;
+    RenderSideScrollingBackground Background;
     @Override
     public String GetName() {
         return "MainGame";
@@ -24,11 +25,11 @@ public class MainGameSceneState implements StateBase {
     public void OnEnter(SurfaceView _view)
     {
         // Example to include another Renderview for Pause Button
-        RenderSideScrollingBackground.Create(R.drawable.gamepage);
+        Background = RenderSideScrollingBackground.Create(R.drawable.gamepage);
         smurf = EntitySmurf.Create();
         PauseButton.Create();
         RenderTextEntity.Create();
-        EntityPortal.Create(_view.getWidth() / 2, _view.getHeight() / 2, _view.getWidth(), _view.getHeight()/2);
+        portal = EntityPortal.Create(3,3, _view.getWidth(), _view.getHeight()/2);
         left_button = LeftButton.Create();
         right_button = RightButton.Create();
         float xPos=0;
@@ -52,19 +53,16 @@ public class MainGameSceneState implements StateBase {
 
         EntityManager.Instance.Update(_dt);
 
-        if (TouchManager.Instance.IsPress()) {
-            //Example of touch on screen in the main game to trigger back to Main menu
-            //StateManager.Instance.ChangeState("Mainmenu");
-            EntityManager.Instance.GetBG().isMoving = !EntityManager.Instance.GetBG().isMoving;
-            //EntityManager.Instance.GetBG().isMoving = false;
-            //System.out.println("TouchManager.IsDown = true");
-        }
         if(left_button.isPressed()){
             smurf.moveLeft();
+            Background.Direction = 1;
         }
-        if(right_button.isPressed()){
+        else if(right_button.isPressed()){
             smurf.moveRight();
+            Background.Direction = -1;
         }
+        else Background.Direction = 0;
+
     }
 }
 

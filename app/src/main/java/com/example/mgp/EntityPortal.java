@@ -3,7 +3,7 @@ package com.example.mgp;
 import android.graphics.Canvas;
 import android.view.SurfaceView;
 
-public class EntityPortal implements EntityBase{
+public class EntityPortal implements EntityBase, Collidable {
     private boolean IsDone;
     private boolean IsInit = false;
     private int renderLayer = LayerConstants.BACKGROUNDGAMEOBJECTS_LAYER;
@@ -21,6 +21,9 @@ public class EntityPortal implements EntityBase{
     //Surfaceview max X and max Y
     private int maxX, maxY;
 
+    //Scaling
+    public int scaleX, scaleY;
+
     public static EntityPortal Create ()
     {
         EntityPortal result = new EntityPortal();
@@ -29,13 +32,13 @@ public class EntityPortal implements EntityBase{
         return result;
     }
 
-    public static EntityPortal Create(int gameX, int gameY, int screenX, int screenY)
+    public static EntityPortal Create(int scaleX, int scaleY, int screenX, int screenY)
     {
         EntityPortal result = Create();
         result.screenX = screenX;
         result.screenY = screenY;
-        result.gameX = gameX;
-        result.gameY = gameY;
+        result.scaleX = scaleX;
+        result.scaleY = scaleY;
 
         return result;
     }
@@ -69,15 +72,17 @@ public class EntityPortal implements EntityBase{
 
         if (EntityManager.Instance.GetBG().isMoving)
         {
-            moveValue = -EntityManager.Instance.GetBG().moveValue;
+            moveValue = EntityManager.Instance.GetBG().moveValue;
             screenX += moveValue;
         }
+
+
 
     }
 
     @Override
     public void Render(Canvas _canvas) {
-        sprite.Render(_canvas, screenX,screenY,3,3);
+        sprite.Render(_canvas, screenX,screenY,scaleX,scaleY);
     }
 
     @Override
@@ -98,5 +103,30 @@ public class EntityPortal implements EntityBase{
     @Override
     public ENTITY_TYPE GetEntityType() {
         return ENTITY_TYPE.ENT_PORTAL;
+    }
+
+    @Override
+    public String GetType() {
+        return null;
+    }
+
+    @Override
+    public float GetPosX() {
+        return 0;
+    }
+
+    @Override
+    public float GetPosY() {
+        return 0;
+    }
+
+    @Override
+    public float GetRadius() {
+        return 0;
+    }
+
+    @Override
+    public void OnHit(Collidable _other) {
+
     }
 }

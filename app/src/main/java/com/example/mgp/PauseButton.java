@@ -12,6 +12,7 @@ public class PauseButton implements EntityBase{
     private boolean Paused = false;
 
     private Bitmap bmpP = null;
+    private  Bitmap bmpUP = null;
     private Bitmap scaledbmpP = null;
     private Bitmap scaledbmpUP = null;
     private int xPos,yPos;
@@ -33,7 +34,7 @@ public class PauseButton implements EntityBase{
     @Override public void Init(SurfaceView _view)
     {
         bmpP = ResourceManager.Instance.GetBitmap(R.drawable.pause);
-        //bmpUP = ResourceManager.Instance.GetBitmap(R.drawable.pause1);
+        bmpUP = ResourceManager.Instance.GetBitmap(R.drawable.ship2_1);
 
         // Find screen width and screen height
         DisplayMetrics metrics = _view.getResources().getDisplayMetrics();
@@ -44,7 +45,7 @@ public class PauseButton implements EntityBase{
         // (int)(ScreenWidth)/12 --> 12 is based off my pause image button
         // (int)(ScreenHeight)/7 --> 7 is based off my pause image button
         scaledbmpP = Bitmap.createScaledBitmap(bmpP, (int)(ScreenWidth)/12, (int)(ScreenHeight)/7, true);
-        //scaledbmpUP = Bitmap.createScaledBitmap(bmpUP, (int)(ScreenWidth)/12, (int)(ScreenHeight)/7, true);
+        scaledbmpUP = Bitmap.createScaledBitmap(bmpUP, (int)(ScreenWidth)/12, (int)(ScreenHeight)/7, true);
 
         // My own position adjustment for the Pause button placement
         // Change accordingly

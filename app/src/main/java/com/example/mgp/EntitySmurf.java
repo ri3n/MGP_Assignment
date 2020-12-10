@@ -98,8 +98,8 @@ public class EntitySmurf implements EntityBase,Collidable {
 
         // Lifetime .. meant to check if time is up, destroy the image created.
         lifeTime -= _dt;
-        if (lifeTime < 0.0f)
-            SetIsDone(true);
+    //    if (lifeTime < 0.0f)
+    //        SetIsDone(true);
 
     }
     // Render
@@ -173,16 +173,16 @@ public class EntitySmurf implements EntityBase,Collidable {
             }
         }
     public void moveLeft() {
-        xPos-=100;
+        xPos -= 100;
         if(xPos<0+imgOffset){
             xPos=0+imgOffset;
         }
     }
     public void moveRight(){
-        xPos+=100;
+        xPos += 100;
         if(xPos>ScreenWidth-imgOffset){
             xPos=ScreenWidth-imgOffset;
         }
     }
-    }
+}
 
