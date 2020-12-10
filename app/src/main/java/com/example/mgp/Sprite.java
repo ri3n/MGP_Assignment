@@ -52,7 +52,7 @@ public class Sprite{
     }
 
     // Render --> Canvas and x & y (position to be drawn out via the imaginary rectangle
-    public void Render(Canvas _canvas, int _x, int _y)
+    public void Render(Canvas _canvas, int _x, int _y, int scaleX, int scaleY)
     {
         int frameX = currentFrame % col;
         int frameY = currentFrame / col;
@@ -65,7 +65,7 @@ public class Sprite{
         //Rect(int left, int top, int right, int bottom)
         //Create a new rectangle with the specified coordinates.
         Rect src = new Rect(srcX, srcY, srcX + width, srcY + height);
-        Rect dst = new Rect(_x, _y, _x + width, _y + height);
+        Rect dst = new Rect(_x, _y, _x + (width * scaleX), _y + (height * scaleY));
         _canvas.drawBitmap(bmp, src, dst, null);
         //dst: the pos
         //src: the sprite/image you want to show

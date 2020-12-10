@@ -20,10 +20,11 @@ public class MainGameSceneState implements StateBase {
     public void OnEnter(SurfaceView _view)
     {
         // Example to include another Renderview for Pause Button
-        RenderSideScrollingBackground.Create(R.drawable.gamepage2);
+        RenderSideScrollingBackground.Create(R.drawable.gamepage);
         EntitySmurf.Create();
         PauseButton.Create();
         RenderTextEntity.Create();
+        EntityPortal.Create(_view.getWidth() / 2, _view.getHeight() / 2, _view.getWidth(), _view.getHeight()/2);
     }
 
     @Override
@@ -44,10 +45,12 @@ public class MainGameSceneState implements StateBase {
 
         EntityManager.Instance.Update(_dt);
 
-        if (TouchManager.Instance.IsDown()) {
-			
+        if (TouchManager.Instance.IsPress()) {
             //Example of touch on screen in the main game to trigger back to Main menu
             //StateManager.Instance.ChangeState("Mainmenu");
+            EntityManager.Instance.GetBG().isMoving = !EntityManager.Instance.GetBG().isMoving;
+            //EntityManager.Instance.GetBG().isMoving = false;
+            //System.out.println("TouchManager.IsDown = true");
         }
     }
 }

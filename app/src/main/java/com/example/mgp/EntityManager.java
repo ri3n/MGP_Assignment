@@ -131,6 +131,16 @@ public class EntityManager {
         entityList.add(_newEntity);
     }
 
+    public RenderSideScrollingBackground GetBG()
+    {
+        for(EntityBase a: entityList)
+        {
+            if (a.GetEntityType() == EntityBase.ENTITY_TYPE.ENT_BACKGROUND)
+                return (RenderSideScrollingBackground)a;
+        }
+        return null;
+    }
+
     public void Clean()
     {
         entityList.clear();

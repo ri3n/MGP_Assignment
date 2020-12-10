@@ -20,7 +20,7 @@ public class EntitySmurf implements EntityBase,Collidable {
     private float xPos, yPos, xDir, yDir, lifeTime;
     private boolean hasTouched = false; // Check for ontouch events
     private boolean isDone, isInit;
-    private int renderLayer = 1;
+    private int renderLayer = LayerConstants.GAMEOBJECTS_LAYER;
     private float imgRadius = 0;
     @Override
     public boolean IsDone() {
@@ -92,7 +92,7 @@ public class EntitySmurf implements EntityBase,Collidable {
         //_canvas.drawBitmap(bmp, xPos - bmp.getWidth() * 0.5f, yPos - bmp.getHeight() * 0.5f, null);
 
         // This is for our sprite animation!
-        spritesheet.Render(_canvas, (int)xPos, (int)yPos);
+        spritesheet.Render(_canvas, (int)xPos, (int)yPos,1,1);
     }
 
         @Override
