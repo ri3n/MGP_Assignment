@@ -14,6 +14,8 @@ public interface EntityBase
         ENT_PAUSE,
         ENT_TEXT,
         ENT_NEXT,
+        ENT_LEFTARROW,
+        ENT_RIGHTARROW,
         ENT_DEFAULT,
     }
 

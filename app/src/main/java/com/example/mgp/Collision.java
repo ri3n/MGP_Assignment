@@ -19,4 +19,12 @@ public class Collision {
 
         return true;
     }
+
+    public static boolean Quad(float x1,float y1,float width,float height,float posX,float posY)
+    {
+        if( x1 > (posX - width / 2) && x1 < (posX + width / 2) && (y1 > (posY - height / 2) && y1 < (posY + height / 2))){
+            return true;
+        }
+        return false;
+    }
 }
