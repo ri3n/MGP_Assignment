@@ -21,12 +21,11 @@ public class EntitySmurf implements EntityBase,Collidable {
     private float xPos, yPos, xDir, yDir, lifeTime;
     private boolean hasTouched = false; // Check for ontouch events
     private boolean isDone, isInit;
-    private int renderLayer = 1;
+    private int renderLayer = LayerConstants.GAMEOBJECTS_LAYER;;
     private float imgRadius = 0;
     private float imgOffset = 85;
 
     private int ScreenWidth,ScreenHeight;
-
     @Override
     public boolean IsDone() {
         return isDone;
@@ -71,7 +70,8 @@ public class EntitySmurf implements EntityBase,Collidable {
     public void Update(float _dt) {
 
         if (TouchManager.Instance.HasTouch()) {
-            // 0.0f, xPos, yPos, imgRadius ---> Checking collision of finger w the image
+// 0.0f, xPos, yPos, imgRadius ---> Checking collision of finger w the image
+//
             if (Collision.SphereToSphere(TouchManager.Instance.GetPosX(), TouchManager.Instance.GetPosY(), 0.0f, xPos, yPos, imgRadius) || hasTouched) {
                 // Collided!
 
@@ -83,7 +83,7 @@ public class EntitySmurf implements EntityBase,Collidable {
 
         }
 
-//        if(yPos<ScreenHeight){
+        //        if(yPos<ScreenHeight){
 //            yPos+=9.8;
 //        }
 //        if(yPos>ScreenHeight){
@@ -97,11 +97,11 @@ public class EntitySmurf implements EntityBase,Collidable {
         spritesheet.Update(_dt);
 
         // Lifetime .. meant to check if time is up, destroy the image created.
-        //lifeTime -= _dt;
+        lifeTime -= _dt;
         if (lifeTime < 0.0f)
             SetIsDone(true);
-    }
 
+    }
     // Render
     @Override
     public void Render(Canvas _canvas) {
@@ -109,69 +109,69 @@ public class EntitySmurf implements EntityBase,Collidable {
         //_canvas.drawBitmap(bmp, xPos - bmp.getWidth() * 0.5f, yPos - bmp.getHeight() * 0.5f, null);
 
         // This is for our sprite animation!
-        spritesheet.Render(_canvas, (int) xPos, (int) yPos);
+        spritesheet.Render(_canvas, (int)xPos, (int)yPos,1,1);
     }
 
-    @Override
-    public boolean IsInit() {
-        return isInit;
-    }
-
-    @Override
-    public int GetRenderLayer() {
-        return renderLayer;
-    }
-
-    @Override
-    public void SetRenderLayer(int _newLayer) {
-        renderLayer = _newLayer;
-    }
-
-    public static EntitySmurf Create() {
-        EntitySmurf result = new EntitySmurf();
-        EntityManager.Instance.AddEntity(result, ENTITY_TYPE.ENT_SMURF);
-        return result;
-    }
-
-    public static EntitySmurf Create(int _layer) {
-        EntitySmurf result = Create();
-        result.SetRenderLayer(_layer);
-        return result;
-    }
-
-    @Override
-    public ENTITY_TYPE GetEntityType() {
-        return ENTITY_TYPE.ENT_SMURF;
-    }
-
-    @Override
-    public String GetType() {
-        return "SampleEntity";
-    }
-
-    @Override
-    public float GetPosX() {
-        return xPos;
-    }
-
-    @Override
-    public float GetPosY() {
-        return yPos;
-    }
-
-    @Override
-    public float GetRadius() {
-        return 0;
-    }
-
-    @Override
-    public void OnHit(Collidable _other) {
-        if (_other.GetType() == "NextEntity") //Another Entity
-        {
-            SetIsDone(true);
+        @Override
+        public boolean IsInit () {
+            return isInit;
         }
-    }
 
+        @Override
+        public int GetRenderLayer () {
+            return renderLayer;
+        }
+
+        @Override
+        public void SetRenderLayer ( int _newLayer){
+            renderLayer = _newLayer;
+        }
+
+        public static EntitySmurf Create ()
+        {
+            EntitySmurf result = new EntitySmurf();
+            EntityManager.Instance.AddEntity(result, ENTITY_TYPE.ENT_SMURF);
+            return result;
+        }
+
+        public static EntitySmurf Create ( int _layer)
+        {
+            EntitySmurf result = Create();
+            result.SetRenderLayer(_layer);
+            return result;
+        }
+
+        @Override
+        public ENTITY_TYPE GetEntityType () {
+            return ENTITY_TYPE.ENT_SMURF;
+        }
+
+        @Override
+        public String GetType () {
+            return "SampleEntity";
+        }
+        @Override
+        public float GetPosX () {
+            return xPos;
+        }
+
+        @Override
+        public float GetPosY () {
+            return yPos;
+        }
+
+        @Override
+        public float GetRadius () {
+            return 0;
+        }
+
+        @Override
+        public void OnHit (Collidable _other){
+            if (_other.GetType() == "NextEntity") //Another Entity
+            {
+                SetIsDone(true);
+            }
+        }
     public void moveLeft() {
         xPos-=100;
         if(xPos<0+imgOffset){
@@ -184,6 +184,5 @@ public class EntitySmurf implements EntityBase,Collidable {
             xPos=ScreenWidth-imgOffset;
         }
     }
-}
-
+    }
 

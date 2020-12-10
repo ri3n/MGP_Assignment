@@ -7,7 +7,6 @@ import android.graphics.Paint;
 import android.view.SurfaceView;
 
 import org.w3c.dom.Entity;
-
 // Created by TanSiewLan2020
 
 public class MainGameSceneState implements StateBase {
@@ -15,7 +14,6 @@ public class MainGameSceneState implements StateBase {
     EntitySmurf smurf;
     LeftButton left_button;
     RightButton right_button;
-
 
     @Override
     public String GetName() {
@@ -26,10 +24,11 @@ public class MainGameSceneState implements StateBase {
     public void OnEnter(SurfaceView _view)
     {
         // Example to include another Renderview for Pause Button
-        RenderSideScrollingBackground.Create(R.drawable.gamepage2);
+        RenderSideScrollingBackground.Create(R.drawable.gamepage);
         smurf = EntitySmurf.Create();
         PauseButton.Create();
         RenderTextEntity.Create();
+        EntityPortal.Create(_view.getWidth() / 2, _view.getHeight() / 2, _view.getWidth(), _view.getHeight()/2);
         left_button = LeftButton.Create();
         right_button = RightButton.Create();
         float xPos=0;
@@ -45,16 +44,20 @@ public class MainGameSceneState implements StateBase {
     public void Render(Canvas _canvas)
     {
         EntityManager.Instance.Render(_canvas);
+
     }
 
     @Override
     public void Update(float _dt) {
 
         EntityManager.Instance.Update(_dt);
-        if (TouchManager.Instance.IsDown()) {
-			
+
+        if (TouchManager.Instance.IsPress()) {
             //Example of touch on screen in the main game to trigger back to Main menu
             //StateManager.Instance.ChangeState("Mainmenu");
+            EntityManager.Instance.GetBG().isMoving = !EntityManager.Instance.GetBG().isMoving;
+            //EntityManager.Instance.GetBG().isMoving = false;
+            //System.out.println("TouchManager.IsDown = true");
         }
         if(left_button.isPressed()){
             smurf.moveLeft();
