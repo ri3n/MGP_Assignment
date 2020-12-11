@@ -1,5 +1,6 @@
 package com.example.mgp;
 
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.view.SurfaceView;
 
@@ -10,13 +11,12 @@ public class EntityPortal implements EntityBase, Collidable {
     private float moveValue;
     private Sprite sprite;
     private int bitmapID;
-
+    private Bitmap bmp;
     //On-Screen coordinates - this coordinates will move with the background
     //When within the surface view value, entityportal will be rendered
     private int screenX,screenY;
 
-    //In-Game coordinates
-    public int gameX, gameY;
+    private int numSpriteGrids;
 
     //Surfaceview max X and max Y
     private int maxX, maxY;
@@ -55,15 +55,20 @@ public class EntityPortal implements EntityBase, Collidable {
 
     @Override
     public void Init(SurfaceView _view) {
-        bitmapID = R.drawable.portal_sprite;
-        sprite = new Sprite(ResourceManager.Instance.GetBitmap(bitmapID), 1, 11, 11);
 
         IsDone = false;
         IsInit = true;
         moveValue = 0;
 
-        maxX = _view.getWidth();
-        maxY = _view.getHeight();
+        maxX = ScreenConstants.GetScreenWidth(_view);
+        maxY = ScreenConstants.GetScreenHeight(_view);
+        bitmapID = R.drawable.portal_sprite;
+        bmp = ResourceManager.Instance.GetBitmap(bitmapID);
+        bmp = Bitmap.createScaledBitmap(bmp,ScreenConstants.GetQuadWidth(_view), ScreenConstants.GetQuadHeight(_view),true);
+
+        sprite = new Sprite(ResourceManager.Instance.GetBitmap(bitmapID), 1, 11, 11);
+        numSpriteGrids = 11;
+        //(int)(ScreenWidth)/5,(int)(ScreenWidth)/5
     }
 
     @Override
@@ -75,8 +80,6 @@ public class EntityPortal implements EntityBase, Collidable {
             moveValue = EntityManager.Instance.GetBG().moveValue;
             screenX += moveValue;
         }
-
-
 
     }
 
@@ -107,26 +110,25 @@ public class EntityPortal implements EntityBase, Collidable {
 
     @Override
     public String GetType() {
-        return null;
+        return "ENT_PORTAL";
     }
 
     @Override
     public float GetPosX() {
-        return 0;
+        return screenX;
     }
 
     @Override
     public float GetPosY() {
-        return 0;
+        return screenY;
     }
 
     @Override
     public float GetRadius() {
-        return 0;
+        return scaleX * bmp.getWidth() / numSpriteGrids;
     }
 
     @Override
     public void OnHit(Collidable _other) {
-
     }
 }
