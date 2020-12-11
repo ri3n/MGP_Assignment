@@ -1,7 +1,8 @@
-package com.example.mgp;
+package com.example.mgp.Entities;
 
 import android.graphics.Canvas;
 import android.view.SurfaceView;
+import com.example.mgp.*;
 
 // Created by TanSiewLan2020
 

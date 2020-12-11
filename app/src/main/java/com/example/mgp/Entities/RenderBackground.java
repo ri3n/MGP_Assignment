@@ -1,10 +1,12 @@
-package com.example.mgp;
+package com.example.mgp.Entities;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.view.SurfaceView;
+
+import com.example.mgp.ResourceManager;
+import com.example.mgp.*;
 
 public class RenderBackground implements EntityBase{
     private static Bitmap bmp = null;

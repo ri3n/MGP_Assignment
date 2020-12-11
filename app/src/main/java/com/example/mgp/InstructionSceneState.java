@@ -3,6 +3,9 @@ package com.example.mgp;
 import android.graphics.Canvas;
 import android.view.SurfaceView;
 
+import com.example.mgp.Entities.EntityManager;
+import com.example.mgp.Entities.EntitySmurf;
+
 public class InstructionSceneState implements StateBase{
 
     private float timer = 0.0f;

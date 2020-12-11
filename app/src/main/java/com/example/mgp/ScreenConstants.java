@@ -31,5 +31,4 @@ public class ScreenConstants {
     {
         return GetScreenHeight(_view) / 10;
     }
-
 }

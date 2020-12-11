@@ -29,13 +29,13 @@ public class StateManager {
         view = _view;
     }
 
-    void AddState(StateBase _newState)
+    public void AddState(StateBase _newState)
     {
         // Add the state into the state map
         stateMap.put(_newState.GetName(), _newState);
     }
 
-    void ChangeState(String _nextState)
+    public void ChangeState(String _nextState)
     {
         // Try to assign the next state
         nextState = stateMap.get(_nextState);

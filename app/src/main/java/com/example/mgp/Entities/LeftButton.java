@@ -1,9 +1,17 @@
-package com.example.mgp;
+package com.example.mgp.Entities;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.util.DisplayMetrics;
 import android.view.SurfaceView;
+
+import com.example.mgp.Collision;
+import com.example.mgp.LayerConstants;
+import com.example.mgp.R;
+import com.example.mgp.ResourceManager;
+import com.example.mgp.ScreenConstants;
+import com.example.mgp.TouchManager;
+import com.example.mgp.*;
 
 public class LeftButton implements EntityBase{
 

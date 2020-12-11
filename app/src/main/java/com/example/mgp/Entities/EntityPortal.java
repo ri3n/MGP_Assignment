@@ -1,8 +1,16 @@
-package com.example.mgp;
+package com.example.mgp.Entities;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.view.SurfaceView;
+
+import com.example.mgp.Collidable;
+import com.example.mgp.LayerConstants;
+import com.example.mgp.R;
+import com.example.mgp.ResourceManager;
+import com.example.mgp.ScreenConstants;
+import com.example.mgp.Sprite;
+import com.example.mgp.*;
 
 public class EntityPortal implements EntityBase, Collidable {
     private boolean IsDone;

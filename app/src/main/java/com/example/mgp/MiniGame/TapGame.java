@@ -4,6 +4,8 @@ import android.graphics.Canvas;
 import android.view.SurfaceView;
 
 import com.example.mgp.*;
+import com.example.mgp.Entities.EntityManager;
+import com.example.mgp.Entities.RenderBackground;
 
 public class TapGame implements StateBase {
     RenderBackground Background;

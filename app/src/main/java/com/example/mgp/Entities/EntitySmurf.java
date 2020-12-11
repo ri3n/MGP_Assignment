@@ -1,15 +1,22 @@
-package com.example.mgp;
+package com.example.mgp.Entities;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.util.DisplayMetrics;
 import android.view.SurfaceView;
 
-import java.time.temporal.ValueRange;
-import java.util.Random;
+import com.example.mgp.Collidable;
+import com.example.mgp.Collision;
+import com.example.mgp.LayerConstants;
+import com.example.mgp.R;
+import com.example.mgp.ResourceManager;
+import com.example.mgp.ScreenConstants;
+import com.example.mgp.Sprite;
+import com.example.mgp.TouchManager;
 
-public class EntitySmurf implements EntityBase,Collidable {
+import java.util.Random;
+import com.example.mgp.*;
+
+public class EntitySmurf implements EntityBase, Collidable {
 
     private Bitmap bmp = null; // Define image object name (bmp)
     private Sprite spritesheet = null;

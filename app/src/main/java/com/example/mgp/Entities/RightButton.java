@@ -1,9 +1,17 @@
-package com.example.mgp;
+package com.example.mgp.Entities;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.util.DisplayMetrics;
 import android.view.SurfaceView;
+
+import com.example.mgp.Collision;
+import com.example.mgp.LayerConstants;
+import com.example.mgp.R;
+import com.example.mgp.ResourceManager;
+import com.example.mgp.ScreenConstants;
+import com.example.mgp.TouchManager;
+import com.example.mgp.*;
 
 
 public class RightButton implements EntityBase {
@@ -114,14 +122,14 @@ public class RightButton implements EntityBase {
 
     public boolean isPressed(){return pressed;}
 
-    public static com.example.mgp.RightButton Create() {
-        com.example.mgp.RightButton result = new com.example.mgp.RightButton();
+    public static RightButton Create() {
+        RightButton result = new RightButton();
         EntityManager.Instance.AddEntity(result, ENTITY_TYPE.ENT_RIGHTARROW);
         return result;
     }
 
-    public static com.example.mgp.RightButton Create(int _layer) {
-        com.example.mgp.RightButton result = Create();
+    public static RightButton Create(int _layer) {
+        RightButton result = Create();
         result.SetRenderLayer(_layer);
         return result;
     }

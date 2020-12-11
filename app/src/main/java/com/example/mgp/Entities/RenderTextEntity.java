@@ -1,4 +1,4 @@
-package com.example.mgp;
+package com.example.mgp.Entities;
 
 // import android.graphics.Typeface;
 // Font file typeface on BB
@@ -14,6 +14,9 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.view.SurfaceView;
+
+import com.example.mgp.LayerConstants;
+import com.example.mgp.*;
 
 // Create a new entity class
 public class RenderTextEntity implements EntityBase{

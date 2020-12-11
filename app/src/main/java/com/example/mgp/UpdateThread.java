@@ -7,6 +7,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.view.SurfaceHolder;
 
+import com.example.mgp.Entities.EntityManager;
+
 public class UpdateThread extends Thread {
 
     static final long targetFPS = 60;

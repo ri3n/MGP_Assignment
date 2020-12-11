@@ -1,10 +1,18 @@
-package com.example.mgp;
+package com.example.mgp.Entities;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Rect;
-import android.util.DisplayMetrics;
 import android.view.SurfaceView;
+
+import com.example.mgp.Collision;
+import com.example.mgp.LayerConstants;
+import com.example.mgp.R;
+import com.example.mgp.ResourceManager;
+import com.example.mgp.ScreenConstants;
+import com.example.mgp.StateManager;
+import com.example.mgp.TouchManager;
+
+import com.example.mgp.*;
 
 public class EnterButton implements EntityBase{
     private boolean isDone = false;
@@ -37,7 +45,7 @@ public class EnterButton implements EntityBase{
         ScreenWidth = _view.getWidth();
         ScreenHeight = _view.getHeight();
 
-        bmp = Bitmap.createScaledBitmap(ResourceManager.Instance.GetBitmap(R.drawable.enter_button),ScreenConstants.GetUIQuadWidth(_view), ScreenConstants.GetUIQuadHeight(_view),true);
+        bmp = Bitmap.createScaledBitmap(ResourceManager.Instance.GetBitmap(R.drawable.enter_button), ScreenConstants.GetUIQuadWidth(_view), ScreenConstants.GetUIQuadHeight(_view),true);
 
         // Scale image according/ based on the screen size
         // (int)(ScreenWidth)/12 --> 12 is based off my pause image button

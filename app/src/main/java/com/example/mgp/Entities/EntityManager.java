@@ -1,11 +1,16 @@
-package com.example.mgp;
+package com.example.mgp.Entities;
 
 import android.graphics.Canvas;
 import android.view.SurfaceView;
 
+import com.example.mgp.Collidable;
+import com.example.mgp.Collision;
+import com.example.mgp.GameSystem;
+
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
+import com.example.mgp.*;
 
 // Created by TanSiewLan2019
 
@@ -26,6 +31,17 @@ public class EntityManager {
 
     public void Update(float _dt)
     {
+        if (GameSystem.Instance.GetIsPaused())
+        {
+            for (EntityBase currEntity: entityList)
+            {
+                if (currEntity.GetEntityType() != EntityBase.ENTITY_TYPE.ENT_PAUSE) continue;
+                else
+                    currEntity.Update(_dt);
+            }
+            return;
+        }
+
         LinkedList<EntityBase> removalList = new LinkedList<EntityBase>();
 
         // Update all

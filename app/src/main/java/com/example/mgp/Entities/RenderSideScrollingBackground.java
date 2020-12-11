@@ -1,9 +1,13 @@
-package com.example.mgp;
+package com.example.mgp.Entities;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.view.SurfaceView;
+
+import com.example.mgp.LayerConstants;
+import com.example.mgp.ResourceManager;
+import com.example.mgp.*;
 
 public class RenderSideScrollingBackground implements EntityBase{
     private static Bitmap bmp = null;
@@ -23,6 +27,7 @@ public class RenderSideScrollingBackground implements EntityBase{
     public float moveValue;
 
     public boolean isMoving = true;
+
 
     public static RenderSideScrollingBackground Create ()
     {

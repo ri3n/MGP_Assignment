@@ -1,12 +1,17 @@
 package com.example.mgp;
 
-import android.app.Activity;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.view.SurfaceView;
 
-import org.w3c.dom.Entity;
+import com.example.mgp.Entities.EnterButton;
+import com.example.mgp.Entities.EntityManager;
+import com.example.mgp.Entities.EntityPortal;
+import com.example.mgp.Entities.EntitySmurf;
+import com.example.mgp.Entities.LeftButton;
+import com.example.mgp.Entities.PauseButton;
+import com.example.mgp.Entities.RenderSideScrollingBackground;
+import com.example.mgp.Entities.RenderTextEntity;
+import com.example.mgp.Entities.RightButton;
 // Created by TanSiewLan2020
 
 public class MainGameSceneState implements StateBase {
