@@ -8,18 +8,19 @@ import android.view.SurfaceView;
 public interface EntityBase
 {
  	 //used for entities such as background
-    enum ENTITY_TYPE{
-        ENT_PLAYER,
-        ENT_SMURF,
-        ENT_PAUSE,
-        ENT_TEXT,
-        ENT_NEXT,
+    enum ENTITY_TYPE {
+         ENT_PLAYER,
+         ENT_SMURF,
+         ENT_PAUSE,
+         ENT_ENTER,
+         ENT_TEXT,
+         ENT_NEXT,
          ENT_BACKGROUND,
          ENT_PORTAL,
          ENT_LEFTARROW,
          ENT_RIGHTARROW,
-        ENT_DEFAULT,
-    }
+         ENT_DEFAULT,
+     }
 
     boolean IsDone();
     void SetIsDone(boolean _isDone);

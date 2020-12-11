@@ -59,8 +59,8 @@ public class Sprite{
         int srcX = frameX * width;
         int srcY = frameY * height;
 
-        _x -= 0.5f * width;
-        _y -= 0.5f * height;
+        _x -= 0.5f * (width * scaleX);
+        _y -= 0.5f * (height * scaleY);
         // RECT
         //Rect(int left, int top, int right, int bottom)
         //Create a new rectangle with the specified coordinates.

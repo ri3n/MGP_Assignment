@@ -18,6 +18,8 @@ public class RenderSideScrollingBackground implements EntityBase{
     private boolean IsInit = false;
     private int bitmapID;
 
+    public int Direction;
+
     public float moveValue;
 
     public boolean isMoving = true;
@@ -68,31 +70,44 @@ public class RenderSideScrollingBackground implements EntityBase{
         dstRight2 = 0;
         IsInit = true;
 
+        Direction = 1;
 
         moveValue = 0;
     }
 
     @Override
     public void Update(float _dt) {
-        if (isMoving)
-        {
-            moveValue = _dt * 300;
+        if (isMoving) {
+            moveValue = _dt * 300 * Direction;
 
             dstLeft += (int) moveValue;
             dstRight += (int) moveValue;
 
-
-            if (dstLeft >= maxX) {
-                dstLeft = dstLeft2 - maxX + (int)moveValue;
-                dstRight = dstLeft2+ (int)moveValue;
-            }
-
             dstLeft2 += (int) moveValue;
             dstRight2 += (int) moveValue;
 
+            //Check if image 1 goes out of the screen on the right side
+            if (dstLeft >= maxX) {
+                dstLeft = dstLeft2 - maxX + (int) moveValue;
+                dstRight = dstLeft2 + (int) moveValue;
+            }
+
+            //Check if image 1 goes out of the screen on the left side
+            else if (dstRight <= 0) {
+                dstLeft = dstRight2 + (int)moveValue;
+                dstRight = dstLeft + maxX + (int)moveValue;
+            }
+
+            //Check if image 2 goes out of the screen on the right side
             if (dstLeft2 >= maxX) {
-                dstLeft2 = dstLeft - maxX+ (int)moveValue;
-                dstRight2 = dstLeft+ (int)moveValue;
+                dstLeft2 = dstLeft - maxX + (int) moveValue;
+                dstRight2 = dstLeft + (int) moveValue;
+            }
+
+            //Check if image 2 goes out of the screen on the left side
+            else if (dstRight2 <= 0) {
+                dstLeft2 = dstRight + (int)moveValue;
+                dstRight2 = dstLeft2 + maxX + (int)moveValue;
             }
         }
     }

@@ -17,7 +17,7 @@ public class LeftButton implements EntityBase{
 
     private int ScreenWidth,ScreenHeight;
 
-    private int renderLayer = 1;
+    private int renderLayer = LayerConstants.UI_LAYER;
 
     @Override
     public boolean IsDone() {
@@ -42,7 +42,7 @@ public class LeftButton implements EntityBase{
         // Scale image according/ based on the screen size
         // (int)(ScreenWidth)/12 --> 12 is based off my pause image button
         // (int)(ScreenHeight)/7 --> 7 is based off my pause image button
-        scaledbmpP = Bitmap.createScaledBitmap(bmpP, (int)(ScreenWidth)/12, (int)(ScreenHeight)/10, true);
+        scaledbmpP = Bitmap.createScaledBitmap(bmpP, ScreenConstants.GetUIQuadWidth(_view), ScreenConstants.GetUIQuadHeight(_view), true);
 
         // My own position adjustment for the button placement
         // Change accordingly

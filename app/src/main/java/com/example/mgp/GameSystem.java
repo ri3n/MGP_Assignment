@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.view.SurfaceView;
 
+import com.example.mgp.MiniGame.TapGame;
+
 // Created by TanSiewLan2020
 
 public class GameSystem {
@@ -29,6 +31,7 @@ public class GameSystem {
         StateManager.Instance.AddState(new Mainmenu());
         StateManager.Instance.AddState(new InstructionSceneState());
         StateManager.Instance.AddState(new MainGameSceneState());
+        StateManager.Instance.AddState(new TapGame());
     }
 
     public void SetIsPaused(boolean _newIsPaused)

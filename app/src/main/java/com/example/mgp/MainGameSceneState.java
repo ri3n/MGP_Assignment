@@ -11,9 +11,18 @@ import org.w3c.dom.Entity;
 
 public class MainGameSceneState implements StateBase {
     private float timer = 0.0f;
+
+    //Entity holders
     EntitySmurf smurf;
+    EntityPortal portal;
+
+    //Button holders
     LeftButton left_button;
     RightButton right_button;
+    EnterButton enter_button;
+
+    //Background holders
+    RenderSideScrollingBackground Background;
 
     @Override
     public String GetName() {
@@ -24,13 +33,14 @@ public class MainGameSceneState implements StateBase {
     public void OnEnter(SurfaceView _view)
     {
         // Example to include another Renderview for Pause Button
-        RenderSideScrollingBackground.Create(R.drawable.gamepage);
+        Background = RenderSideScrollingBackground.Create(R.drawable.gamepage);
         smurf = EntitySmurf.Create();
         PauseButton.Create();
         RenderTextEntity.Create();
-        EntityPortal.Create(_view.getWidth() / 2, _view.getHeight() / 2, _view.getWidth(), _view.getHeight()/2);
+        portal = EntityPortal.Create(3,3, _view.getWidth(), _view.getHeight()/2);
         left_button = LeftButton.Create();
         right_button = RightButton.Create();
+        enter_button = EnterButton.Create();
         float xPos=0;
     }
 
@@ -52,19 +62,24 @@ public class MainGameSceneState implements StateBase {
 
         EntityManager.Instance.Update(_dt);
 
-        if (TouchManager.Instance.IsPress()) {
-            //Example of touch on screen in the main game to trigger back to Main menu
-            //StateManager.Instance.ChangeState("Mainmenu");
-            EntityManager.Instance.GetBG().isMoving = !EntityManager.Instance.GetBG().isMoving;
-            //EntityManager.Instance.GetBG().isMoving = false;
-            //System.out.println("TouchManager.IsDown = true");
-        }
         if(left_button.isPressed()){
-            smurf.moveLeft();
+            smurf.moveLeft(0);
+            Background.Direction = 1;
         }
-        if(right_button.isPressed()){
-            smurf.moveRight();
+        else if(right_button.isPressed()){
+            smurf.moveRight(0);
+            Background.Direction = -1;
         }
+        else Background.Direction = 0;
+
+        //if (Collision.Quad(smurf.GetPosX(), smurf.GetPosY(), smurf.GetRadius() * 2, smurf.GetRadius() * 2, portal.GetPosX(), portal.GetPosY()))
+        if (Collision.SphereToSphere(smurf.GetPosX(),smurf.GetPosY(),smurf.GetRadius() ,portal.GetPosX(),portal.GetPosY(),portal.GetRadius()))
+            enter_button.MakeVisible = true;
+        else enter_button.MakeVisible = false;
+
+//    public static boolean Quad(float x1,float y1,float width,float height,float posX,float posY)
+
+
     }
 }
 

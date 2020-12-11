@@ -1,25 +1,28 @@
 package com.example.mgp;
 
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.view.SurfaceView;
 
-public class EntityPortal implements EntityBase{
+public class EntityPortal implements EntityBase, Collidable {
     private boolean IsDone;
     private boolean IsInit = false;
     private int renderLayer = LayerConstants.BACKGROUNDGAMEOBJECTS_LAYER;
     private float moveValue;
     private Sprite sprite;
     private int bitmapID;
-
+    private Bitmap bmp;
     //On-Screen coordinates - this coordinates will move with the background
     //When within the surface view value, entityportal will be rendered
     private int screenX,screenY;
 
-    //In-Game coordinates
-    public int gameX, gameY;
+    private int numSpriteGrids;
 
     //Surfaceview max X and max Y
     private int maxX, maxY;
+
+    //Scaling
+    public int scaleX, scaleY;
 
     public static EntityPortal Create ()
     {
@@ -29,13 +32,13 @@ public class EntityPortal implements EntityBase{
         return result;
     }
 
-    public static EntityPortal Create(int gameX, int gameY, int screenX, int screenY)
+    public static EntityPortal Create(int scaleX, int scaleY, int screenX, int screenY)
     {
         EntityPortal result = Create();
         result.screenX = screenX;
         result.screenY = screenY;
-        result.gameX = gameX;
-        result.gameY = gameY;
+        result.scaleX = scaleX;
+        result.scaleY = scaleY;
 
         return result;
     }
@@ -52,15 +55,20 @@ public class EntityPortal implements EntityBase{
 
     @Override
     public void Init(SurfaceView _view) {
-        bitmapID = R.drawable.portal_sprite;
-        sprite = new Sprite(ResourceManager.Instance.GetBitmap(bitmapID), 1, 11, 11);
 
         IsDone = false;
         IsInit = true;
         moveValue = 0;
 
-        maxX = _view.getWidth();
-        maxY = _view.getHeight();
+        maxX = ScreenConstants.GetScreenWidth(_view);
+        maxY = ScreenConstants.GetScreenHeight(_view);
+        bitmapID = R.drawable.portal_sprite;
+        bmp = ResourceManager.Instance.GetBitmap(bitmapID);
+        bmp = Bitmap.createScaledBitmap(bmp,ScreenConstants.GetQuadWidth(_view), ScreenConstants.GetQuadHeight(_view),true);
+
+        sprite = new Sprite(ResourceManager.Instance.GetBitmap(bitmapID), 1, 11, 11);
+        numSpriteGrids = 11;
+        //(int)(ScreenWidth)/5,(int)(ScreenWidth)/5
     }
 
     @Override
@@ -69,7 +77,7 @@ public class EntityPortal implements EntityBase{
 
         if (EntityManager.Instance.GetBG().isMoving)
         {
-            moveValue = -EntityManager.Instance.GetBG().moveValue;
+            moveValue = EntityManager.Instance.GetBG().moveValue;
             screenX += moveValue;
         }
 
@@ -77,7 +85,7 @@ public class EntityPortal implements EntityBase{
 
     @Override
     public void Render(Canvas _canvas) {
-        sprite.Render(_canvas, screenX,screenY,3,3);
+        sprite.Render(_canvas, screenX,screenY,scaleX,scaleY);
     }
 
     @Override
@@ -98,5 +106,29 @@ public class EntityPortal implements EntityBase{
     @Override
     public ENTITY_TYPE GetEntityType() {
         return ENTITY_TYPE.ENT_PORTAL;
+    }
+
+    @Override
+    public String GetType() {
+        return "ENT_PORTAL";
+    }
+
+    @Override
+    public float GetPosX() {
+        return screenX;
+    }
+
+    @Override
+    public float GetPosY() {
+        return screenY;
+    }
+
+    @Override
+    public float GetRadius() {
+        return scaleX * bmp.getWidth() / numSpriteGrids;
+    }
+
+    @Override
+    public void OnHit(Collidable _other) {
     }
 }

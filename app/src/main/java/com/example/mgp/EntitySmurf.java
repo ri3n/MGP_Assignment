@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.util.DisplayMetrics;
 import android.view.SurfaceView;
 
+import java.time.temporal.ValueRange;
 import java.util.Random;
 
 public class EntitySmurf implements EntityBase,Collidable {
@@ -19,11 +20,15 @@ public class EntitySmurf implements EntityBase,Collidable {
     //vector 2 class from ACG, PPHYs, go ahead!!
 
     private float xPos, yPos, xDir, yDir, lifeTime;
+    private float screenX, screenY;
     private boolean hasTouched = false; // Check for ontouch events
     private boolean isDone, isInit;
     private int renderLayer = LayerConstants.GAMEOBJECTS_LAYER;;
     private float imgRadius = 0;
     private float imgOffset = 85;
+    private int numSpriteGrids;
+
+    private float scaleX,scaleY;
 
     private int ScreenWidth,ScreenHeight;
     @Override
@@ -38,11 +43,11 @@ public class EntitySmurf implements EntityBase,Collidable {
 
     @Override
     public void Init(SurfaceView _view) {
-        spritesheet = new Sprite(ResourceManager.Instance.GetBitmap(R.drawable.smurf_sprite), 4, 4, 16);
+        bmp = ResourceManager.Instance.GetBitmap(R.drawable.smurf_sprite);
+//      scaledbmpP = Bitmap.createScaledBitmap(bmpP, (int)(ScreenWidth)/12, (int)(ScreenHeight)/10, true);
 
         //Define which image / png u want to use for this entity
         // Using ResourceManager
-        bmp = ResourceManager.Instance.GetBitmap(R.drawable.smurf_sprite);
 
         // For me: my smurf will be render at random position on the screen
         // then when the user touch the smurf on the screen, new smurfs will be render at
@@ -53,15 +58,21 @@ public class EntitySmurf implements EntityBase,Collidable {
         // because we using a state, we created our own surfaceview = screen
         // ranGen will produce random x values based on the view size
         xPos = ranGen.nextFloat() * _view.getWidth();
-        yPos = ranGen.nextFloat() * _view.getHeight();
-
+        //yPos = ranGen.nextFloat() * _view.getHeight();
+        yPos = _view.getHeight() / 2;
         // Not used but u can use them if u want
         xDir = ranGen.nextFloat() * 100.0f - 50.0f;
         yDir = ranGen.nextFloat() * 100.0f - 50.0f;
 
-        DisplayMetrics metrics = _view.getResources().getDisplayMetrics();
-        ScreenWidth = metrics.widthPixels;
-        ScreenHeight = metrics.heightPixels;
+        ScreenWidth = ScreenConstants.GetScreenWidth(_view);
+        ScreenHeight = ScreenConstants.GetScreenHeight(_view);
+
+        bmp = Bitmap.createScaledBitmap(bmp, ScreenConstants.GetQuadWidth(_view), ScreenConstants.GetQuadHeight(_view),true);
+
+        spritesheet = new Sprite(bmp, 4, 4, 16);
+        numSpriteGrids = 16;
+
+        scaleX = scaleY = 3;
 
         isInit = true;
     }
@@ -98,8 +109,8 @@ public class EntitySmurf implements EntityBase,Collidable {
 
         // Lifetime .. meant to check if time is up, destroy the image created.
         lifeTime -= _dt;
-        if (lifeTime < 0.0f)
-            SetIsDone(true);
+    //    if (lifeTime < 0.0f)
+    //        SetIsDone(true);
 
     }
     // Render
@@ -109,7 +120,7 @@ public class EntitySmurf implements EntityBase,Collidable {
         //_canvas.drawBitmap(bmp, xPos - bmp.getWidth() * 0.5f, yPos - bmp.getHeight() * 0.5f, null);
 
         // This is for our sprite animation!
-        spritesheet.Render(_canvas, (int)xPos, (int)yPos,1,1);
+        spritesheet.Render(_canvas, (int)xPos, (int)yPos,(int)scaleX,(int)scaleY);
     }
 
         @Override
@@ -148,7 +159,7 @@ public class EntitySmurf implements EntityBase,Collidable {
 
         @Override
         public String GetType () {
-            return "SampleEntity";
+            return "ENT_SMURF";
         }
         @Override
         public float GetPosX () {
@@ -162,7 +173,7 @@ public class EntitySmurf implements EntityBase,Collidable {
 
         @Override
         public float GetRadius () {
-            return 0;
+            return (scaleX) * bmp.getWidth()  / numSpriteGrids;
         }
 
         @Override
@@ -172,17 +183,17 @@ public class EntitySmurf implements EntityBase,Collidable {
                 SetIsDone(true);
             }
         }
-    public void moveLeft() {
-        xPos-=100;
+    public void moveLeft(float value) {
+        xPos += value;
         if(xPos<0+imgOffset){
             xPos=0+imgOffset;
         }
     }
-    public void moveRight(){
-        xPos+=100;
+    public void moveRight(float value){
+        xPos += value;
         if(xPos>ScreenWidth-imgOffset){
             xPos=ScreenWidth-imgOffset;
         }
     }
-    }
+}
 
