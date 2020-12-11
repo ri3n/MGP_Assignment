@@ -19,10 +19,28 @@ public class Collision {
 
         return true;
     }
-
-    public static boolean Quad(float x1,float y1,float width,float height,float posX,float posY)
+    //code for collision of 2 quads
+    //variables objectXpos , objectYpos,objectwidth,objectheight,
+    public static boolean Quad(float objectX,float objectY,float objectWidth,float objectHeight,
+    //other object xPos, other object yPos,other object width,other object height
+                               float otherX,float otherY,float otherWidth,float otherHeight)
     {
-        if( x1 > (posX - width / 2) && x1 < (posX + width / 2) && (y1 > (posY - height / 2) && y1 < (posY + height / 2))){
+        //presetting the variables for each side of the object
+        float leftOfObject = objectX - (objectWidth / 2);
+        float rightOfObject = objectX + (objectWidth / 2);
+        float topOfObject = objectY - (objectHeight / 2);
+        float botOfObject = objectY + (objectHeight / 2);
+        //presetting the variables for each side of the other object
+        float leftOfOther = otherX - (otherWidth / 2);
+        float rightOfOther = otherX + (otherWidth / 2);
+        float topOfOther = otherY - (otherHeight / 2);
+        float botOfOther = otherY + (otherHeight / 2);
+
+        //X axis check for if the overlap each other
+        if((rightOfObject >= leftOfOther) && (leftOfObject <= rightOfOther) &&
+        //Y axis check for if they overlap each other
+           (botOfObject >= topOfOther) && (topOfObject <= botOfOther))
+        {
             return true;
         }
         return false;
