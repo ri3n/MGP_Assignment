@@ -76,8 +76,8 @@ public class LeftButton implements EntityBase{
 //                    entityPosX=100;
 //                }
 
-                if(Collision.Quad(TouchManager.Instance.GetPosX(),TouchManager.Instance.GetPosY(),
-                        (int)(ScreenWidth)/12,(int)(ScreenHeight)/10,xPos,yPos))
+                if(Collision.Quad((float)TouchManager.Instance.GetPosX(),(float)TouchManager.Instance.GetPosY(),
+                        1.f,1.f,(float)xPos,(float)yPos,(float)scaledbmpP.getWidth(),(float)scaledbmpP.getHeight()))
                 {
                     pressed = true;
                 }

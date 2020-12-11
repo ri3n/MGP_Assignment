@@ -62,8 +62,8 @@ public class EnterButton implements EntityBase{
             {
                 float imgRadius = bmp.getHeight() * 0.5f;
 
-                if(Collision.Quad(TouchManager.Instance.GetPosX(),TouchManager.Instance.GetPosY(),
-                        bmp.getWidth(),bmp.getHeight(),xPos,yPos))
+                if(Collision.Quad((float)TouchManager.Instance.GetPosX(),(float)TouchManager.Instance.GetPosY(),
+                        1.f,1.f,(float)xPos,(float)yPos,(float)bmp.getWidth(),(float)bmp.getHeight()))
                 {
                     System.out.println("enter button is pressed");
                     StateManager.Instance.ChangeState("MINIGAME_TAPGAME");
