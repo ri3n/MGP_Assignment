@@ -2,7 +2,6 @@ package com.example.mgp.MiniGame;
 
 import android.graphics.Canvas;
 import android.view.SurfaceView;
-import android.view.View;
 
 import com.example.mgp.*;
 import com.example.mgp.Entities.EntityHackerMan;
@@ -13,7 +12,8 @@ import com.example.mgp.Entities.RenderTextEntity;
 public class TapGame implements StateBase {
     RenderBackground Background;
     EntityHackerMan hackerman;
-    RenderTextEntity textRender;
+    RenderTextEntity FPSText;
+    RenderTextEntity ScoreText;
 
     @Override
     public String GetName() {
@@ -24,9 +24,10 @@ public class TapGame implements StateBase {
     public void OnEnter(SurfaceView _view) {
         Background = RenderBackground.Create(R.drawable.gamepage);
         hackerman = EntityHackerMan.Create();
-        textRender = RenderTextEntity.Create();
-        textRender.RenderFPS(true);
-        textRender.RenderScore(true);
+        FPSText = RenderTextEntity.Create("FPS: ", 70, 35,80);
+        ScoreText = RenderTextEntity.Create("Score: ", 70,1000 , 80);
+        //textRender.RenderFPS(true);
+        //textRender.RenderScore(true);
     }
 
     @Override
@@ -44,6 +45,12 @@ public class TapGame implements StateBase {
     public void Update(float _dt)
     {
         EntityManager.Instance.Update(_dt);
-        textRender.SetScore(hackerman.GetScore());
+
+        //FPSText Updates
+        FPSCounter.Instance.Update(_dt);
+        FPSText.text = "FPS: " + FPSCounter.Instance.fps;
+
+        //ScoreText Updates
+        ScoreText.text = "Score: " + hackerman.GetScore();
     }
 }

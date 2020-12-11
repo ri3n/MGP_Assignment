@@ -30,6 +30,8 @@ public class MainGameSceneState implements StateBase {
     //Background holders
     RenderSideScrollingBackground Background;
 
+    //Text holders
+    RenderTextEntity FPSText;
     @Override
     public String GetName() {
         return "MainGame";
@@ -42,13 +44,12 @@ public class MainGameSceneState implements StateBase {
         Background = RenderSideScrollingBackground.Create(R.drawable.gamepage);
         smurf = EntitySmurf.Create();
         PauseButton.Create();
-        RenderTextEntity textRender = RenderTextEntity.Create();
+        FPSText = RenderTextEntity.Create("FPS: ", 70, 35,80);
         portal = EntityPortal.Create(3,3, _view.getWidth(), _view.getHeight()/2);
         left_button = LeftButton.Create();
         right_button = RightButton.Create();
         enter_button = EnterButton.Create();
         float xPos=0;
-        textRender.RenderFPS(true);
     }
 
     @Override
@@ -83,6 +84,9 @@ public class MainGameSceneState implements StateBase {
         if (Collision.SphereToSphere(smurf.GetPosX(),smurf.GetPosY(),smurf.GetRadius() ,portal.GetPosX(),portal.GetPosY(),portal.GetRadius()))
             enter_button.MakeVisible = true;
         else enter_button.MakeVisible = false;
+
+        FPSCounter.Instance.Update(_dt);
+        FPSText.text = "FPS: " + FPSCounter.Instance.fps;
     }
 }
 

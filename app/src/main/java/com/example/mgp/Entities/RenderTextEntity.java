@@ -39,6 +39,12 @@ public class RenderTextEntity implements EntityBase{
     int score;
     private int ScreenWidth, ScreenHeight;
 
+    public String text;
+    boolean MakeVisible = true;
+
+    private int fontSize;
+    private int xPos, yPos;
+
     // Define the use of Typeface ... name is myfont
     Typeface myfont;
 
@@ -65,38 +71,28 @@ public class RenderTextEntity implements EntityBase{
     @Override
     public void Update(float _dt) {
 
-        // get actual fps and print fps on screen
-        frameCount++;
-        long currentTime = System.currentTimeMillis();
 
-        lastTime = currentTime;
-
-        if(currentTime - lastFPSTime > 1000)
-        {
-            fps = (frameCount * 1000.f) / (currentTime - lastFPSTime);
-            lastFPSTime = currentTime;
-            frameCount = 0;
-        }
 
     }
 
     @Override
     public void Render(Canvas _canvas)
     {
-//        Paint paint = new Paint(); // Use paint to render text on screen
-//        paint.setARGB(255, 0,0,0); // Alpha, R, G, B Can make it a variable
-//        paint.setStrokeWidth(200); // Stroke width is just the thickness of the appearance of the text
-//        paint.setTypeface(myfont); // using the type of font we defined
-//        paint.setTextSize(70);     // Text size
-//        _canvas.drawText("FPS: " + fps, 30, 80, paint); // To render text is drawText FPS: 60
-//        // drawText(String text, float x, float y, Paint paint)
-//        // Draw the text, with origin at (x,y), using the specified paint.
-        if(renderFPS)
-        {
-            FPS(_canvas);
-        }
-        if(renderScore)
-            Score(_canvas);
+        Paint paint = new Paint(); // Use paint to render text on screen
+        paint.setARGB(255, 255,255,255); // Alpha, R, G, B Can make it a variable
+        paint.setStrokeWidth(200); // Stroke width is just the thickness of the appearance of the text
+        paint.setTypeface(myfont); // using the type of font we defined
+        paint.setTextSize(fontSize);     // Text size
+        _canvas.drawText(text, xPos, yPos, paint); // To render text is drawText FPS: 60
+        // drawText(String text, float x, float y, Paint paint)
+        // Draw the text, with origin at (x,y), using the specified paint.
+
+        //if(renderFPS)
+        //{
+        //    FPS(_canvas);
+        //}
+        //if(renderScore)
+        //   Score(_canvas);
 
     }
 
@@ -125,6 +121,16 @@ public class RenderTextEntity implements EntityBase{
         return result;
     }
 
+    public static RenderTextEntity Create(String text, int fontSize, int xPos, int yPos)
+    {
+        RenderTextEntity result = Create();
+        result.text = text;
+        result.fontSize = fontSize;
+        result.xPos = xPos;
+        result.yPos = yPos;
+        return result;
+    }
+
     public void SetScore(int _score)
     {
         score = _score;
@@ -133,7 +139,7 @@ public class RenderTextEntity implements EntityBase{
     public void FPS(Canvas _canvas)
     {
         Paint paint = new Paint(); // Use paint to render text on screen
-        paint.setARGB(255, 0,0,0); // Alpha, R, G, B Can make it a variable
+        paint.setARGB(255, 255,255,255); // Alpha, R, G, B Can make it a variable
         paint.setStrokeWidth(200); // Stroke width is just the thickness of the appearance of the text
         paint.setTypeface(myfont); // using the type of font we defined
         paint.setTextSize(70);     // Text size
