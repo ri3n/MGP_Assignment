@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.view.SurfaceView;
 
 import com.example.mgp.Entities.EnterButton;
+import com.example.mgp.Entities.EntityHackerMan;
 import com.example.mgp.Entities.EntityManager;
 import com.example.mgp.Entities.EntityPortal;
 import com.example.mgp.Entities.EntitySmurf;
@@ -41,18 +42,19 @@ public class MainGameSceneState implements StateBase {
         Background = RenderSideScrollingBackground.Create(R.drawable.gamepage);
         smurf = EntitySmurf.Create();
         PauseButton.Create();
-        RenderTextEntity.Create();
+        RenderTextEntity textRender = RenderTextEntity.Create();
         portal = EntityPortal.Create(3,3, _view.getWidth(), _view.getHeight()/2);
         left_button = LeftButton.Create();
         right_button = RightButton.Create();
         enter_button = EnterButton.Create();
         float xPos=0;
+        textRender.RenderFPS(true);
     }
 
     @Override
     public void OnExit() {
         EntityManager.Instance.Clean();
-        Gamepage.Instance.finish();
+        //Gamepage.Instance.finish();
     }
 
     @Override
@@ -81,10 +83,6 @@ public class MainGameSceneState implements StateBase {
         if (Collision.SphereToSphere(smurf.GetPosX(),smurf.GetPosY(),smurf.GetRadius() ,portal.GetPosX(),portal.GetPosY(),portal.GetRadius()))
             enter_button.MakeVisible = true;
         else enter_button.MakeVisible = false;
-
-//    public static boolean Quad(float x1,float y1,float width,float height,float posX,float posY)
-
-
     }
 }
 

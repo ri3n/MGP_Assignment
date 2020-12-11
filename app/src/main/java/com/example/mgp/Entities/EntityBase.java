@@ -20,6 +20,7 @@ public interface EntityBase
          ENT_PORTAL,
          ENT_LEFTARROW,
          ENT_RIGHTARROW,
+         ENT_HACKERMAN,
          ENT_DEFAULT,
      }
 

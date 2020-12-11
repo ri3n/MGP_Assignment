@@ -88,9 +88,9 @@ public class EntitySmurf implements EntityBase, Collidable {
     public void Update(float _dt) {
 
         if (TouchManager.Instance.HasTouch()) {
-// 0.0f, xPos, yPos, imgRadius ---> Checking collision of finger w the image
-//
-            if (Collision.SphereToSphere(TouchManager.Instance.GetPosX(), TouchManager.Instance.GetPosY(), 0.0f, xPos, yPos, imgRadius) || hasTouched) {
+        // 0.0f, xPos, yPos, imgRadius ---> Checking collision of finger w the image
+
+            if (Collision.SphereToSphere(TouchManager.Instance.GetPosX(), TouchManager.Instance.GetPosY(), 0.0f, xPos, yPos, (scaleX) * bmp.getWidth()  / numSpriteGrids) || hasTouched) {
                 // Collided!
 
                 hasTouched = true;
@@ -100,16 +100,6 @@ public class EntitySmurf implements EntityBase, Collidable {
             }
 
         }
-
-        //        if(yPos<ScreenHeight){
-//            yPos+=9.8;
-//        }
-//        if(yPos>ScreenHeight){
-//            yPos=ScreenHeight;
-//        }
-//        if(yPos<0) {
-//            yPos=0;
-//        }
 
         // Update will pass the delta time in for the animation to happen
         spritesheet.Update(_dt);
