@@ -128,9 +128,7 @@ public class MainGameSceneState implements StateBase {
             enter_button.MakeVisible = true;
             enter_button.nextScene = "MINIGAME_TAPGAME";
         }
-        else enter_button.MakeVisible = false;
-
-        if (Collision.SphereToSphere(player.GetPosX(),player.GetPosY(),player.GetRadius() ,house.GetPosX(),house.GetPosY(),house.GetRadius())) {
+        else if (Collision.SphereToSphere(player.GetPosX(),player.GetPosY(),player.GetRadius() ,house.GetPosX(),house.GetPosY(),house.GetRadius())) {
             enter_button.MakeVisible = true;
             enter_button.nextScene = "Mainmenu";
         }
