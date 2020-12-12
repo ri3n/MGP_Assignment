@@ -82,7 +82,6 @@ public class EnterButton implements EntityBase{
                     else
                     {
                         Gamepage.Instance.finish();
-                        StateManager.Instance.ChangeState("MainGame");
                     }
                 }
 
