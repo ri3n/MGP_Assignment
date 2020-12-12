@@ -30,6 +30,8 @@ public class EnterButton implements EntityBase{
 
     public boolean MakeVisible;
 
+    public String nextScene;
+
     @Override public boolean IsDone()
     {
         return isDone;
@@ -56,6 +58,8 @@ public class EnterButton implements EntityBase{
         xPos = ScreenWidth - 150;
         yPos = ScreenHeight - 150;
 
+        nextScene = "";
+
         MakeVisible = false;
         isInit = true;
     }
@@ -73,8 +77,13 @@ public class EnterButton implements EntityBase{
                 if(Collision.Quad((float)TouchManager.Instance.GetPosX(),(float)TouchManager.Instance.GetPosY(),
                         1.f,1.f,(float)xPos,(float)yPos,(float)bmp.getWidth(),(float)bmp.getHeight()))
                 {
-                    System.out.println("enter button is pressed");
-                    StateManager.Instance.ChangeState("MINIGAME_TAPGAME");
+                    if (nextScene != "Mainmenu")
+                    StateManager.Instance.ChangeState(nextScene);
+                    else
+                    {
+                        Gamepage.Instance.finish();
+                        StateManager.Instance.ChangeState("MainGame");
+                    }
                 }
 
             }

@@ -6,6 +6,7 @@ import android.view.SurfaceView;
 import com.example.mgp.Entities.EnterButton;
 import com.example.mgp.Entities.EntityCharacter;
 import com.example.mgp.Entities.EntityHackerMan;
+import com.example.mgp.Entities.EntityHouse;
 import com.example.mgp.Entities.EntityManager;
 import com.example.mgp.Entities.EntityPortal;
 import com.example.mgp.Entities.EntitySmurf;
@@ -25,6 +26,7 @@ public class MainGameSceneState implements StateBase {
     EntitySmurf smurf;
     EntityPortal portal;
     EntityCharacter player;
+    EntityHouse house;
 
     //Button holders
     LeftButton left_button;
@@ -58,6 +60,7 @@ public class MainGameSceneState implements StateBase {
         left_button = LeftButton.Create();
         right_button = RightButton.Create();
         enter_button = EnterButton.Create();
+        house = EntityHouse.Create();
         float xPos=0;
     }
 
@@ -121,10 +124,17 @@ public class MainGameSceneState implements StateBase {
         else Background.Direction = 0;
 
         //if (Collision.Quad(smurf.GetPosX(), smurf.GetPosY(), smurf.GetRadius() * 2, smurf.GetRadius() * 2, portal.GetPosX(), portal.GetPosY()))
-        if (Collision.SphereToSphere(player.GetPosX(),player.GetPosY(),player.GetRadius() ,portal.GetPosX(),portal.GetPosY(),portal.GetRadius()))
+        if (Collision.SphereToSphere(player.GetPosX(),player.GetPosY(),player.GetRadius() ,portal.GetPosX(),portal.GetPosY(),portal.GetRadius())) {
             enter_button.MakeVisible = true;
+            enter_button.nextScene = "MINIGAME_TAPGAME";
+        }
         else enter_button.MakeVisible = false;
 
+        if (Collision.SphereToSphere(player.GetPosX(),player.GetPosY(),player.GetRadius() ,house.GetPosX(),house.GetPosY(),house.GetRadius())) {
+            enter_button.MakeVisible = true;
+            enter_button.nextScene = "Mainmenu";
+        }
+        else enter_button.MakeVisible = false;
     }
 }
 

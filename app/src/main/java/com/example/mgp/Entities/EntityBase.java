@@ -21,7 +21,8 @@ public interface EntityBase
          ENT_LEFTARROW,
          ENT_RIGHTARROW,
          ENT_HACKERMAN,
-         ENT_DEFAULT,
+         ENT_HOUSE,
+         ENT_DEFAULT
      }
 
     boolean IsDone();
