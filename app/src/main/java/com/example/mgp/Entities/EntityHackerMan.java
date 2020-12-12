@@ -104,6 +104,7 @@ public class EntityHackerMan implements EntityBase, Collidable {
         {
             xPos=ranGen.nextFloat() * ScreenWidth;
             yPos=ranGen.nextFloat() * ScreenHeight;
+            lifeTime=10.0f;
         }
 
     }
