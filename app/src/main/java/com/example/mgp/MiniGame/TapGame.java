@@ -26,6 +26,7 @@ public class TapGame implements StateBase {
         hackerman = EntityHackerMan.Create();
         FPSText = RenderTextEntity.Create("FPS: ", 70, 35,80);
         ScoreText = RenderTextEntity.Create("Score: ", 70,1000 , 80);
+
         //textRender.RenderFPS(true);
         //textRender.RenderScore(true);
     }

@@ -60,9 +60,10 @@ public class RenderSideScrollingBackground implements EntityBase{
         isDone = false;
 
         // Using ResourceManager
-        bmp = ResourceManager.Instance.GetBitmap(bitmapID);
-        maxX = _view.getWidth();
-        maxY = _view.getHeight();
+//        bmp = ResourceManager.Instance.GetBitmap(bitmapID);
+        bmp = ResourceManager.Instance.GetBitmap(R.drawable.gamepage);
+        maxX = ScreenConstants.GetScreenWidth(_view);
+        maxY = ScreenConstants.GetScreenHeight(_view);
 
 
         width = bmp.getWidth();

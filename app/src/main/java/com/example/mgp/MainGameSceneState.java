@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.view.SurfaceView;
 
 import com.example.mgp.Entities.EnterButton;
+import com.example.mgp.Entities.EntityCharacter;
 import com.example.mgp.Entities.EntityHackerMan;
 import com.example.mgp.Entities.EntityManager;
 import com.example.mgp.Entities.EntityPortal;
@@ -13,6 +14,8 @@ import com.example.mgp.Entities.PauseButton;
 import com.example.mgp.Entities.RenderSideScrollingBackground;
 import com.example.mgp.Entities.RenderTextEntity;
 import com.example.mgp.Entities.RightButton;
+
+import org.w3c.dom.Entity;
 // Created by TanSiewLan2020
 
 public class MainGameSceneState implements StateBase {
@@ -21,6 +24,7 @@ public class MainGameSceneState implements StateBase {
     //Entity holders
     EntitySmurf smurf;
     EntityPortal portal;
+    EntityCharacter player;
 
     //Button holders
     LeftButton left_button;
@@ -32,6 +36,10 @@ public class MainGameSceneState implements StateBase {
 
     //Text holders
     RenderTextEntity FPSText;
+    RenderTextEntity WelcomeText;
+
+    private float ChangeTextTimer = 10;
+
     @Override
     public String GetName() {
         return "MainGame";
@@ -42,10 +50,11 @@ public class MainGameSceneState implements StateBase {
     {
         // Example to include another Renderview for Pause Button
         Background = RenderSideScrollingBackground.Create(R.drawable.gamepage);
-        smurf = EntitySmurf.Create();
+        player = EntityCharacter.Create();
         PauseButton.Create();
         FPSText = RenderTextEntity.Create("FPS: ", 70, 35,80);
-        portal = EntityPortal.Create(3,3, _view.getWidth(), _view.getHeight()/2);
+        WelcomeText = RenderTextEntity.Create("Welcome to KEYBOARD WARRIOR!", 70, 35, 160);
+        portal = EntityPortal.Create(3,3, _view.getWidth()/2, _view.getHeight()/2);
         left_button = LeftButton.Create();
         right_button = RightButton.Create();
         enter_button = EnterButton.Create();
@@ -65,28 +74,57 @@ public class MainGameSceneState implements StateBase {
 
     }
 
+    private void UpdateWelcomeText(float _dt)
+    {
+        ChangeTextTimer -= _dt;
+
+        if (WelcomeText != null || !WelcomeText.IsDone())
+        {
+            if (ChangeTextTimer <= 5.f && ChangeTextTimer > 0.f)
+            {
+                WelcomeText.text = "This is the lobby";
+            }
+            else if (ChangeTextTimer <= 0.f)
+            {
+                WelcomeText.text = "Enter the portal to begin!";
+            }
+        }
+
+        if (ChangeTextTimer <= -3)
+        {
+            WelcomeText.SetIsDone(true);
+        }
+    }
+
     @Override
     public void Update(float _dt) {
 
+        //Update WelcomeText
+        UpdateWelcomeText(_dt);
+
+        //Update FPSCounter
+        FPSCounter.Instance.Update(_dt);
+        FPSText.text = "FPS: " + FPSCounter.Instance.fps;
+
+        //Update EntityManager
         EntityManager.Instance.Update(_dt);
 
+        //Update Buttons
         if(left_button.isPressed()){
-            smurf.moveLeft(0);
+            player.moveLeft(0);
             Background.Direction = 1;
         }
         else if(right_button.isPressed()){
-            smurf.moveRight(0);
+            player.moveRight(0);
             Background.Direction = -1;
         }
         else Background.Direction = 0;
 
         //if (Collision.Quad(smurf.GetPosX(), smurf.GetPosY(), smurf.GetRadius() * 2, smurf.GetRadius() * 2, portal.GetPosX(), portal.GetPosY()))
-        if (Collision.SphereToSphere(smurf.GetPosX(),smurf.GetPosY(),smurf.GetRadius() ,portal.GetPosX(),portal.GetPosY(),portal.GetRadius()))
+        if (Collision.SphereToSphere(player.GetPosX(),player.GetPosY(),player.GetRadius() ,portal.GetPosX(),portal.GetPosY(),portal.GetRadius()))
             enter_button.MakeVisible = true;
         else enter_button.MakeVisible = false;
 
-        FPSCounter.Instance.Update(_dt);
-        FPSText.text = "FPS: " + FPSCounter.Instance.fps;
     }
 }
 

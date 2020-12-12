@@ -133,7 +133,7 @@ public class EntityPortal implements EntityBase, Collidable {
 
     @Override
     public float GetRadius() {
-        return scaleX * bmp.getWidth() / numSpriteGrids;
+        return bmp.getWidth() / numSpriteGrids * scaleX / 2;
     }
 
     @Override
