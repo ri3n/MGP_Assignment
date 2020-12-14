@@ -26,6 +26,8 @@ public class Mainmenu extends Activity implements OnClickListener,StateBase
     private Button btn_start;
     private Button btn_options;
 
+    private boolean isRender = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -37,6 +39,7 @@ public class Mainmenu extends Activity implements OnClickListener,StateBase
         //Hide Top Bar
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.mainmenu);
+
 
 
         //Init buttons

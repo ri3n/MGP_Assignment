@@ -1,6 +1,7 @@
 package com.example.mgp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.Window;
@@ -35,4 +36,10 @@ public class Gamepage extends Activity {
         return true;
     }
 
+    public void GoToMainMenu()
+    {
+        Intent intent = new Intent();
+        intent.setClass(this,Mainmenu.class);
+        startActivity(intent);
+    }
 }

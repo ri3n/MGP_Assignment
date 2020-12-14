@@ -79,8 +79,8 @@ public class StateManager {
     void Start(String _newCurrent)
     {
         // Make sure only can call once at the start
-        if (currState != null || nextState != null)
-            return;
+//        if (currState != null || nextState != null)
+//            return;
 
         currState = stateMap.get(_newCurrent);
         if (currState != null)

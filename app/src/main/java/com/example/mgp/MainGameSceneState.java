@@ -61,6 +61,8 @@ public class MainGameSceneState implements StateBase {
         right_button = RightButton.Create();
         enter_button = EnterButton.Create();
         house = EntityHouse.Create();
+
+
         float xPos=0;
     }
 

@@ -1,5 +1,6 @@
 package com.example.mgp.Entities;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.view.SurfaceView;
@@ -77,12 +78,13 @@ public class EnterButton implements EntityBase{
                 if(Collision.Quad((float)TouchManager.Instance.GetPosX(),(float)TouchManager.Instance.GetPosY(),
                         1.f,1.f,(float)xPos,(float)yPos,(float)bmp.getWidth(),(float)bmp.getHeight()))
                 {
-                    if (nextScene != "Mainmenu")
                     StateManager.Instance.ChangeState(nextScene);
-                    else
+                    if (nextScene == "Mainmenu")
                     {
                         Gamepage.Instance.finish();
                     }
+
+
                 }
 
             }
