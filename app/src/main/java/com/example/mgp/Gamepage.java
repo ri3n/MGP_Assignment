@@ -7,7 +7,9 @@ import android.view.MotionEvent;
 import android.view.Window;
 import android.view.WindowManager;
 
-public class Gamepage extends Activity {
+import androidx.fragment.app.FragmentActivity;
+
+public class Gamepage extends FragmentActivity {
     public static Gamepage Instance = null;
 
     @Override
