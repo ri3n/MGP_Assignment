@@ -10,6 +10,7 @@ import com.example.mgp.Entities.RenderBackground;
 import com.example.mgp.Entities.RenderTextEntity;
 
 import java.text.DecimalFormat;
+import java.util.Random;
 
 public class TapGame implements StateBase {
     RenderBackground Background;
@@ -18,9 +19,12 @@ public class TapGame implements StateBase {
     RenderTextEntity ScoreText;
     RenderTextEntity TimerText;
 
+    Random random;
+
     private int ScreenWidth,ScreenHeight;
 
     float GameTime;
+    int score;
 
     @Override
     public String GetName() {
@@ -55,7 +59,21 @@ public class TapGame implements StateBase {
     @Override
     public void Update(float _dt)
     {
+        if(hackerman == null || hackerman.IsDone()){
+//            random.nextInt(3);
+//            if(random.nextInt(3)==1)
+//            {
+//
+//            }
+            hackerman = EntityHackerMan.Create();
+        }
+        
         EntityManager.Instance.Update(_dt);
+
+        if(hackerman.GetScored()==true){
+            score++;
+            hackerman.SetScored(false);
+        }
 
         GameTime -= _dt;
 
@@ -64,7 +82,8 @@ public class TapGame implements StateBase {
         FPSText.text = "FPS: " + FPSCounter.Instance.fps;
 
         //ScoreText Updates
-        ScoreText.text = "Score: " + hackerman.GetScore();
+        //ScoreText.text = "Score: " + hackerman.GetScore();
+        ScoreText.text = "Score: " + String.valueOf(score);
 
         GameSystem.Instance.SetIntInSave("Score", hackerman.GetScore());
 
