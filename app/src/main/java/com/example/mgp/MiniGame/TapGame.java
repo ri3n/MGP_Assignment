@@ -40,18 +40,17 @@ public class TapGame implements StateBase {
         //textRender.RenderFPS(true);
         //textRender.RenderScore(true);
         GameTime = 60.f;
+        GameSystem.Instance.SaveEditBegin();
     }
 
     @Override
     public void OnExit() {
+        GameSystem.Instance.SaveEditEnd();
         EntityManager.Instance.Clean();
     }
 
     @Override
-    public void Render(Canvas _canvas)
-    {
-        EntityManager.Instance.Render(_canvas);
-    }
+    public void Render(Canvas _canvas) { EntityManager.Instance.Render(_canvas); }
 
     @Override
     public void Update(float _dt)
@@ -66,6 +65,8 @@ public class TapGame implements StateBase {
 
         //ScoreText Updates
         ScoreText.text = "Score: " + hackerman.GetScore();
+
+        GameSystem.Instance.SetIntInSave("Score", hackerman.GetScore());
 
         //update game time
         DecimalFormat numberFormat = new DecimalFormat("#.#");

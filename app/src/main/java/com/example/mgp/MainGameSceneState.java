@@ -39,6 +39,7 @@ public class MainGameSceneState implements StateBase {
     //Text holders
     RenderTextEntity FPSText;
     RenderTextEntity WelcomeText;
+    RenderTextEntity ScoreEntity;
 
     private float ChangeTextTimer = 10;
 
@@ -61,6 +62,7 @@ public class MainGameSceneState implements StateBase {
         right_button = RightButton.Create();
         enter_button = EnterButton.Create();
         house = EntityHouse.Create();
+        ScoreEntity = RenderTextEntity.Create("Highscore: "+ GameSystem.Instance.GetIntFromSave("Score"),70 ,_view.getWidth()/2, _view.getHeight()/2+30);
         float xPos=0;
     }
 
