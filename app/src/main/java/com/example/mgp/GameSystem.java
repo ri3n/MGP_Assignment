@@ -10,9 +10,12 @@ import com.example.mgp.MiniGame.TapGame;
 
 public class GameSystem {
     public final static GameSystem Instance = new GameSystem();
+    public static final String SHARED_PREF_ID = "GameSaveFile";
 
     // Game stuff
     private boolean isPaused = false;
+    SharedPreferences sharedPref = null;
+    SharedPreferences.Editor editor = null;
 
     // Singleton Pattern : Blocks others from creating
     private GameSystem()
@@ -26,11 +29,14 @@ public class GameSystem {
     public void Init(SurfaceView _view)
     {
         ResourceManager.Instance.Init(_view);
+        AudioManager.Instance.Init(_view);
         // We will add all of our states into the state manager here!
         StateManager.Instance.AddState(new Mainmenu());
         StateManager.Instance.AddState(new InstructionSceneState());
         StateManager.Instance.AddState(new MainGameSceneState());
         StateManager.Instance.AddState(new TapGame());
+        //shared preference
+        sharedPref = Gamepage.Instance.getSharedPreferences(SHARED_PREF_ID, 0);
     }
 
     public void SetIsPaused(boolean _newIsPaused)
@@ -43,4 +49,26 @@ public class GameSystem {
         return isPaused;
     }
 
+    public void SaveEditBegin(){
+        if(editor != null)
+            return;
+        editor=sharedPref.edit();
+    }
+
+    public void SaveEditEnd(){
+        if(editor == null)
+            return;
+        editor.commit();
+        editor = null;
+    }
+
+    public void SetIntInSave(String _key,int _value){
+        if(editor == null)
+            return;
+        editor.putInt(_key,_value);
+    }
+
+    public int GetIntFromSave(String _key){
+        return sharedPref.getInt(_key,-1);
+    }
 }

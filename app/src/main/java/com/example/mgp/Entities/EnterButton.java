@@ -12,6 +12,7 @@ import com.example.mgp.ResourceManager;
 import com.example.mgp.ScreenConstants;
 import com.example.mgp.StateManager;
 import com.example.mgp.TouchManager;
+import com.example.mgp.AudioManager;
 
 import com.example.mgp.*;
 
@@ -78,6 +79,9 @@ public class EnterButton implements EntityBase{
                 if(Collision.Quad((float)TouchManager.Instance.GetPosX(),(float)TouchManager.Instance.GetPosY(),
                         1.f,1.f,(float)xPos,(float)yPos,(float)bmp.getWidth(),(float)bmp.getHeight()))
                 {
+                    AudioManager.Instance.PlayAudio(R.raw.clicksound);
+
+                    if (nextScene != "Mainmenu")
                     StateManager.Instance.ChangeState(nextScene);
                     if (nextScene == "Mainmenu")
                     {

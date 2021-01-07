@@ -71,9 +71,6 @@ public class Mainmenu extends Activity implements OnClickListener,StateBase
             intent.setClass(this,Optionspage.class);
             intent.putExtra("prevPage", 1);
         }
-
-
-
         //Transit the screen
         startActivity(intent);
     }
@@ -98,7 +95,6 @@ public class Mainmenu extends Activity implements OnClickListener,StateBase
     public String GetName() {
         return "Mainmenu";
     }
-
 
     @Override
     protected void onPause()

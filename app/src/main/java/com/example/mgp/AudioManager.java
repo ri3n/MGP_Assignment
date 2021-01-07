@@ -15,7 +15,6 @@ public class AudioManager
 
     private MediaPlayer newAudio;
 
-
     public final static AudioManager Instance = new AudioManager();
 
     private AudioManager()

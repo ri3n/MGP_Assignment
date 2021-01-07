@@ -10,6 +10,7 @@ import com.example.mgp.GameSystem;
 import com.example.mgp.R;
 import com.example.mgp.ResourceManager;
 import com.example.mgp.TouchManager;
+import com.example.mgp.AudioManager;
 import com.example.mgp.*;
 
 public class PauseButton implements EntityBase{

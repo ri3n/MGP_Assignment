@@ -86,6 +86,13 @@ public class EntityManager {
         }
         removalList.clear(); // Clean up of removal list
 
+        // Remove all entities that are done
+        for(int i = 0;i < removalList.size(); ++i)
+        {
+            entityList.remove(removalList.get(i));
+        }
+        removalList.clear(); // Clean up of removal list
+
         // Collision Check
         for (int i = 0; i < entityList.size(); ++i)
         {
