@@ -6,6 +6,7 @@ import android.view.SurfaceView;
 import com.example.mgp.*;
 import com.example.mgp.Entities.EntityHackerMan;
 import com.example.mgp.Entities.EntityManager;
+import com.example.mgp.Entities.EntitySmurf;
 import com.example.mgp.Entities.RenderBackground;
 import com.example.mgp.Entities.RenderTextEntity;
 
@@ -15,6 +16,7 @@ import java.util.Random;
 public class TapGame implements StateBase {
     RenderBackground Background;
     EntityHackerMan hackerman;
+    EntitySmurf smurf;
     RenderTextEntity FPSText;
     RenderTextEntity ScoreText;
     RenderTextEntity TimerText;
@@ -24,6 +26,7 @@ public class TapGame implements StateBase {
     private int ScreenWidth,ScreenHeight;
 
     float GameTime;
+    float CDTimer;
     int score;
 
     @Override
@@ -43,8 +46,11 @@ public class TapGame implements StateBase {
         TimerText = RenderTextEntity.Create("" , 70 , ScreenWidth/2 - 2 , ScreenHeight);
         //textRender.RenderFPS(true);
         //textRender.RenderScore(true);
+        random = new Random();
         GameTime = 60.f;
+        CDTimer = 5.f;
         GameSystem.Instance.SaveEditBegin();
+
     }
 
     @Override
@@ -59,15 +65,17 @@ public class TapGame implements StateBase {
     @Override
     public void Update(float _dt)
     {
-        if(hackerman == null || hackerman.IsDone()){
-//            random.nextInt(3);
-//            if(random.nextInt(3)==1)
-//            {
-//
-//            }
-            hackerman = EntityHackerMan.Create();
+        if(hackerman == null || hackerman.IsDone()
+            ){
+            //hackerman = EntityHackerMan.Create();
+            CDTimer -= _dt;
         }
-        
+
+        if(CDTimer<=0){
+            hackerman = EntityHackerMan.Create();
+            CDTimer = random.nextFloat();
+        }
+
         EntityManager.Instance.Update(_dt);
 
         if(hackerman.GetScored()==true){
