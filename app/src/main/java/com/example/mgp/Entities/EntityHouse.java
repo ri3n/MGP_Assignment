@@ -72,7 +72,6 @@ public class EntityHouse implements EntityBase, Collidable {
 
         if (EntityManager.Instance.GetBG().isMoving)
         {
-            moveValue = EntityManager.Instance.GetBG().moveValue;
             screenX += moveValue;
         }
 
@@ -134,5 +133,10 @@ public class EntityHouse implements EntityBase, Collidable {
 
     @Override
     public void OnHit(Collidable _other) {
+    }
+
+    public void SetMoveValue(float moveValue)
+    {
+        this.moveValue = moveValue;
     }
 }

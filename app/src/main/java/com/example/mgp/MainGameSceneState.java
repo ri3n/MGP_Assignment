@@ -55,14 +55,14 @@ public class MainGameSceneState implements StateBase {
         Background = RenderSideScrollingBackground.Create(R.drawable.gamepage);
         player = EntityCharacter.Create();
         PauseButton.Create();
-        FPSText = RenderTextEntity.Create("FPS: ", 70, 35,80);
-        WelcomeText = RenderTextEntity.Create("Welcome to KEYBOARD WARRIOR!", 70, 35, 160);
+        FPSText = RenderTextEntity.Create("FPS: ", 70, 35,80, true);
+        WelcomeText = RenderTextEntity.Create("Welcome to KEYBOARD WARRIOR!", 70, 35, 160, true);
         portal = EntityPortal.Create(3,3, _view.getWidth()/2, _view.getHeight()/2);
         left_button = LeftButton.Create();
         right_button = RightButton.Create();
         enter_button = EnterButton.Create();
         house = EntityHouse.Create();
-        ScoreEntity = RenderTextEntity.Create("Highscore: "+ GameSystem.Instance.GetIntFromSave("Score"),70 ,_view.getWidth()/2, _view.getHeight()/2+30);
+        ScoreEntity = RenderTextEntity.Create("Highscore: "+ GameSystem.Instance.GetIntFromSave("Score"),70 ,_view.getWidth()/2 -(6*35), _view.getHeight()/2 - 150, false);
         float xPos=0;
     }
 
@@ -76,7 +76,6 @@ public class MainGameSceneState implements StateBase {
     public void Render(Canvas _canvas)
     {
         EntityManager.Instance.Render(_canvas);
-
     }
 
     private void UpdateWelcomeText(float _dt)
@@ -125,6 +124,11 @@ public class MainGameSceneState implements StateBase {
         }
         else Background.Direction = 0;
 
+        //Update moving entites by setting the move values
+        ScoreEntity.SetMoveValue(Background.moveValue);
+        portal.SetMoveValue(Background.moveValue);
+        house.SetMoveValue(Background.moveValue);
+
         //if (Collision.Quad(smurf.GetPosX(), smurf.GetPosY(), smurf.GetRadius() * 2, smurf.GetRadius() * 2, portal.GetPosX(), portal.GetPosY()))
         if (Collision.SphereToSphere(player.GetPosX(),player.GetPosY(),player.GetRadius() ,portal.GetPosX(),portal.GetPosY(),portal.GetRadius())) {
             enter_button.MakeVisible = true;
@@ -135,6 +139,8 @@ public class MainGameSceneState implements StateBase {
             enter_button.nextScene = "Mainmenu";
         }
         else enter_button.MakeVisible = false;
+
+
     }
 }
 

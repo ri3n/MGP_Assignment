@@ -41,9 +41,9 @@ public class TapGame implements StateBase {
 
         Background = RenderBackground.Create(R.drawable.gamepage);
         hackerman = EntityHackerMan.Create();
-        FPSText = RenderTextEntity.Create("FPS: ", 70, 35 , 80);
-        ScoreText = RenderTextEntity.Create("Score: ", 70 , 1000 , 80);
-        TimerText = RenderTextEntity.Create("" , 70 , ScreenWidth/2 - 2 , ScreenHeight);
+        FPSText = RenderTextEntity.Create("FPS: ", 70, 35 , 80, true);
+        ScoreText = RenderTextEntity.Create("Score: ", 70 , 1000 , 80, true);
+        TimerText = RenderTextEntity.Create("" , 70 , ScreenWidth/2 - 2 , ScreenHeight, true);
         //textRender.RenderFPS(true);
         //textRender.RenderScore(true);
         random = new Random();

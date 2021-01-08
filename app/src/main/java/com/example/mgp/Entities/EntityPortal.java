@@ -16,7 +16,6 @@ public class EntityPortal implements EntityBase, Collidable {
     private boolean IsDone;
     private boolean IsInit = false;
     private int renderLayer = LayerConstants.BACKGROUNDGAMEOBJECTS_LAYER;
-    private float moveValue;
     private Sprite sprite;
     private int bitmapID;
     private Bitmap bmp;
@@ -31,6 +30,9 @@ public class EntityPortal implements EntityBase, Collidable {
 
     //Scaling
     public int scaleX, scaleY;
+
+    //Move Value
+    private float moveValue;
 
     public static EntityPortal Create ()
     {
@@ -47,7 +49,8 @@ public class EntityPortal implements EntityBase, Collidable {
         result.screenY = screenY;
         result.scaleX = scaleX;
         result.scaleY = scaleY;
-
+        result.maxX = screenX;
+        result.maxY = screenY;
         return result;
     }
 
@@ -85,7 +88,6 @@ public class EntityPortal implements EntityBase, Collidable {
 
         if (EntityManager.Instance.GetBG().isMoving)
         {
-            moveValue = EntityManager.Instance.GetBG().moveValue;
             screenX += moveValue;
         }
 
@@ -138,5 +140,10 @@ public class EntityPortal implements EntityBase, Collidable {
 
     @Override
     public void OnHit(Collidable _other) {
+    }
+
+    public void SetMoveValue(float moveValue)
+    {
+        this.moveValue = moveValue;
     }
 }

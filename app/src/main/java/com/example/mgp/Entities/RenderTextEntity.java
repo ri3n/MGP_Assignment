@@ -42,8 +42,15 @@ public class RenderTextEntity implements EntityBase{
     public String text;
     boolean MakeVisible = true;
 
+    //boolean that toggles between staying on screen in the same pos
+    //vs movable text
+    public boolean IsOnScreenText = true;
+
     private int fontSize;
-    private int xPos, yPos;
+    private int screenX, screenY;
+    private int worldX, worldY;
+
+    private float moveValue;
 
     // Define the use of Typeface ... name is myfont
     Typeface myfont;
@@ -63,6 +70,7 @@ public class RenderTextEntity implements EntityBase{
 
         // Use my own fonts
         // Standard font loading using android API
+        moveValue = 0;
         myfont = Typeface.createFromAsset(_view.getContext().getAssets(), "fonts/Gemcut.otf");
         ScreenWidth = ScreenConstants.GetScreenWidth(_view);
         ScreenHeight = ScreenConstants.GetScreenHeight(_view);
@@ -70,29 +78,24 @@ public class RenderTextEntity implements EntityBase{
 
     @Override
     public void Update(float _dt) {
-
-
-
+        if (!IsOnScreenText)
+        {
+            screenX += moveValue;
+           // screenX +=
+        }
     }
 
     @Override
     public void Render(Canvas _canvas)
     {
-        Paint paint = new Paint(); // Use paint to render text on screen
-        paint.setARGB(255, 255,255,255); // Alpha, R, G, B Can make it a variable
-        paint.setStrokeWidth(200); // Stroke width is just the thickness of the appearance of the text
-        paint.setTypeface(myfont); // using the type of font we defined
-        paint.setTextSize(fontSize);     // Text size
-        _canvas.drawText(text, xPos, yPos, paint); // To render text is drawText FPS: 60
-        // drawText(String text, float x, float y, Paint paint)
-        // Draw the text, with origin at (x,y), using the specified paint.
-
-        //if(renderFPS)
-        //{
-        //    FPS(_canvas);
-        //}
-        //if(renderScore)
-        //   Score(_canvas);
+            Paint paint = new Paint(); // Use paint to render text on screen
+            paint.setARGB(255, 255, 255, 255); // Alpha, R, G, B Can make it a variable
+            paint.setStrokeWidth(200); // Stroke width is just the thickness of the appearance of the text
+            paint.setTypeface(myfont); // using the type of font we defined
+            paint.setTextSize(fontSize);     // Text size
+            _canvas.drawText(text, screenX, screenY, paint); // To render text is drawText FPS: 60
+            // drawText(String text, float x, float y, Paint paint)
+            // Draw the text, with origin at (x,y), using the specified paint.
 
     }
 
@@ -121,13 +124,16 @@ public class RenderTextEntity implements EntityBase{
         return result;
     }
 
-    public static RenderTextEntity Create(String text, int fontSize, int xPos, int yPos)
+    public static RenderTextEntity Create(String text, int fontSize, int xPos, int yPos, boolean IsOnScreenText)
     {
         RenderTextEntity result = Create();
         result.text = text;
         result.fontSize = fontSize;
-        result.xPos = xPos;
-        result.yPos = yPos;
+        result.screenX = xPos;
+        result.screenY = yPos;
+        result.worldX = xPos;
+        result.worldY = yPos;
+        result.IsOnScreenText = IsOnScreenText;
         return result;
     }
 
@@ -168,6 +174,11 @@ public class RenderTextEntity implements EntityBase{
     public void RenderScore(boolean _ScoreTF)
     {
         renderScore = _ScoreTF;
+    }
+
+    public void SetMoveValue(float moveValue)
+    {
+        this.moveValue = moveValue;
     }
 
 }
