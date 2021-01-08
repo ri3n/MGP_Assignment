@@ -21,22 +21,24 @@ public class PauseConfirmDialogFragment extends DialogFragment {
 
         //Builder name: builder
 
-        builder.setMessage("Confirm Pause?").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+        builder.setMessage("Pause").setPositiveButton("Resume", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id)
             {
-                GameSystem.Instance.SetIsPaused(true);
+                GameSystem.Instance.SetIsPaused(false);
                 IsShown = false;
             }
-        })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+        });
+               /* .setNegativeButton("B", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         //User cancelled pause
                         GameSystem.Instance.SetIsPaused(false);
                         IsShown = false;
                     }
-                });
+                }
+
+                );*/
 
         return builder.create();
     }

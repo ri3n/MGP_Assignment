@@ -1,4 +1,4 @@
-package com.example.mgp;
+package com.example.mgp.ActivityStates;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -11,6 +11,11 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 
+import com.example.mgp.R;
+import com.example.mgp.Splashpage;
+import com.example.mgp.StateBase;
+import com.example.mgp.StateManager;
+
 //extends Activity - for every new screen
 //implements OnClickListener: for the screen to be touchscreen
 // Layout Error possiblities:
@@ -20,7 +25,7 @@ import android.widget.Button;
 // - Syntax Error
 // !! Never resolve an XML error with import R
 // R: Resource registry
-public class Mainmenu extends Activity implements OnClickListener,StateBase
+public class Mainmenu extends Activity implements OnClickListener, StateBase
 {
     //Start button
     private Button btn_start;
@@ -62,7 +67,7 @@ public class Mainmenu extends Activity implements OnClickListener,StateBase
 
         if (v == btn_start) //if usr clicks on start
         {
-            intent.setClass(this,Splashpage.class); //Set the intent right
+            intent.setClass(this, Splashpage.class); //Set the intent right
             StateManager.Instance.ChangeState("Default"); // Default is like a loading page
         }
 

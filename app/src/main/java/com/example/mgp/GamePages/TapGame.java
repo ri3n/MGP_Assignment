@@ -1,4 +1,4 @@
-package com.example.mgp.MiniGame;
+package com.example.mgp.GamePages;
 
 import android.graphics.Canvas;
 import android.view.SurfaceView;

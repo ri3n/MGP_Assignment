@@ -64,7 +64,7 @@ public class EntityCharacter implements Collidable,EntityBase{
         // ranGen will produce random x values based on the view size
         xPos = bmp.getWidth();
         //yPos = ranGen.nextFloat() * _view.getHeight();
-        yPos = _view.getHeight() / 2;
+        yPos = _view.getHeight() / 2 + 50;
         // Not used but u can use them if u want
         xDir = ranGen.nextFloat() * 100.0f - 50.0f;
         yDir = ranGen.nextFloat() * 100.0f - 50.0f;
@@ -75,7 +75,7 @@ public class EntityCharacter implements Collidable,EntityBase{
         spritesheet = new Sprite(bmp, 1, 4, 4);
         numSpriteGrids = 4;
 
-        scaleX = scaleY = 4;
+        scaleX = scaleY = 3;
 
         isInit = true;
     }

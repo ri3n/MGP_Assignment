@@ -5,6 +5,7 @@ import android.view.SurfaceView;
 
 import com.example.mgp.Entities.EntityManager;
 import com.example.mgp.Entities.EntitySmurf;
+import com.example.mgp.ActivityStates.Gamepage;
 
 public class InstructionSceneState implements StateBase{
 
@@ -12,7 +13,7 @@ public class InstructionSceneState implements StateBase{
 
     @Override
     public String GetName() {
-        return "InstructionP";
+        return "InstructionPage";
     }
 
     @Override

@@ -1,6 +1,5 @@
-package com.example.mgp;
+package com.example.mgp.ActivityStates;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -8,6 +7,9 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import androidx.fragment.app.FragmentActivity;
+
+import com.example.mgp.GameView;
+import com.example.mgp.TouchManager;
 
 public class Gamepage extends FragmentActivity {
     public static Gamepage Instance = null;
@@ -41,7 +43,7 @@ public class Gamepage extends FragmentActivity {
     public void GoToMainMenu()
     {
         Intent intent = new Intent();
-        intent.setClass(this,Mainmenu.class);
+        intent.setClass(this, Mainmenu.class);
         startActivity(intent);
     }
 }

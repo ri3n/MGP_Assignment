@@ -1,4 +1,4 @@
-package com.example.mgp;
+package com.example.mgp.ActivityStates;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+
+import com.example.mgp.R;
 
 public class Pausepage extends Activity implements View.OnClickListener
 {
@@ -55,7 +57,7 @@ public class Pausepage extends Activity implements View.OnClickListener
 
         if (v == btn_resume) //if usr clicks on start
         {
-            intent.setClass(this,Gamepage.class); //Set the intent right
+            intent.setClass(this, Gamepage.class); //Set the intent right
         }
 
         else if (v == btn_exit)

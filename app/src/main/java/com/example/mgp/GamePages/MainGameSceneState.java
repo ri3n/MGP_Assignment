@@ -1,8 +1,9 @@
-package com.example.mgp;
+package com.example.mgp.GamePages;
 
 import android.graphics.Canvas;
 import android.view.SurfaceView;
 
+import com.example.mgp.Collision;
 import com.example.mgp.Entities.EnterButton;
 import com.example.mgp.Entities.EntityCharacter;
 import com.example.mgp.Entities.EntityHackerMan;
@@ -15,6 +16,10 @@ import com.example.mgp.Entities.PauseButton;
 import com.example.mgp.Entities.RenderSideScrollingBackground;
 import com.example.mgp.Entities.RenderTextEntity;
 import com.example.mgp.Entities.RightButton;
+import com.example.mgp.FPSCounter;
+import com.example.mgp.GameSystem;
+import com.example.mgp.R;
+import com.example.mgp.StateBase;
 
 import org.w3c.dom.Entity;
 // Created by TanSiewLan2020

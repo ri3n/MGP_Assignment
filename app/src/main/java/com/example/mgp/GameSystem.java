@@ -1,10 +1,12 @@
 package com.example.mgp;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.view.SurfaceView;
 
-import com.example.mgp.MiniGame.TapGame;
+import com.example.mgp.GamePages.MainGameSceneState;
+import com.example.mgp.GamePages.TapGame;
+import com.example.mgp.ActivityStates.Gamepage;
+import com.example.mgp.ActivityStates.Mainmenu;
 
 // Created by TanSiewLan2020
 

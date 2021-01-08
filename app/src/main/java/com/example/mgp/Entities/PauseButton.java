@@ -9,8 +9,8 @@ import com.example.mgp.Collision;
 import com.example.mgp.GameSystem;
 import com.example.mgp.R;
 import com.example.mgp.ResourceManager;
+import com.example.mgp.ActivityStates.Gamepage;
 import com.example.mgp.TouchManager;
-import com.example.mgp.AudioManager;
 import com.example.mgp.*;
 
 public class PauseButton implements EntityBase{
@@ -75,6 +75,7 @@ public class PauseButton implements EntityBase{
                 if (Collision.SphereToSphere(TouchManager.Instance.GetPosX(), TouchManager.Instance.GetPosY(), 0.0f, xPos, yPos, imgRadius))
                 {
                     Paused = true; // Meant user had pressed the Pause button!!!
+                    GameSystem.Instance.SetIsPaused(true);
 
                     // When button is pressed, U can play an audio clip
                     // AudioManager.Instance.PlayAudio(R.raw.clicksound);

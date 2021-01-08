@@ -1,6 +1,5 @@
 package com.example.mgp.Entities;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.view.SurfaceView;
@@ -11,10 +10,9 @@ import com.example.mgp.R;
 import com.example.mgp.ResourceManager;
 import com.example.mgp.ScreenConstants;
 import com.example.mgp.StateManager;
+import com.example.mgp.ActivityStates.Gamepage;
 import com.example.mgp.TouchManager;
 import com.example.mgp.AudioManager;
-
-import com.example.mgp.*;
 
 public class EnterButton implements EntityBase{
     private boolean isDone = false;

@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MGPAssignment">
 
-    <activity android:name=".Mainmenu"
+    <activity android:name=".ActivityStates.Mainmenu"
         android:screenOrientation="landscape">
 
         <intent-filter>
@@ -28,7 +28,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".Optionspage"
+        <activity android:name=".ActivityStates.Optionspage"
             android:screenOrientation="landscape">
 
             <intent-filter>
@@ -37,7 +37,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".Pausepage"
+        <activity android:name=".ActivityStates.Pausepage"
             android:screenOrientation="landscape">
 
             <intent-filter>
@@ -46,7 +46,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".Gamepage"
+        <activity android:name=".ActivityStates.Gamepage"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
