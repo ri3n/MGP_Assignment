@@ -16,6 +16,7 @@ import com.example.mgp.TouchManager;
 import java.util.Random;
 
 public class EntityCharacter implements Collidable,EntityBase{
+    private int bitmapID;
     private Bitmap bmp = null; // Define image object name (bmp)
     private Sprite spritesheet = null;
     // Sprite class will take in a sprite sheet image
@@ -31,6 +32,7 @@ public class EntityCharacter implements Collidable,EntityBase{
     private int renderLayer = LayerConstants.GAMEOBJECTS_LAYER;;
     private float imgRadius = 0;
     private float imgOffset = 85;
+    private int row,col,fps;
     private int numSpriteGrids;
 
     private float scaleX,scaleY;
@@ -48,7 +50,7 @@ public class EntityCharacter implements Collidable,EntityBase{
 
     @Override
     public void Init(SurfaceView _view) {
-        bmp = ResourceManager.Instance.GetBitmap(R.drawable.stickman_sprite);
+        bmp = ResourceManager.Instance.GetBitmap(bitmapID);
 //      scaledbmpP = Bitmap.createScaledBitmap(bmpP, (int)(ScreenWidth)/12, (int)(ScreenHeight)/10, true);
 
         //Define which image / png u want to use for this entity
@@ -72,10 +74,7 @@ public class EntityCharacter implements Collidable,EntityBase{
         ScreenWidth = ScreenConstants.GetScreenWidth(_view);
         ScreenHeight = ScreenConstants.GetScreenHeight(_view);
 
-        spritesheet = new Sprite(bmp, 1, 4, 4);
-        numSpriteGrids = 4;
-
-        scaleX = scaleY = 3;
+        spritesheet = new Sprite(bmp, row, col, fps);
 
         isInit = true;
     }
@@ -138,10 +137,17 @@ public class EntityCharacter implements Collidable,EntityBase{
         return result;
     }
 
-    public static EntityCharacter Create ( int _layer)
+    public static EntityCharacter Create ( int _layer,int bitmapID, int row, int col, int fps, int numSpriteGrids, int scaleX, int scaleY)
     {
         EntityCharacter result = Create();
         result.SetRenderLayer(_layer);
+        result.bitmapID = bitmapID;
+        result.row = row;
+        result.col = col;
+        result.fps = fps;
+        result.numSpriteGrids = numSpriteGrids;
+        result.scaleX = scaleX;
+        result.scaleY = scaleY;
         return result;
     }
 

@@ -6,6 +6,7 @@ import android.view.MotionEvent;
 // Manages the touch events
 
 public class TouchManager {
+    private boolean isDownPreviously = false;
     public final static TouchManager Instance = new TouchManager();
 
     private TouchManager(){
@@ -20,7 +21,6 @@ public class TouchManager {
 
     private int posX, posY;
     private TouchState status = TouchState.NONE; //Set to default as NONE
-    private TouchState prevStatus = TouchState.NONE; //Set to NONE first, used for IsPress
 
     public boolean HasTouch(){  // Check for a touch status on screen
         return status == TouchState.DOWN || status == TouchState.MOVE;
@@ -28,7 +28,15 @@ public class TouchManager {
 
     public boolean IsDown() { return status == TouchState.DOWN; }
 
-    public boolean IsPress() { return (status == TouchState.DOWN && prevStatus == TouchState.NONE); }
+    public boolean IsPress()
+    {
+        if (status == TouchState.DOWN && !isDownPreviously)
+        {
+            isDownPreviously = true;
+            return true;
+        }
+        else return false;
+    }
 
     public int GetPosX(){
         return posX;
@@ -44,18 +52,16 @@ public class TouchManager {
 
         switch (_motionEventStatus){
             case MotionEvent.ACTION_DOWN:
-                prevStatus = status;
                 status = TouchState.DOWN;
                 break;
 
             case MotionEvent.ACTION_MOVE:
-                prevStatus = status;
                 status = TouchState.MOVE;
                 break;
 
             case MotionEvent.ACTION_UP:
-                prevStatus = status;
                 status = TouchState.NONE;
+                isDownPreviously = false;
                 break;
 
         }

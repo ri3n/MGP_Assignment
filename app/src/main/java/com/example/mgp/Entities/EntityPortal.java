@@ -19,6 +19,9 @@ public class EntityPortal implements EntityBase, Collidable {
     private Sprite sprite;
     private int bitmapID;
     private Bitmap bmp;
+
+    private int rows,cols,fps;
+
     //On-Screen coordinates - this coordinates will move with the background
     //When within the surface view value, entityportal will be rendered
     private int screenX,screenY;
@@ -42,7 +45,7 @@ public class EntityPortal implements EntityBase, Collidable {
         return result;
     }
 
-    public static EntityPortal Create(int scaleX, int scaleY, int screenX, int screenY)
+    public static EntityPortal Create(int scaleX, int scaleY, int screenX, int screenY, int bitmapID, int rows, int cols, int fps, int numSpriteGrids)
     {
         EntityPortal result = Create();
         result.screenX = screenX;
@@ -51,6 +54,11 @@ public class EntityPortal implements EntityBase, Collidable {
         result.scaleY = scaleY;
         result.maxX = screenX;
         result.maxY = screenY;
+        result.bitmapID = bitmapID;
+        result.rows = rows;
+        result.cols = cols;
+        result.fps = fps;
+        result.numSpriteGrids = numSpriteGrids;
         return result;
     }
 
@@ -73,12 +81,10 @@ public class EntityPortal implements EntityBase, Collidable {
 
         maxX = ScreenConstants.GetScreenWidth(_view);
         maxY = ScreenConstants.GetScreenHeight(_view);
-        bitmapID = R.drawable.portal_sprite;
         bmp = ResourceManager.Instance.GetBitmap(bitmapID);
         bmp = Bitmap.createScaledBitmap(bmp,ScreenConstants.GetQuadWidth(_view), ScreenConstants.GetQuadHeight(_view),true);
 
-        sprite = new Sprite(ResourceManager.Instance.GetBitmap(bitmapID), 1, 11, 11);
-        numSpriteGrids = 11;
+        sprite = new Sprite(ResourceManager.Instance.GetBitmap(bitmapID), rows, cols, fps);
         //(int)(ScreenWidth)/5,(int)(ScreenWidth)/5
     }
 

@@ -60,7 +60,7 @@ public class EntityHouse implements EntityBase, Collidable {
         bmp = ResourceManager.Instance.GetBitmap(bitmapID);
         bmp = Bitmap.createScaledBitmap(bmp,ScreenConstants.GetQuadWidth(_view), ScreenConstants.GetQuadHeight(_view),true);
 
-        screenX = 10;
+        screenX = bmp.getWidth()/2;
         screenY = ScreenConstants.GetScreenHeight(_view) / 2;
 
         scaleX = scaleY = 1;
