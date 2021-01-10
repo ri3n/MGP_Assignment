@@ -21,6 +21,7 @@ public class TapGame implements StateBase {
     RenderTextEntity FPSText;
     RenderTextEntity ScoreText;
     RenderTextEntity TimerText;
+    RenderTextEntity LifeText;
 
     Random random;
 
@@ -29,6 +30,7 @@ public class TapGame implements StateBase {
     float GameTime;
     float CDTimer;
     int score;
+    int life;
 
     @Override
     public String GetName() {
@@ -45,6 +47,7 @@ public class TapGame implements StateBase {
         FPSText = RenderTextEntity.Create("FPS: ", 70, 35 , 80, true);
         ScoreText = RenderTextEntity.Create("Score: ", 70 , 1000 , 80, true);
         TimerText = RenderTextEntity.Create("" , 70 , ScreenWidth/2 - 2 , ScreenHeight, true);
+        LifeText = RenderTextEntity.Create("life: ", 70, ScreenWidth / 50 , ScreenHeight , true);
         PauseButton.Create();
         //textRender.RenderFPS(true);
         //textRender.RenderScore(true);
@@ -53,6 +56,7 @@ public class TapGame implements StateBase {
         CDTimer = random.nextFloat();
         GameSystem.Instance.SaveEditBegin();
         score = 0;
+        life = 3;
     }
 
     @Override
@@ -68,7 +72,6 @@ public class TapGame implements StateBase {
     public void Update(float _dt)
     {
         if(hackerman == null || hackerman.IsDone() ){
-            //hackerman = EntityHackerMan.Create();
             CDTimer -= _dt;
         }
 
@@ -84,6 +87,11 @@ public class TapGame implements StateBase {
             hackerman.SetScored(false);
         }
 
+        if(hackerman.GetDied()){
+            life--;
+            hackerman.SetDied();
+        }
+
         GameTime -= _dt;
 
         //FPSText Updates
@@ -91,8 +99,10 @@ public class TapGame implements StateBase {
         FPSText.text = "FPS: " + FPSCounter.Instance.fps;
 
         //ScoreText Updates
-        //ScoreText.text = "Score: " + hackerman.GetScore();
         ScoreText.text = "Score: " + String.valueOf(score);
+
+        //LifeText Updates
+        LifeText.text = "Life: "+ String.valueOf(life);
 
         if(GameSystem.Instance.GetIntFromSave("Score") < score)
         {
@@ -104,7 +114,7 @@ public class TapGame implements StateBase {
         String time = numberFormat.format(GameTime);
         TimerText.text = time;
 
-        if(GameTime<=0.f)
+        if(GameTime<=0.f||life<=0)
         {
             StateManager.Instance.ChangeState("MainGame");
         }
