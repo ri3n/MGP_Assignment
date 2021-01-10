@@ -57,7 +57,7 @@ public class EntityHackerMan implements EntityBase, Collidable {
         // then when the user touch the smurf on the screen, new smurfs will be render at
         // another position.
         ranGen = new Random();
-        lifeTime = ranGen.nextFloat();
+        lifeTime = 2.f;
         //_view.getWidth(); -- will give the length of the view = surfaceview = screen
         // because we using a state, we created our own surfaceview = screen
         // ranGen will produce random x values based on the view size
