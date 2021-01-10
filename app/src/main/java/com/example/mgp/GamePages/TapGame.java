@@ -30,7 +30,7 @@ public class TapGame implements StateBase {
     float GameTime;
     float CDTimer;
     int score;
-    int life;
+    int lives;
 
     @Override
     public String GetName() {
@@ -56,7 +56,7 @@ public class TapGame implements StateBase {
         CDTimer = random.nextFloat();
         GameSystem.Instance.SaveEditBegin();
         score = 0;
-        life = 3;
+        lives = 3;
     }
 
     @Override
@@ -88,7 +88,7 @@ public class TapGame implements StateBase {
         }
 
         if(hackerman.GetDied()){
-            life--;
+            lives--;
             hackerman.SetDied();
         }
 
@@ -102,7 +102,7 @@ public class TapGame implements StateBase {
         ScoreText.text = "Score: " + String.valueOf(score);
 
         //LifeText Updates
-        LifeText.text = "Life: "+ String.valueOf(life);
+        LifeText.text = "Life: "+ String.valueOf(lives);
 
         if(GameSystem.Instance.GetIntFromSave("Score") < score)
         {
@@ -114,7 +114,7 @@ public class TapGame implements StateBase {
         String time = numberFormat.format(GameTime);
         TimerText.text = time;
 
-        if(GameTime<=0.f||life<=0)
+        if(GameTime<=0.f||lives<=0)
         {
             StateManager.Instance.ChangeState("MainGame");
         }
