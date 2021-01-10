@@ -19,6 +19,8 @@ public class EntityObstacle implements EntityBase, Collidable {
     private int screenX, screenY;
     private boolean isVisible;
 
+    private boolean isDone = false;
+
     private float moveValue;
 
     private int screenWidth;
@@ -41,18 +43,17 @@ public class EntityObstacle implements EntityBase, Collidable {
         result.screenX = screenX;
         result.screenY = screenY;
 
-        System.out.println("EntityObstacle Created");
         return result;
     }
 
     @Override
     public boolean IsDone() {
-        return isInit;
+        return isDone;
     }
 
     @Override
     public void SetIsDone(boolean _isDone) {
-        isInit = _isDone;
+        isDone = _isDone;
     }
 
     @Override
@@ -66,7 +67,7 @@ public class EntityObstacle implements EntityBase, Collidable {
         screenWidth = ScreenConstants.GetScreenWidth(_view);
         screenHeight = ScreenConstants.GetScreenHeight(_view);
 
-        renderLayer = LayerConstants.GAMEOBJECTS_LAYER;
+        renderLayer = LayerConstants.BACKGROUNDGAMEOBJECTS_LAYER;
 
         isInit = true;
 
@@ -74,13 +75,14 @@ public class EntityObstacle implements EntityBase, Collidable {
 
     @Override
     public void Update(float _dt) {
-//        screenX += moveValue;
+        screenX += moveValue;
+
+        if (screenX < -bmp.getWidth() * scaleX) screenX = screenWidth + (bmp.getWidth() * scaleX);
     }
 
 
     @Override
     public void Render(Canvas _canvas) {
-        System.out.println("is rendering");
         float _x = screenX - 0.5f * (bmp.getWidth() * scaleX);
         float _y = screenY - 0.5f * (bmp.getHeight() * scaleY);
         // RECT

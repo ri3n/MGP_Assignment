@@ -1,5 +1,6 @@
 package com.example.mgp.GamePages;
 
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.view.SurfaceView;
 
@@ -19,6 +20,7 @@ import com.example.mgp.FPSCounter;
 import com.example.mgp.GameSystem;
 import com.example.mgp.LayerConstants;
 import com.example.mgp.R;
+import com.example.mgp.ResourceManager;
 import com.example.mgp.StateBase;
 // Created by TanSiewLan2020
 
@@ -55,10 +57,11 @@ public class MainGameSceneState implements StateBase {
     @Override
     public void OnEnter(SurfaceView _view)
     {
+        Bitmap playerbmp = ResourceManager.Instance.GetBitmap(R.drawable.stickman_sprite);
         // Example to include another Renderview for Pause Button
         Background = RenderSideScrollingBackground.Create(R.drawable.gamepage);
         Background.moveSpeed = 300;
-        player = EntityCharacter.Create(LayerConstants.GAMEOBJECTS_LAYER ,R.drawable.stickman_sprite,1,4,4,4,3,3);
+        player = EntityCharacter.Create(R.drawable.stickman_sprite,playerbmp.getWidth(),_view.getHeight()/2+50,1,4,4,4,3,3);
         PauseButton.Create();
         FPSText = RenderTextEntity.Create("FPS: ", 70, 35,80, true);
         WelcomeText = RenderTextEntity.Create("Welcome to KEYBOARD WARRIOR!", 70, 35, 160, true);
@@ -130,12 +133,13 @@ public class MainGameSceneState implements StateBase {
         }
         else Background.Direction = 0;
 
-        //Update moving entites by setting the move values
-        ScoreEntity.SetMoveValue(Background.moveValue);
-        portal_tapgame.SetMoveValue(Background.moveValue);
-        portal_obstaclegame.SetMoveValue(Background.moveValue);
-        house.SetMoveValue(Background.moveValue);
-
+        if (Background.isMoving) {
+            //Update moving entites by setting the move values
+            ScoreEntity.SetMoveValue(Background.moveValue);
+            portal_tapgame.SetMoveValue(Background.moveValue);
+            portal_obstaclegame.SetMoveValue(Background.moveValue);
+            house.SetMoveValue(Background.moveValue);
+        }
         //if (Collision.Quad(smurf.GetPosX(), smurf.GetPosY(), smurf.GetRadius() * 2, smurf.GetRadius() * 2, portal.GetPosX(), portal.GetPosY()))
         if (Collision.SphereToSphere(player.GetPosX(),player.GetPosY(),player.GetRadius() , portal_tapgame.GetPosX(), portal_tapgame.GetPosY(), portal_tapgame.GetRadius())) {
             enter_button.MakeVisible = true;

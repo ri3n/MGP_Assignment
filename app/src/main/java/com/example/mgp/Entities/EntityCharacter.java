@@ -26,7 +26,6 @@ public class EntityCharacter implements Collidable,EntityBase{
     //vector 2 class from ACG, PPHYs, go ahead!!
 
     private float xPos, yPos, xDir, yDir, lifeTime;
-    private float screenX, screenY;
     private boolean hasTouched = false; // Check for ontouch events
     private boolean isDone, isInit;
     private int renderLayer = LayerConstants.GAMEOBJECTS_LAYER;;
@@ -63,10 +62,7 @@ public class EntityCharacter implements Collidable,EntityBase{
         Random ranGen = new Random();
         //_view.getWidth(); -- will give the length of the view = surfaceview = screen
         // because we using a state, we created our own surfaceview = screen
-        // ranGen will produce random x values based on the view size
-        xPos = bmp.getWidth();
-        //yPos = ranGen.nextFloat() * _view.getHeight();
-        yPos = _view.getHeight() / 2 + 50;
+
         // Not used but u can use them if u want
         xDir = ranGen.nextFloat() * 100.0f - 50.0f;
         yDir = ranGen.nextFloat() * 100.0f - 50.0f;
@@ -137,11 +133,12 @@ public class EntityCharacter implements Collidable,EntityBase{
         return result;
     }
 
-    public static EntityCharacter Create ( int _layer,int bitmapID, int row, int col, int fps, int numSpriteGrids, int scaleX, int scaleY)
+    public static EntityCharacter Create (int bitmapID,int xPos, int yPos, int row, int col, int fps, int numSpriteGrids, int scaleX, int scaleY)
     {
         EntityCharacter result = Create();
-        result.SetRenderLayer(_layer);
         result.bitmapID = bitmapID;
+        result.SetPosX(xPos);
+        result.SetPosY(yPos);
         result.row = row;
         result.col = col;
         result.fps = fps;
@@ -169,6 +166,10 @@ public class EntityCharacter implements Collidable,EntityBase{
     public float GetPosY () {
         return yPos;
     }
+
+    public void SetPosX(float _xPos) {xPos = _xPos;}
+
+    public void SetPosY(float _yPos) {yPos = _yPos;}
 
     @Override
     public float GetRadius () {
