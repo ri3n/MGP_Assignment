@@ -81,7 +81,12 @@ public class PauseButton implements EntityBase{
 
                     // If just want a pause without the (popup dialog --> No done yet.)
                     // Method already written in your GameSystem class from Week 5
-                    GameSystem.Instance.SetIsPaused(!GameSystem.Instance.GetIsPaused());
+
+                    if (PauseConfirmDialogFragment.IsShown) return;
+
+                    PauseConfirmDialogFragment newPauseConfirm = new PauseConfirmDialogFragment();
+                    newPauseConfirm.show(Gamepage.Instance.getFragmentManager(), "PauseConfirm");
+
                 }
             }
         }

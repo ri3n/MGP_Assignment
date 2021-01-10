@@ -1,12 +1,15 @@
 package com.example.mgp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.Window;
 import android.view.WindowManager;
 
-public class Gamepage extends Activity {
+import androidx.fragment.app.FragmentActivity;
+
+public class Gamepage extends FragmentActivity {
     public static Gamepage Instance = null;
 
     @Override
@@ -35,4 +38,10 @@ public class Gamepage extends Activity {
         return true;
     }
 
+    public void GoToMainMenu()
+    {
+        Intent intent = new Intent();
+        intent.setClass(this,Mainmenu.class);
+        startActivity(intent);
+    }
 }
