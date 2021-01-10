@@ -1,12 +1,12 @@
 package com.example.mgp.GamePages;
 
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.view.SurfaceView;
 
 import com.example.mgp.Collision;
 import com.example.mgp.Entities.EnterButton;
 import com.example.mgp.Entities.EntityCharacter;
-import com.example.mgp.Entities.EntityHackerMan;
 import com.example.mgp.Entities.EntityHouse;
 import com.example.mgp.Entities.EntityManager;
 import com.example.mgp.Entities.EntityPortal;
@@ -18,10 +18,10 @@ import com.example.mgp.Entities.RenderTextEntity;
 import com.example.mgp.Entities.RightButton;
 import com.example.mgp.FPSCounter;
 import com.example.mgp.GameSystem;
+import com.example.mgp.LayerConstants;
 import com.example.mgp.R;
+import com.example.mgp.ResourceManager;
 import com.example.mgp.StateBase;
-
-import org.w3c.dom.Entity;
 // Created by TanSiewLan2020
 
 public class MainGameSceneState implements StateBase {
@@ -29,7 +29,8 @@ public class MainGameSceneState implements StateBase {
 
     //Entity holders
     EntitySmurf smurf;
-    EntityPortal portal;
+    EntityPortal portal_tapgame;
+    EntityPortal portal_obstaclegame;
     EntityCharacter player;
     EntityHouse house;
 
@@ -56,13 +57,16 @@ public class MainGameSceneState implements StateBase {
     @Override
     public void OnEnter(SurfaceView _view)
     {
+        Bitmap playerbmp = ResourceManager.Instance.GetBitmap(R.drawable.stickman_sprite);
         // Example to include another Renderview for Pause Button
         Background = RenderSideScrollingBackground.Create(R.drawable.gamepage);
-        player = EntityCharacter.Create();
+        Background.moveSpeed = 300;
+        player = EntityCharacter.Create(R.drawable.stickman_sprite,playerbmp.getWidth(),_view.getHeight()/2+50,1,4,4,4,3,3);
         PauseButton.Create();
         FPSText = RenderTextEntity.Create("FPS: ", 70, 35,80, true);
         WelcomeText = RenderTextEntity.Create("Welcome to KEYBOARD WARRIOR!", 70, 35, 160, true);
-        portal = EntityPortal.Create(3,3, _view.getWidth()/2, _view.getHeight()/2);
+        portal_tapgame = EntityPortal.Create(3,3, _view.getWidth() / 2, _view.getHeight()/2, R.drawable.portal_sprite,1,11,11,11);
+        portal_obstaclegame = EntityPortal.Create(3,3,_view.getWidth() - 150,_view.getHeight()/2,R.drawable.portal2_sprite,1,5,5,5);
         left_button = LeftButton.Create();
         right_button = RightButton.Create();
         enter_button = EnterButton.Create();
@@ -129,19 +133,25 @@ public class MainGameSceneState implements StateBase {
         }
         else Background.Direction = 0;
 
-        //Update moving entites by setting the move values
-        ScoreEntity.SetMoveValue(Background.moveValue);
-        portal.SetMoveValue(Background.moveValue);
-        house.SetMoveValue(Background.moveValue);
-
+        if (Background.isMoving) {
+            //Update moving entites by setting the move values
+            ScoreEntity.SetMoveValue(Background.moveValue);
+            portal_tapgame.SetMoveValue(Background.moveValue);
+            portal_obstaclegame.SetMoveValue(Background.moveValue);
+            house.SetMoveValue(Background.moveValue);
+        }
         //if (Collision.Quad(smurf.GetPosX(), smurf.GetPosY(), smurf.GetRadius() * 2, smurf.GetRadius() * 2, portal.GetPosX(), portal.GetPosY()))
-        if (Collision.SphereToSphere(player.GetPosX(),player.GetPosY(),player.GetRadius() ,portal.GetPosX(),portal.GetPosY(),portal.GetRadius())) {
+        if (Collision.SphereToSphere(player.GetPosX(),player.GetPosY(),player.GetRadius() , portal_tapgame.GetPosX(), portal_tapgame.GetPosY(), portal_tapgame.GetRadius())) {
             enter_button.MakeVisible = true;
             enter_button.nextScene = "MINIGAME_TAPGAME";
         }
         else if (Collision.SphereToSphere(player.GetPosX(),player.GetPosY(),player.GetRadius() ,house.GetPosX(),house.GetPosY(),house.GetRadius())) {
             enter_button.MakeVisible = true;
             enter_button.nextScene = "Mainmenu";
+        }
+        else if (Collision.SphereToSphere(player.GetPosX(),player.GetPosY(),player.GetRadius() ,portal_obstaclegame.GetPosX(),portal_obstaclegame.GetPosY(),portal_obstaclegame.GetRadius())) {
+            enter_button.MakeVisible = true;
+            enter_button.nextScene = "MINIGAME_OBSTACLEGAME";
         }
         else enter_button.MakeVisible = false;
 

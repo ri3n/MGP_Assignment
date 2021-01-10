@@ -22,6 +22,7 @@ public interface EntityBase
          ENT_RIGHTARROW,
          ENT_HACKERMAN,
          ENT_HOUSE,
+         ENT_OBSTACLE,
          ENT_DEFAULT
      }
 

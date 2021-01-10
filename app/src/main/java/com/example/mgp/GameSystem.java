@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.view.SurfaceView;
 
 import com.example.mgp.GamePages.MainGameSceneState;
+import com.example.mgp.GamePages.ObstacleGame;
 import com.example.mgp.GamePages.TapGame;
 import com.example.mgp.ActivityStates.Gamepage;
 import com.example.mgp.ActivityStates.Mainmenu;
@@ -39,6 +40,7 @@ public class GameSystem {
         StateManager.Instance.AddState(new InstructionSceneState());
         StateManager.Instance.AddState(new MainGameSceneState());
         StateManager.Instance.AddState(new TapGame());
+        StateManager.Instance.AddState(new ObstacleGame());
         //shared preference
         sharedPref = Gamepage.Instance.getSharedPreferences(SHARED_PREF_ID, 0);
     }

@@ -16,6 +16,7 @@ import com.example.mgp.TouchManager;
 import java.util.Random;
 
 public class EntityCharacter implements Collidable,EntityBase{
+    private int bitmapID;
     private Bitmap bmp = null; // Define image object name (bmp)
     private Sprite spritesheet = null;
     // Sprite class will take in a sprite sheet image
@@ -25,12 +26,12 @@ public class EntityCharacter implements Collidable,EntityBase{
     //vector 2 class from ACG, PPHYs, go ahead!!
 
     private float xPos, yPos, xDir, yDir, lifeTime;
-    private float screenX, screenY;
     private boolean hasTouched = false; // Check for ontouch events
     private boolean isDone, isInit;
     private int renderLayer = LayerConstants.GAMEOBJECTS_LAYER;;
     private float imgRadius = 0;
     private float imgOffset = 85;
+    private int row,col,fps;
     private int numSpriteGrids;
 
     private float scaleX,scaleY;
@@ -48,7 +49,7 @@ public class EntityCharacter implements Collidable,EntityBase{
 
     @Override
     public void Init(SurfaceView _view) {
-        bmp = ResourceManager.Instance.GetBitmap(R.drawable.stickman_sprite);
+        bmp = ResourceManager.Instance.GetBitmap(bitmapID);
 //      scaledbmpP = Bitmap.createScaledBitmap(bmpP, (int)(ScreenWidth)/12, (int)(ScreenHeight)/10, true);
 
         //Define which image / png u want to use for this entity
@@ -61,10 +62,7 @@ public class EntityCharacter implements Collidable,EntityBase{
         Random ranGen = new Random();
         //_view.getWidth(); -- will give the length of the view = surfaceview = screen
         // because we using a state, we created our own surfaceview = screen
-        // ranGen will produce random x values based on the view size
-        xPos = bmp.getWidth();
-        //yPos = ranGen.nextFloat() * _view.getHeight();
-        yPos = _view.getHeight() / 2 + 50;
+
         // Not used but u can use them if u want
         xDir = ranGen.nextFloat() * 100.0f - 50.0f;
         yDir = ranGen.nextFloat() * 100.0f - 50.0f;
@@ -72,10 +70,7 @@ public class EntityCharacter implements Collidable,EntityBase{
         ScreenWidth = ScreenConstants.GetScreenWidth(_view);
         ScreenHeight = ScreenConstants.GetScreenHeight(_view);
 
-        spritesheet = new Sprite(bmp, 1, 4, 4);
-        numSpriteGrids = 4;
-
-        scaleX = scaleY = 3;
+        spritesheet = new Sprite(bmp, row, col, fps);
 
         isInit = true;
     }
@@ -138,10 +133,18 @@ public class EntityCharacter implements Collidable,EntityBase{
         return result;
     }
 
-    public static EntityCharacter Create ( int _layer)
+    public static EntityCharacter Create (int bitmapID,int xPos, int yPos, int row, int col, int fps, int numSpriteGrids, int scaleX, int scaleY)
     {
         EntityCharacter result = Create();
-        result.SetRenderLayer(_layer);
+        result.bitmapID = bitmapID;
+        result.SetPosX(xPos);
+        result.SetPosY(yPos);
+        result.row = row;
+        result.col = col;
+        result.fps = fps;
+        result.numSpriteGrids = numSpriteGrids;
+        result.scaleX = scaleX;
+        result.scaleY = scaleY;
         return result;
     }
 
@@ -163,6 +166,10 @@ public class EntityCharacter implements Collidable,EntityBase{
     public float GetPosY () {
         return yPos;
     }
+
+    public void SetPosX(float _xPos) {xPos = _xPos;}
+
+    public void SetPosY(float _yPos) {yPos = _yPos;}
 
     @Override
     public float GetRadius () {
