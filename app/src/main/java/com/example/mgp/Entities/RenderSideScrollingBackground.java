@@ -24,6 +24,7 @@ public class RenderSideScrollingBackground implements EntityBase{
 
     public int Direction;
 
+    public float moveSpeed;
     public float moveValue;
 
     public boolean isMoving = true;
@@ -40,7 +41,7 @@ public class RenderSideScrollingBackground implements EntityBase{
     {
         RenderSideScrollingBackground result = Create();
         result.bitmapID = bitmapID;
-        result.SetRenderLayer(0);
+        result.SetRenderLayer(LayerConstants.BACKGROUND_LAYER);
         return result;
     }
     @Override
@@ -84,7 +85,7 @@ public class RenderSideScrollingBackground implements EntityBase{
     @Override
     public void Update(float _dt) {
         if (isMoving) {
-            moveValue = _dt * 300 * Direction;
+            moveValue = _dt * moveSpeed * Direction;
 
             dstLeft += (int) moveValue;
             dstRight += (int) moveValue;

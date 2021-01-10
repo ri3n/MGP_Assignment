@@ -32,7 +32,7 @@ public class EntityHouse implements EntityBase, Collidable {
     public static EntityHouse Create ()
     {
         EntityHouse result = new EntityHouse();
-        EntityManager.Instance.AddEntity(result, ENTITY_TYPE.ENT_PORTAL);
+        EntityManager.Instance.AddEntity(result, ENTITY_TYPE.ENT_HOUSE);
 
         return result;
     }
@@ -60,7 +60,7 @@ public class EntityHouse implements EntityBase, Collidable {
         bmp = ResourceManager.Instance.GetBitmap(bitmapID);
         bmp = Bitmap.createScaledBitmap(bmp,ScreenConstants.GetQuadWidth(_view), ScreenConstants.GetQuadHeight(_view),true);
 
-        screenX = 10;
+        screenX = bmp.getWidth()/2;
         screenY = ScreenConstants.GetScreenHeight(_view) / 2;
 
         scaleX = scaleY = 1;
