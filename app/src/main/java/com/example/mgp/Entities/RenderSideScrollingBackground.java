@@ -41,7 +41,7 @@ public class RenderSideScrollingBackground implements EntityBase{
     {
         RenderSideScrollingBackground result = Create();
         result.bitmapID = bitmapID;
-        result.SetRenderLayer(0);
+        result.SetRenderLayer(LayerConstants.BACKGROUND_LAYER);
         return result;
     }
     @Override

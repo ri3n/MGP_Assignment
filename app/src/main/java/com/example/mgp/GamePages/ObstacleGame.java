@@ -6,12 +6,14 @@ import android.view.SurfaceView;
 import com.example.mgp.*;
 import com.example.mgp.Entities.EntityCharacter;
 import com.example.mgp.Entities.EntityManager;
+import com.example.mgp.Entities.EntityObstacle;
 import com.example.mgp.Entities.RenderSideScrollingBackground;
 
 public class ObstacleGame implements StateBase {
 
     EntityCharacter player;
     RenderSideScrollingBackground background;
+    EntityObstacle obstacle;
 
     boolean KeyDownPreviously;
 
@@ -25,7 +27,7 @@ public class ObstacleGame implements StateBase {
         player = EntityCharacter.Create(LayerConstants.GAMEOBJECTS_LAYER,R.drawable.stickman_run_sprite,1,7,7,7,3,3);
         background = RenderSideScrollingBackground.Create(R.drawable.gamepage);
         background.moveSpeed = -500;
-        KeyDownPreviously = false;
+        obstacle = EntityObstacle.Create(R.drawable.obstacle_virus,ScreenConstants.GetScreenWidth(_view)/2, ScreenConstants.GetScreenHeight(_view)/2,15,15);
     }
 
     @Override
@@ -40,6 +42,9 @@ public class ObstacleGame implements StateBase {
     @Override
     public void Update(float _dt) {
         EntityManager.Instance.Update(_dt);
+
+        //obstacle.SetMoveValue(background.moveValue);
+
         if(TouchManager.Instance.IsPress())
         {
             System.out.println("is down");

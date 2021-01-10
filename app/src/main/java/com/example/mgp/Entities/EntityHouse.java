@@ -32,7 +32,7 @@ public class EntityHouse implements EntityBase, Collidable {
     public static EntityHouse Create ()
     {
         EntityHouse result = new EntityHouse();
-        EntityManager.Instance.AddEntity(result, ENTITY_TYPE.ENT_PORTAL);
+        EntityManager.Instance.AddEntity(result, ENTITY_TYPE.ENT_HOUSE);
 
         return result;
     }
