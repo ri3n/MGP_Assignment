@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.view.SurfaceView;
 
+import com.example.mgp.AudioManager;
 import com.example.mgp.Collidable;
 import com.example.mgp.Collision;
 import com.example.mgp.LayerConstants;
@@ -95,6 +96,9 @@ public class EntityHackerMan implements EntityBase, Collidable {
                 isDone = true;
                 scored = true;
                 //lifeTime = 5.0f;
+
+                AudioManager.Instance.PlayAudio(R.raw.damage);
+
             }
 
         }

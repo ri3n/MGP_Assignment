@@ -88,6 +88,10 @@ public class LeftButton implements EntityBase{
                         1.f,1.f,(float)xPos,(float)yPos,(float)scaledbmpP.getWidth(),(float)scaledbmpP.getHeight()))
                 {
                     pressed = true;
+                    if(!AudioManager.Instance.IsPlaying(R.raw.walk)){
+                        AudioManager.Instance.PlayAudio(R.raw.walk);
+                        //https://freesound.org/s/500727/
+                    }
                 }
             }
         }
