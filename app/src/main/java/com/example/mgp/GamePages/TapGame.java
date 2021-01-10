@@ -7,6 +7,7 @@ import com.example.mgp.*;
 import com.example.mgp.Entities.EntityHackerMan;
 import com.example.mgp.Entities.EntityManager;
 import com.example.mgp.Entities.EntitySmurf;
+import com.example.mgp.Entities.PauseButton;
 import com.example.mgp.Entities.RenderBackground;
 import com.example.mgp.Entities.RenderTextEntity;
 
@@ -44,11 +45,12 @@ public class TapGame implements StateBase {
         FPSText = RenderTextEntity.Create("FPS: ", 70, 35 , 80, true);
         ScoreText = RenderTextEntity.Create("Score: ", 70 , 1000 , 80, true);
         TimerText = RenderTextEntity.Create("" , 70 , ScreenWidth/2 - 2 , ScreenHeight, true);
+        PauseButton.Create();
         //textRender.RenderFPS(true);
         //textRender.RenderScore(true);
         random = new Random();
         GameTime = 60.f;
-        CDTimer = 5.f;
+        CDTimer = random.nextFloat();
         GameSystem.Instance.SaveEditBegin();
 
     }
@@ -65,8 +67,7 @@ public class TapGame implements StateBase {
     @Override
     public void Update(float _dt)
     {
-        if(hackerman == null || hackerman.IsDone()
-            ){
+        if(hackerman == null || hackerman.IsDone() ){
             //hackerman = EntityHackerMan.Create();
             CDTimer -= _dt;
         }
@@ -93,7 +94,10 @@ public class TapGame implements StateBase {
         //ScoreText.text = "Score: " + hackerman.GetScore();
         ScoreText.text = "Score: " + String.valueOf(score);
 
-        GameSystem.Instance.SetIntInSave("Score", hackerman.GetScore());
+        if(GameSystem.Instance.GetIntFromSave("Score") < score)
+        {
+            GameSystem.Instance.SetIntInSave("Score", score);
+        }
 
         //update game time
         DecimalFormat numberFormat = new DecimalFormat("#.#");

@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.view.SurfaceView;
 
+import com.example.mgp.AudioManager;
 import com.example.mgp.Collidable;
 import com.example.mgp.Collision;
 import com.example.mgp.LayerConstants;
@@ -55,8 +56,8 @@ public class EntityHackerMan implements EntityBase, Collidable {
         // For me: my smurf will be render at random position on the screen
         // then when the user touch the smurf on the screen, new smurfs will be render at
         // another position.
-        lifeTime = 10.0f;
         ranGen = new Random();
+        lifeTime = ranGen.nextFloat();
         //_view.getWidth(); -- will give the length of the view = surfaceview = screen
         // because we using a state, we created our own surfaceview = screen
         // ranGen will produce random x values based on the view size
@@ -95,6 +96,9 @@ public class EntityHackerMan implements EntityBase, Collidable {
                 isDone = true;
                 scored = true;
                 //lifeTime = 5.0f;
+
+                AudioManager.Instance.PlayAudio(R.raw.damage);
+
             }
 
         }
@@ -189,4 +193,5 @@ public class EntityHackerMan implements EntityBase, Collidable {
 
     public boolean GetScored() { return scored; }
     public void SetScored(boolean _scored) { scored = _scored; }
+
 }
