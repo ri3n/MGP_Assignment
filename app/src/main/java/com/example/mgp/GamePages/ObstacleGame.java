@@ -74,7 +74,7 @@ public class ObstacleGame implements StateBase {
         GameOver = false;
         GameOverTimer = 5;
         GameText = RenderTextEntity.Create("READY?",250,_view.getWidth()/2 - (125*3),_view.getHeight()/4,true);
-        curr_GameState = GAME_STATE.GAME;
+        curr_GameState = GAME_STATE.READY;
         textDisplayTimer = 3;
         survivalTimer = 0;
     }
