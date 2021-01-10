@@ -52,7 +52,7 @@ public class TapGame implements StateBase {
         GameTime = 60.f;
         CDTimer = random.nextFloat();
         GameSystem.Instance.SaveEditBegin();
-
+        score = 0;
     }
 
     @Override
