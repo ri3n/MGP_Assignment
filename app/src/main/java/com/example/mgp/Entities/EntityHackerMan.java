@@ -33,7 +33,7 @@ public class EntityHackerMan implements EntityBase, Collidable {
     private int ScreenWidth, ScreenHeight;
     Random ranGen;
     int score;
-    boolean scored, died;
+    boolean scored;
 
     @Override
     public boolean IsDone() {
@@ -75,7 +75,6 @@ public class EntityHackerMan implements EntityBase, Collidable {
 
         score = 0;
         scored = false;
-        died = false;
         isInit = true;
     }
 
@@ -113,7 +112,6 @@ public class EntityHackerMan implements EntityBase, Collidable {
         {
             xPos=ranGen.nextFloat() * ScreenWidth;
             yPos=ranGen.nextFloat() * ScreenHeight;
-            died = true;
             isDone = true;
             //lifeTime = 5.0f;
         }
@@ -196,6 +194,4 @@ public class EntityHackerMan implements EntityBase, Collidable {
     public boolean GetScored() { return scored; }
     public void SetScored(boolean _scored) { scored = _scored; }
 
-    public boolean GetDied() { return died; }
-    public void SetDied(boolean _died) { scored = _died; }
 }

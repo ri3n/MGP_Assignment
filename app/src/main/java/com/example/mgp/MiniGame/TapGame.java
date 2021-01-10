@@ -51,7 +51,6 @@ public class TapGame implements StateBase {
         random = new Random();
         GameTime = 60.f;
         CDTimer = random.nextFloat();
-        life = 3;
         GameSystem.Instance.SaveEditBegin();
 
     }
@@ -85,11 +84,6 @@ public class TapGame implements StateBase {
             hackerman.SetScored(false);
         }
 
-        if(hackerman.GetDied()){
-            life--;
-            hackerman.SetDied(false);
-        }
-
         GameTime -= _dt;
 
         //FPSText Updates
@@ -111,7 +105,7 @@ public class TapGame implements StateBase {
         String time = numberFormat.format(GameTime);
         TimerText.text = time;
 
-        if(GameTime<=0.f||life==0)
+        if(GameTime<=0.f)
         {
             StateManager.Instance.ChangeState("MainGame");
         }
