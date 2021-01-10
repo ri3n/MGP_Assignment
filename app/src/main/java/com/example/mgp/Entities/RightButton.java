@@ -12,7 +12,10 @@ import com.example.mgp.ResourceManager;
 import com.example.mgp.ScreenConstants;
 import com.example.mgp.TouchManager;
 import com.example.mgp.*;
-
+/*
+entity: right button
+Created by: Kai Yang
+ */
 
 public class RightButton implements EntityBase {
 

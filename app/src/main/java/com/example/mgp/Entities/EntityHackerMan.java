@@ -15,7 +15,10 @@ import com.example.mgp.Sprite;
 import com.example.mgp.TouchManager;
 
 import java.util.Random;
-
+/*
+Entity: hacker
+Created by: Kai Yang
+ */
 public class EntityHackerMan implements EntityBase, Collidable {
 
 

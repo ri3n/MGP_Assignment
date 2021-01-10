@@ -13,6 +13,9 @@ import com.example.mgp.Entities.RenderTextEntity;
 
 import java.text.DecimalFormat;
 import java.util.Random;
+/*Scene: Tap Game
+  Created by: Kai Yang
+*/
 
 public class TapGame implements StateBase {
     RenderBackground Background;
@@ -49,8 +52,7 @@ public class TapGame implements StateBase {
         TimerText = RenderTextEntity.Create("" , 70 , ScreenWidth/2 - 2 , ScreenHeight, true);
         LifeText = RenderTextEntity.Create("life: ", 70, ScreenWidth / 50 , ScreenHeight , true);
         PauseButton.Create();
-        //textRender.RenderFPS(true);
-        //textRender.RenderScore(true);
+
         random = new Random();
         GameTime = 60.f;
         CDTimer = random.nextFloat();

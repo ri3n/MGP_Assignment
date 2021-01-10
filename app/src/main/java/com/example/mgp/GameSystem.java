@@ -8,6 +8,8 @@ import com.example.mgp.GamePages.TapGame;
 import com.example.mgp.ActivityStates.Gamepage;
 import com.example.mgp.ActivityStates.Mainmenu;
 
+import java.util.Set;
+
 // Created by TanSiewLan2020
 
 public class GameSystem {
@@ -71,6 +73,10 @@ public class GameSystem {
     }
 
     public int GetIntFromSave(String _key){
-        return sharedPref.getInt(_key,-1);
+        return sharedPref.getInt(_key, -1);
+    }
+
+    public void SetString(String _key, Set<String> set){
+        editor.putStringSet("key", set);
     }
 }

@@ -12,7 +12,10 @@ import com.example.mgp.ResourceManager;
 import com.example.mgp.ScreenConstants;
 import com.example.mgp.TouchManager;
 import com.example.mgp.*;
-
+/*
+entity: left button
+Created by: Kai Yang
+ */
 public class LeftButton implements EntityBase{
 
     private boolean isDone = false;
