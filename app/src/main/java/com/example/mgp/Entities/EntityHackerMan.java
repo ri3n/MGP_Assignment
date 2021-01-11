@@ -99,7 +99,6 @@ public class EntityHackerMan implements EntityBase, Collidable {
                 score++;
                 isDone = true;
                 scored = true;
-                //lifeTime = 5.0f;
 
                 AudioManager.Instance.PlayAudio(R.raw.damage);
 

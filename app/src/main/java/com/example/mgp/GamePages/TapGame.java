@@ -20,7 +20,6 @@ import java.util.Random;
 public class TapGame implements StateBase {
     RenderBackground Background;
     EntityHackerMan hackerman;
-    EntitySmurf smurf;
     RenderTextEntity FPSText;
     RenderTextEntity ScoreText;
     RenderTextEntity TimerText;
@@ -73,7 +72,7 @@ public class TapGame implements StateBase {
     @Override
     public void Update(float _dt)
     {
-        if(hackerman == null || hackerman.IsDone() ){
+        if(hackerman == null || hackerman.IsDone() ) {
             CDTimer -= _dt;
         }
 
@@ -94,7 +93,10 @@ public class TapGame implements StateBase {
             hackerman.SetDied();
         }
 
-        GameTime -= _dt;
+        if(GameSystem.Instance.GetIsPaused()==false)
+        {
+            GameTime -= _dt;
+        }
 
         //FPSText Updates
         FPSCounter.Instance.Update(_dt);

@@ -46,11 +46,13 @@ public class PauseConfirmDialogFragment extends DialogFragment {
     @Override
     public void onCancel(DialogInterface dialog) {
         IsShown = false;
+        GameSystem.Instance.SetIsPaused(false);
     }
 
     @Override
     public void onDismiss(DialogInterface dialog) {
         IsShown = false;
+        GameSystem.Instance.SetIsPaused(false);
     }
 
 }

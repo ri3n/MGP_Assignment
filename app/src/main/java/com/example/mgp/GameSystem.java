@@ -77,8 +77,4 @@ public class GameSystem {
     public int GetIntFromSave(String _key){
         return sharedPref.getInt(_key, -1);
     }
-
-    public void SetString(String _key, Set<String> set){
-        editor.putStringSet("key", set);
-    }
 }
