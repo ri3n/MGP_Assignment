@@ -81,7 +81,9 @@ public class TapGame implements StateBase {
             CDTimer = random.nextFloat();
         }
 
-        EntityManager.Instance.Update(_dt);
+        if(hackerman != null)
+            EntityManager.Instance.Update(_dt);
+
 
         if(hackerman.GetScored()==true){
             score++;
