@@ -1,3 +1,8 @@
+/*
+Scene: Obstacle Game
+Created by: Ryan Ang
+ */
+
 package com.example.mgp.GamePages;
 
 import android.graphics.Bitmap;
@@ -9,12 +14,24 @@ import com.example.mgp.Entities.EntityCharacter;
 import com.example.mgp.Entities.EntityManager;
 import com.example.mgp.Entities.EntityObstacle;
 import com.example.mgp.Entities.RenderSideScrollingBackground;
+import com.example.mgp.Entities.RenderTextEntity;
 
 public class ObstacleGame implements StateBase {
 
+    enum GAME_STATE
+    {
+        READY,
+        START,
+        GAME,
+        END,
+        DEFAULT
+    }
+
+    //Entity Variables
     EntityCharacter player;
     RenderSideScrollingBackground background;
     EntityObstacle obstacle;
+    RenderTextEntity GameText; //Text for Ready, Start and Score
 
     //Physics Variables
     private boolean player_IsInAir;
@@ -23,6 +40,15 @@ public class ObstacleGame implements StateBase {
     private float netForce;
     private float mass;
     private float simulation_speed;
+
+    private float textDisplayTimer;
+
+    //Game Variables
+    private boolean GameOver = false;
+    private int score;
+    private float GameOverTimer;
+    GAME_STATE curr_GameState;
+    private float survivalTimer;
 
     @Override
     public String GetName() {
@@ -34,19 +60,28 @@ public class ObstacleGame implements StateBase {
         // ranGen will produce random x values based on the view size
 
         Bitmap playerbmp = ResourceManager.Instance.GetBitmap(R.drawable.stickman_run_sprite);
-        GROUND_LEVEL = _view.getHeight() - playerbmp.getHeight()*2;
-        player = EntityCharacter.Create(R.drawable.stickman_run_sprite,playerbmp.getWidth(),(int)GROUND_LEVEL,1,7,7,7,3,3);
+        Bitmap virusbmp = ResourceManager.Instance.GetBitmap(R.drawable.obstacle_virus);
+        GROUND_LEVEL = _view.getHeight() - playerbmp.getHeight()*3;
+        player = EntityCharacter.Create(R.drawable.stickman_run_sprite,playerbmp.getWidth()/3,(int)GROUND_LEVEL,1,7,7,7,5,5);
         background = RenderSideScrollingBackground.Create(R.drawable.gamepage);
         background.moveSpeed = -500;
-        obstacle = EntityObstacle.Create(R.drawable.obstacle_virus,ScreenConstants.GetScreenWidth(_view)/2, (int)GROUND_LEVEL,1,1);
+        obstacle = EntityObstacle.Create(R.drawable.obstacle_virus,ScreenConstants.GetScreenWidth(_view) + virusbmp.getWidth(), (int)GROUND_LEVEL + 75,1,1);
         player_IsInAir = false;
         Gravity = -9.8f;
         mass = 1;
-        simulation_speed = 5;
+        simulation_speed = 4;
+        score = 0;
+        GameOver = false;
+        GameOverTimer = 5;
+        GameText = RenderTextEntity.Create("READY?",250,_view.getWidth()/2 - (125*3),_view.getHeight()/4,true);
+        curr_GameState = GAME_STATE.READY;
+        textDisplayTimer = 3;
+        survivalTimer = 0;
     }
 
     @Override
     public void OnExit() {
+        EntityManager.Instance.Clean();
     }
 
     @Override
@@ -58,38 +93,81 @@ public class ObstacleGame implements StateBase {
     public void Update(float _dt) {
         EntityManager.Instance.Update(_dt);
 
-        if (background.isMoving)
+        switch(curr_GameState)
         {
-            obstacle.SetMoveValue(background.moveValue);
-        }
-        else
-        {
-            obstacle.SetMoveValue(0);
-        }
+            case READY:
+                GameText.text = "READY?";
+                textDisplayTimer -= _dt;
+                if (textDisplayTimer <= 0.f)
+                {
+                    curr_GameState = GAME_STATE.START;
+                    textDisplayTimer = 1;
+                }
+                break;
+            case START:
+                GameText.text = "START!";
+                textDisplayTimer -= _dt;
+                if (textDisplayTimer <= 0.f)
+                    curr_GameState = GAME_STATE.GAME;
+                break;
+            case GAME:
 
-        if(TouchManager.Instance.IsPress())
-        {
-            //Jump
-            Jump();
-        }
-        if (Collision.Quad(player.GetPosX(),player.GetPosY(),player.GetRadius(),player.GetRadius(),obstacle.GetPosX(),obstacle.GetPosY(),obstacle.GetRadius(),obstacle.GetRadius()))
-        {
-            background.isMoving = false;
-        }
-        else background.isMoving = true;
+                //Background Entity updates
+                if (background.isMoving)
+                    obstacle.SetMoveValue(background.moveValue);
+                else
+                    obstacle.SetMoveValue(0);
 
-        //If player_IsJumping == true, then use netForce and set player.screenY to physics
-        if (player_IsInAir)
-        {
-            netForce += Gravity * simulation_speed;
-            float acceleration = netForce / mass;
-            float newY = player.GetPosY() - (acceleration * _dt);
-            player.SetPosY(newY);
-            if (player.GetPosY() >= GROUND_LEVEL)
-            {
-                player_IsInAir = false;
-                player.SetPosY(GROUND_LEVEL);
-            }
+                //Jump Updates
+                if(TouchManager.Instance.IsPress()) //Jump
+                    Jump();
+
+                //If player_IsJumping == true, then use netForce and set player.screenY to physics
+                if (player_IsInAir)
+                {
+                    netForce += Gravity * simulation_speed;
+                    float acceleration = netForce / mass;
+                    float newY = player.GetPosY() - (acceleration * _dt);
+                    player.SetPosY(newY);
+                    //If player is lower than ground level(since Y is inverted)
+                    if (player.GetPosY() >= GROUND_LEVEL)
+                    {
+                        player_IsInAir = false;
+                        player.SetPosY(GROUND_LEVEL);
+                    }
+                }
+                //Collision Updates
+                if (Collision.Quad(player.GetPosX(),player.GetPosY(),player.GetRadius(),player.GetRadius(),obstacle.GetPosX(),obstacle.GetPosY(),obstacle.GetRadius(),obstacle.GetRadius()))
+                {
+                    background.isMoving = false;
+                    curr_GameState = GAME_STATE.END;
+                }
+                else background.isMoving = true;
+
+                //Score management
+                survivalTimer += _dt;
+                if ( (int)survivalTimer % 3 == 0 && (int)survivalTimer != 0)
+                {
+                    ++score;
+                    survivalTimer = 0;
+                }
+
+                GameText.text = String.valueOf(score);
+
+                break;
+            case END:
+                background.isMoving = false;
+                obstacle.SetMoveValue(0);
+                GameText.text = "GAME OVER!";
+                GameOverTimer -= _dt;
+                if (GameOverTimer <= 0)
+                {
+                    StateManager.Instance.ChangeState("MainGame");
+                }
+                break;
+            default:
+                break;
+
         }
 
     }
