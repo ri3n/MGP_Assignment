@@ -181,6 +181,8 @@ public class RenderTextEntity implements EntityBase{
         this.moveValue = moveValue;
     }
 
+    public void SetxPos(int _xPos) {this.screenX = _xPos;}
+    public void SetyPos(int _yPos) {screenY = _yPos;}
 }
 
 // Allows you to draw a box or rectangle, can be used to create a health bar

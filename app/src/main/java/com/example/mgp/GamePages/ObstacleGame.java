@@ -40,7 +40,6 @@ public class ObstacleGame implements StateBase {
     private float netForce;
     private float mass;
     private float simulation_speed;
-
     private float textDisplayTimer;
 
     //Game Variables
@@ -49,6 +48,10 @@ public class ObstacleGame implements StateBase {
     private float GameOverTimer;
     GAME_STATE curr_GameState;
     private float survivalTimer;
+    private float totalElapsedTime;
+    private boolean HasIncreased;
+
+    private int screenWidth,screenHeight;
 
     @Override
     public String GetName() {
@@ -72,11 +75,15 @@ public class ObstacleGame implements StateBase {
         simulation_speed = 4;
         score = 0;
         GameOver = false;
-        GameOverTimer = 5;
+        GameOverTimer = 3;
         GameText = RenderTextEntity.Create("READY?",250,_view.getWidth()/2 - (125*3),_view.getHeight()/4,true);
         curr_GameState = GAME_STATE.READY;
         textDisplayTimer = 3;
         survivalTimer = 0;
+        screenHeight = ScreenConstants.GetScreenHeight(_view);
+        screenWidth = ScreenConstants.GetScreenWidth(_view);
+        totalElapsedTime = 0;
+        HasIncreased = false;
     }
 
     @Override
@@ -111,12 +118,20 @@ public class ObstacleGame implements StateBase {
                     curr_GameState = GAME_STATE.GAME;
                 break;
             case GAME:
-
                 //Background Entity updates
                 if (background.isMoving)
                     obstacle.SetMoveValue(background.moveValue);
                 else
                     obstacle.SetMoveValue(0);
+
+                totalElapsedTime += _dt;
+                if ((int)totalElapsedTime % 10 == 0 && totalElapsedTime >= 1 && !HasIncreased)
+                {
+                    background.moveSpeed -= 25;
+                    HasIncreased = true;
+                    System.out.println("Backgorund Speed: " + background.moveSpeed);
+                }
+                else if ((int)totalElapsedTime % 10 != 0) HasIncreased = false;
 
                 //Jump Updates
                 if(TouchManager.Instance.IsPress()) //Jump
@@ -128,6 +143,7 @@ public class ObstacleGame implements StateBase {
                     netForce += Gravity * simulation_speed;
                     float acceleration = netForce / mass;
                     float newY = player.GetPosY() - (acceleration * _dt);
+                    if (newY <= player.GetRadius()) newY = player.GetRadius();
                     player.SetPosY(newY);
                     //If player is lower than ground level(since Y is inverted)
                     if (player.GetPosY() >= GROUND_LEVEL)
@@ -146,19 +162,21 @@ public class ObstacleGame implements StateBase {
 
                 //Score management
                 survivalTimer += _dt;
-                if ( (int)survivalTimer % 3 == 0 && (int)survivalTimer != 0)
+                if ( (int)survivalTimer % 5 == 0 && (int)survivalTimer != 0)
                 {
                     ++score;
                     survivalTimer = 0;
                 }
 
                 GameText.text = String.valueOf(score);
-
+                GameText.SetxPos(screenWidth / 2);
                 break;
+
             case END:
                 background.isMoving = false;
                 obstacle.SetMoveValue(0);
                 GameText.text = "GAME OVER!";
+                GameText.SetxPos(screenWidth / 2 - (5 * 125));
                 GameOverTimer -= _dt;
                 if (GameOverTimer <= 0)
                 {
