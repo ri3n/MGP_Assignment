@@ -129,8 +129,6 @@ public class Mainmenu extends Activity implements OnClickListener, StateBase
             intent.setClass(this, Splashpage.class); //Set the intent right
             StateManager.Instance.ChangeState("Default"); // Default is like a loading page
 
-            //Transit the screen
-            startActivity(intent);
         }
 
         else if (v == btn_options)
@@ -138,7 +136,6 @@ public class Mainmenu extends Activity implements OnClickListener, StateBase
             intent.setClass(this,Optionspage.class);
             intent.putExtra("prevPage", 1);
 
-            //Transit the screen
         }
 
         else if (v == btn_fb)
