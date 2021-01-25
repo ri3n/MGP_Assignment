@@ -7,12 +7,12 @@
 
     <Button
         android:id="@+id/btn_start"
-        android:layout_width="228dp"
-        android:layout_height="126dp"
+        android:layout_width="183dp"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/btn_options"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="113dp"
-        android:layout_marginEnd="257dp"
+        android:layout_marginTop="155dp"
+        android:layout_marginEnd="-196dp"
         android:background="@drawable/button"
         android:text="START"
         android:textColor="#bdfcf2"
@@ -20,14 +20,25 @@
 
     <Button
         android:id="@+id/btn_options"
-        android:layout_width="228dp"
-        android:layout_height="126dp"
+        android:layout_width="183dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="259dp"
-        android:layout_marginEnd="256dp"
+        android:layout_marginStart="97dp"
+        android:layout_marginTop="152dp"
+        android:layout_marginEnd="184dp"
         android:background="@drawable/button"
         android:text="OPTIONS"
         android:textColor="#bdfcf2"
-        android:textSize="36dp" />
+        android:textSize="30dp" />
+
+    <Button
+        android:id="@+id/btn_fb"
+        android:layout_width="166dp"
+        android:layout_height="109dp"
+        android:layout_alignEnd="@+id/btn_start"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="97dp"
+        android:layout_marginTop="150dp"
+        android:layout_marginEnd="-198dp"
+        android:background="@drawable/com_facebook_button_icon" />
 </RelativeLayout>
