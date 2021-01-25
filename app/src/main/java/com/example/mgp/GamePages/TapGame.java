@@ -72,17 +72,18 @@ public class TapGame implements StateBase {
     @Override
     public void Update(float _dt)
     {
-        if(hackerman == null || hackerman.IsDone() ) {
+        if(hackerman.GetRespawn()) {
             CDTimer -= _dt;
         }
 
         if(CDTimer<=0){
-            hackerman = EntityHackerMan.Create();
+            hackerman.SetRender(true);
+            hackerman.SetRespawn(false);
+            hackerman.SetPos();
             CDTimer = random.nextFloat();
         }
 
-        if(hackerman != null)
-            EntityManager.Instance.Update(_dt);
+        EntityManager.Instance.Update(_dt);
 
 
         if(hackerman.GetScored()==true){

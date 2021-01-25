@@ -35,8 +35,7 @@ public class EntityHackerMan implements EntityBase, Collidable {
     private int renderLayer = LayerConstants.GAMEOBJECTS_LAYER;
     private int ScreenWidth, ScreenHeight;
     Random ranGen;
-    int score;
-    boolean scored, died;
+    boolean scored, died, render,respawn;
 
     @Override
     public boolean IsDone() {
@@ -76,34 +75,35 @@ public class EntityHackerMan implements EntityBase, Collidable {
 
         bmp = Bitmap.createScaledBitmap(bmp, ScreenConstants.GetQuadWidth(_view), ScreenConstants.GetQuadHeight(_view), true);
 
-        score = 0;
         scored = false;
         died = false;
+        render = true;
+        respawn = false;
         isInit = true;
     }
 
     @Override
     public void Update(float _dt) {
+        if(render == true) {
+            if (TouchManager.Instance.IsPress()) {
+                // 0.0f, xPos, yPos, imgRadius ---> Checking collision of finger w the image
 
-        if (TouchManager.Instance.IsPress()) {
-            // 0.0f, xPos, yPos, imgRadius ---> Checking collision of finger w the image
-
-            if (Collision.SphereToSphere(TouchManager.Instance.GetPosX(), TouchManager.Instance.GetPosY(), 0.0f, xPos, yPos,bmp.getWidth())) {
-                // Collided!
+                if (Collision.SphereToSphere(TouchManager.Instance.GetPosX(), TouchManager.Instance.GetPosY(), 0.0f, xPos, yPos, bmp.getWidth())) {
+                    // Collided!
 
 //                hasTouched = true;
 
-                xPos=ranGen.nextFloat() * ScreenWidth;
-                yPos=ranGen.nextFloat() * ScreenHeight;
+                    xPos = ranGen.nextFloat() * ScreenWidth;
+                    yPos = ranGen.nextFloat() * ScreenHeight;
 
-                score++;
-                isDone = true;
-                scored = true;
+                    respawn = true;
+                    scored = true;
 
-                AudioManager.Instance.PlayAudio(R.raw.damage);
+                    AudioManager.Instance.PlayAudio(R.raw.damage);
+
+                }
 
             }
-
         }
 
         // Update will pass the delta time in for the animation to happen
@@ -113,11 +113,9 @@ public class EntityHackerMan implements EntityBase, Collidable {
         lifeTime -= _dt;
         if (lifeTime < 0.0f)
         {
-            xPos=ranGen.nextFloat() * ScreenWidth;
-            yPos=ranGen.nextFloat() * ScreenHeight;
             died = true;
-            isDone = true;
-            //lifeTime = 5.0f;
+            respawn = true;
+            lifeTime = ranGen.nextFloat() * 5;
         }
 
     }
@@ -125,9 +123,10 @@ public class EntityHackerMan implements EntityBase, Collidable {
     // Render
     @Override
     public void Render(Canvas _canvas) {
-        // Our basic rendering with image centered
-        _canvas.drawBitmap(bmp, xPos - bmp.getWidth() * 0.5f, yPos - bmp.getHeight() * 0.5f, null);
-
+        if(render == true){
+            // Our basic rendering with image centered
+            _canvas.drawBitmap(bmp, xPos - bmp.getWidth() * 0.5f, yPos - bmp.getHeight() * 0.5f, null);
+        }
         // This is for our sprite animation!
         //spritesheet.Render(_canvas, (int) xPos, (int) yPos, (int) scaleX, (int) scaleY);
     }
@@ -191,14 +190,19 @@ public class EntityHackerMan implements EntityBase, Collidable {
         }
     }
 
-    public int GetScore(){
-        return score;
-    }
-
     public boolean GetScored() { return scored; }
     public void SetScored(boolean _scored) { scored = _scored; }
 
     public boolean GetDied() { return died; }
     public void SetDied() { died = false; }
 
+    public void SetRender(boolean _render){render = _render; }
+
+    public void SetRespawn(boolean _respawn){ respawn =  _respawn; }
+    public boolean GetRespawn(){return respawn;}
+
+    public void SetPos(){
+        xPos=ranGen.nextFloat() * ScreenWidth;
+        yPos=ranGen.nextFloat() * ScreenHeight;
+    }
 }
