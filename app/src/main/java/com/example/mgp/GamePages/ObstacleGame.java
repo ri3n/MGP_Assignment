@@ -14,9 +14,13 @@ import com.example.mgp.Entities.EntityCharacter;
 import com.example.mgp.Entities.EntityManager;
 import com.example.mgp.Entities.EntityObstacle;
 import com.example.mgp.Entities.EntityPowerUp;
+import com.example.mgp.Entities.PauseButton;
 import com.example.mgp.Entities.RenderSideScrollingBackground;
 import com.example.mgp.Entities.RenderTextEntity;
 import com.example.mgp.Entities.EntityCoin;
+
+import static com.example.mgp.Entities.EntityPowerUp.*;
+import static com.example.mgp.Entities.EntityPowerUp.POWERUP_TYPE.*;
 
 public class ObstacleGame implements StateBase {
 
@@ -57,6 +61,9 @@ public class ObstacleGame implements StateBase {
 
     private int screenWidth,screenHeight;
 
+    private float PowerUpTimer;
+
+
     @Override
     public String GetName() {
         return "MINIGAME_OBSTACLEGAME";
@@ -89,7 +96,12 @@ public class ObstacleGame implements StateBase {
         totalElapsedTime = 0;
         HasIncreased = false;
         coin = EntityCoin.Create();
-        powerUp = EntityPowerUp.Create();
+        powerUp = Create();
+        PauseButton.Create();
+        PowerUpTimer = 0;
+
+
+
     }
 
     @Override
@@ -138,6 +150,7 @@ public class ObstacleGame implements StateBase {
                     obstacle.SetMoveValue(0);
                 }
 
+                //Every 10s increase the speed
                 totalElapsedTime += _dt;
                 if ((int)totalElapsedTime % 10 == 0 && totalElapsedTime >= 1 && !HasIncreased)
                 {
@@ -171,13 +184,16 @@ public class ObstacleGame implements StateBase {
                         player.SetPosY(GROUND_LEVEL);
                     }
                 }
-                //Collision Updates (with obstacle)
-                if (Collision.Quad(player.GetPosX(),player.GetPosY(),player.GetRadius(),player.GetRadius(),obstacle.GetPosX(),obstacle.GetPosY(),obstacle.GetRadius(),obstacle.GetRadius()))
+                if (!player.IsInvincible())
                 {
-                    background.isMoving = false;
-                    curr_GameState = GAME_STATE.END;
+                    //Collision Updates (with obstacle)
+                    if (Collision.Quad(player.GetPosX(),player.GetPosY(),player.GetRadius(),player.GetRadius(),obstacle.GetPosX(),obstacle.GetPosY(),obstacle.GetRadius(),obstacle.GetRadius()))
+                    {
+                        background.isMoving = false;
+                        curr_GameState = GAME_STATE.END;
+                    }
+                    else background.isMoving = true;
                 }
-                else background.isMoving = true;
 
                 //Collision Updates (with coin)
                 if (coin.IsActive() &&
@@ -187,16 +203,46 @@ public class ObstacleGame implements StateBase {
                     coin.SetActive(false);
                 }
 
+                //Power-Up Updates
+                if(player.HasPowerUp())
+                {
+                    powerUp.SetPlayerPos(player.GetPosX(),player.GetPosY());
+
+                    switch(powerUp.getPowerUpType())
+                    {
+                        case INVINCIBILITY:
+                            player.SetIsInvincible(true);
+                            break;
+                        case SLOWDOWN:
+                            background.moveValue += 100;
+                            if (background.moveValue >= 0) background.moveValue = -1;
+                            break;
+                    }
+
+                    PowerUpTimer -= _dt;
+                    if(PowerUpTimer <= 0)
+                    {
+                        powerUp.SetPlayerHasPowerUp(false);
+                        player.SetHasPowerUp(false);
+                        player.SetIsInvincible(false);
+                    }
+
+                }
+
+                //Collision Updates (with powerup)
                 if (powerUp.IsActive() &&
                         Collision.Quad(player.GetPosX(),player.GetPosY(),player.GetRadius(),player.GetRadius(),powerUp.GetPosX(),powerUp.GetPosY(),powerUp.GetRadius(),powerUp.GetRadius()))
                 {
-                    ++score;
+                    PowerUpTimer = 5;
+                    score += 2;
                     powerUp.SetActive(false);
+                    powerUp.SetPlayerHasPowerUp(true);
+                    player.SetHasPowerUp(true);
                 }
 
-                //Score management
+                //Score management (every 10s add 1 score)
                 survivalTimer += _dt;
-                if ( (int)survivalTimer % 5 == 0 && (int)survivalTimer != 0)
+                if ( (int)survivalTimer % 10 == 0 && (int)survivalTimer != 0)
                 {
                     ++score;
                     survivalTimer = 0;

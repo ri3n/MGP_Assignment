@@ -11,6 +11,7 @@ import com.example.mgp.LayerConstants;
 import com.example.mgp.R;
 import com.example.mgp.ResourceManager;
 import com.example.mgp.ScreenConstants;
+import com.example.mgp.Sprite;
 
 public class EntityPowerUp implements EntityBase, Collidable {
 
@@ -25,6 +26,7 @@ public class EntityPowerUp implements EntityBase, Collidable {
     POWERUP_TYPE type;
     private Bitmap bmp_SLOWDOWN;
     private Bitmap bmp_INVINCIBILITY;
+    private Bitmap bmp_frame_INVINCIBILITY;
     private float posX, posY;
     private int scaleX, scaleY;
     private int moveValue;
@@ -33,15 +35,41 @@ public class EntityPowerUp implements EntityBase, Collidable {
 
     private int screenWidth, screenHeight;
 
+    private Sprite invincibilityframe;
+
     private float cooldownTimer;
 
+    private float playerX,playerY;
+
     private float sineValue;
+
+    private boolean PlayerHasPowerUp;
+
+    private float QuadWidth,QuadHeight;
+
+    public void SetPlayerHasPowerUp(boolean toSet)
+    {
+        PlayerHasPowerUp = toSet;
+    }
+
+    public boolean PlayerHasPowerUp()
+    {
+        return PlayerHasPowerUp;
+    }
+
+
     public static EntityPowerUp Create()
     {
         EntityPowerUp result = new EntityPowerUp();
         EntityManager.Instance.AddEntity(result, ENTITY_TYPE.ENT_POWERUP);
         return result;
     }
+
+    public POWERUP_TYPE getPowerUpType()
+    {
+        return type;
+    }
+
 
     public boolean IsActive()
     {
@@ -52,8 +80,19 @@ public class EntityPowerUp implements EntityBase, Collidable {
     {
         this.IsActive = IsActive;
 
-        if (!IsActive) cooldownTimer = 5;
+        posY = screenHeight / 3;
+        posX = screenWidth + (scaleX * bmp_INVINCIBILITY.getWidth());
+
+        if (!IsActive) cooldownTimer = 7;
+
     }
+
+    public void SetPlayerPos(float x, float y)
+    {
+        playerX = x;
+        playerY = y;
+    }
+
 
     public void RandomiseType()
     {
@@ -120,17 +159,29 @@ public class EntityPowerUp implements EntityBase, Collidable {
         bmp_INVINCIBILITY = Bitmap.createScaledBitmap(ResourceManager.Instance.GetBitmap(R.drawable.shield), ScreenConstants.GetQuadWidth(_view) / 2, ScreenConstants.GetQuadWidth(_view) / 2, false);
         bmp_SLOWDOWN = Bitmap.createScaledBitmap(ResourceManager.Instance.GetBitmap(R.drawable.slowdown), ScreenConstants.GetQuadWidth(_view) / 2, ScreenConstants.GetQuadWidth(_view) / 2, false);
 
+        invincibilityframe = new Sprite(Bitmap.createScaledBitmap(ResourceManager.Instance.GetBitmap(R.drawable.invincibilityframe), ScreenConstants.GetQuadWidth(_view) * 9, ScreenConstants.GetQuadHeight(_view),false) , 1, 9, 9);
+
+        playerX = playerY = 0;
+        scaleX = scaleY  = 1;
+
         posY = screenHeight / 3;
-        posX = screenWidth / 2;
+        posX = screenWidth + (scaleX * bmp_INVINCIBILITY.getWidth());
 
         type = POWERUP_TYPE.INVINCIBILITY;
-        scaleX = scaleY  = 1;
         sineValue = 0;
-        cooldownTimer = 5;
+        cooldownTimer = 7;
+
+        PlayerHasPowerUp = false;
+
+        //ScreenConstants.GetQuadWidth(_view),ScreenConstants.GetQuadHeight(_view)
+        QuadWidth = ScreenConstants.GetQuadWidth(_view);
+        QuadHeight = ScreenConstants.GetQuadHeight(_view);
     }
 
     @Override
     public void Update(float _dt) {
+        invincibilityframe.Update(_dt);
+
         cooldownTimer -= _dt;
 
         if (cooldownTimer <= 0)
@@ -149,12 +200,18 @@ public class EntityPowerUp implements EntityBase, Collidable {
             {
                 RandomiseType();
                 posX = screenWidth + (bmp_INVINCIBILITY.getWidth() * scaleX);
+                cooldownTimer = 7;
             }
         }
     }
 
     @Override
     public void Render(Canvas _canvas) {
+        if(PlayerHasPowerUp)
+        {
+            invincibilityframe.Render(_canvas,(int)playerX,(int)playerY,1,1);
+        }
+
         if (!IsActive) return;
             float _x = posX - 0.5f * (bmp_INVINCIBILITY.getWidth() * scaleX);
             float _y = posY - 0.5f * (bmp_INVINCIBILITY.getHeight() * scaleY);

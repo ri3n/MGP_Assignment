@@ -15,7 +15,7 @@ import com.example.mgp.TouchManager;
 
 import java.util.Random;
 
-public class EntityCharacter implements Collidable,EntityBase{
+public class EntityCharacter implements Collidable,EntityBase {
     private int bitmapID;
     private Bitmap bmp = null; // Define image object name (bmp)
     private Sprite spritesheet = null;
@@ -28,15 +28,31 @@ public class EntityCharacter implements Collidable,EntityBase{
     private float xPos, yPos, xDir, yDir, lifeTime;
     private boolean hasTouched = false; // Check for ontouch events
     private boolean isDone, isInit;
-    private int renderLayer = LayerConstants.GAMEOBJECTS_LAYER;;
+    private int renderLayer = LayerConstants.GAMEOBJECTS_LAYER;
+    ;
     private float imgRadius = 0;
     private float imgOffset = 85;
-    private int row,col,fps;
+    private int row, col, fps;
     private int numSpriteGrids;
 
-    private float scaleX,scaleY;
+    private float scaleX, scaleY;
 
-    private int ScreenWidth,ScreenHeight;
+    private int ScreenWidth, ScreenHeight;
+
+    private boolean IsInvincible;
+
+    private boolean HasPowerUp;
+
+    public boolean IsInvincible() {
+        return IsInvincible;
+    }
+
+    public void SetIsInvincible(boolean isinvis) {
+        IsInvincible = isinvis;
+    }
+
+
+
     @Override
     public boolean IsDone() {
         return isDone;
@@ -73,6 +89,18 @@ public class EntityCharacter implements Collidable,EntityBase{
         spritesheet = new Sprite(bmp, row, col, fps);
 
         isInit = true;
+        IsInvincible = false;
+        HasPowerUp = false;
+    }
+
+    public boolean HasPowerUp()
+    {
+        return HasPowerUp;
+    }
+
+    public void SetHasPowerUp(boolean hasPowerUp)
+    {
+        HasPowerUp = hasPowerUp;
     }
 
     @Override
