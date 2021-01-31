@@ -13,8 +13,10 @@ import com.example.mgp.*;
 import com.example.mgp.Entities.EntityCharacter;
 import com.example.mgp.Entities.EntityManager;
 import com.example.mgp.Entities.EntityObstacle;
+import com.example.mgp.Entities.EntityPowerUp;
 import com.example.mgp.Entities.RenderSideScrollingBackground;
 import com.example.mgp.Entities.RenderTextEntity;
+import com.example.mgp.Entities.EntityCoin;
 
 public class ObstacleGame implements StateBase {
 
@@ -32,6 +34,8 @@ public class ObstacleGame implements StateBase {
     RenderSideScrollingBackground background;
     EntityObstacle obstacle;
     RenderTextEntity GameText; //Text for Ready, Start and Score
+    EntityCoin coin;
+    EntityPowerUp powerUp;
 
     //Physics Variables
     private boolean player_IsInAir;
@@ -84,6 +88,8 @@ public class ObstacleGame implements StateBase {
         screenWidth = ScreenConstants.GetScreenWidth(_view);
         totalElapsedTime = 0;
         HasIncreased = false;
+        coin = EntityCoin.Create();
+        powerUp = EntityPowerUp.Create();
     }
 
     @Override
@@ -120,16 +126,24 @@ public class ObstacleGame implements StateBase {
             case GAME:
                 //Background Entity updates
                 if (background.isMoving)
+                {
+                    coin.SetMoveValue((int)background.moveValue);
+                    powerUp.SetMoveValue((int)background.moveValue);
                     obstacle.SetMoveValue(background.moveValue);
+                }
                 else
+                {
+                    powerUp.SetMoveValue(0);
+                    coin.SetMoveValue(0);
                     obstacle.SetMoveValue(0);
+                }
 
                 totalElapsedTime += _dt;
                 if ((int)totalElapsedTime % 10 == 0 && totalElapsedTime >= 1 && !HasIncreased)
                 {
                     background.moveSpeed -= 25;
                     HasIncreased = true;
-                    System.out.println("Backgorund Speed: " + background.moveSpeed);
+                    System.out.println("Background Speed: " + background.moveSpeed);
                 }
                 else if ((int)totalElapsedTime % 10 != 0) HasIncreased = false;
 
@@ -143,7 +157,12 @@ public class ObstacleGame implements StateBase {
                     netForce += Gravity * simulation_speed;
                     float acceleration = netForce / mass;
                     float newY = player.GetPosY() - (acceleration * _dt);
-                    if (newY <= player.GetRadius()) newY = player.GetRadius();
+                    //if player hits the top of the screen
+                    if (newY <= player.GetRadius())
+                    {
+                        netForce = 0;
+                        newY = player.GetRadius();
+                    }
                     player.SetPosY(newY);
                     //If player is lower than ground level(since Y is inverted)
                     if (player.GetPosY() >= GROUND_LEVEL)
@@ -152,13 +171,28 @@ public class ObstacleGame implements StateBase {
                         player.SetPosY(GROUND_LEVEL);
                     }
                 }
-                //Collision Updates
+                //Collision Updates (with obstacle)
                 if (Collision.Quad(player.GetPosX(),player.GetPosY(),player.GetRadius(),player.GetRadius(),obstacle.GetPosX(),obstacle.GetPosY(),obstacle.GetRadius(),obstacle.GetRadius()))
                 {
                     background.isMoving = false;
                     curr_GameState = GAME_STATE.END;
                 }
                 else background.isMoving = true;
+
+                //Collision Updates (with coin)
+                if (coin.IsActive() &&
+                        Collision.Quad(player.GetPosX(),player.GetPosY(),player.GetRadius(),player.GetRadius(),coin.GetPosX(),coin.GetPosY(),coin.GetRadius(),coin.GetRadius()))
+                {
+                    ++score;
+                    coin.SetActive(false);
+                }
+
+                if (powerUp.IsActive() &&
+                        Collision.Quad(player.GetPosX(),player.GetPosY(),player.GetRadius(),player.GetRadius(),powerUp.GetPosX(),powerUp.GetPosY(),powerUp.GetRadius(),powerUp.GetRadius()))
+                {
+                    ++score;
+                    powerUp.SetActive(false);
+                }
 
                 //Score management
                 survivalTimer += _dt;
@@ -173,7 +207,9 @@ public class ObstacleGame implements StateBase {
                 break;
 
             case END:
+                powerUp.SetMoveValue(0);
                 background.isMoving = false;
+                coin.SetMoveValue(0);
                 obstacle.SetMoveValue(0);
                 GameText.text = "GAME OVER!";
                 GameText.SetxPos(screenWidth / 2 - (5 * 125));

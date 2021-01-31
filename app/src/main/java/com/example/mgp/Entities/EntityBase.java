@@ -23,6 +23,8 @@ public interface EntityBase
          ENT_HACKERMAN,
          ENT_HOUSE,
          ENT_OBSTACLE,
+         ENT_COIN,
+         ENT_POWERUP,
          ENT_DEFAULT
      }
 
