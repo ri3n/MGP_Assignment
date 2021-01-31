@@ -80,6 +80,13 @@ public class GameSystem {
         editor.remove(_key);
     }
 
+    public void clearHistory(String _key,String _key2){
+        for(int i=0;i<GetIntFromSave(_key);++i){
+            Remove(_key2);
+        }
+        SetIntInSave(_key,0);
+    }
+
     public int GetIntFromSave(String _key){
         return sharedPref.getInt(_key, -1);
     }
