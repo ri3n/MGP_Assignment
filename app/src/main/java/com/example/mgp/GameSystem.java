@@ -74,6 +74,12 @@ public class GameSystem {
         editor.putInt(_key,_value);
     }
 
+    public void Remove(String _key){
+        if(editor == null)
+            return;
+        editor.remove(_key);
+    }
+
     public int GetIntFromSave(String _key){
         return sharedPref.getInt(_key, -1);
     }

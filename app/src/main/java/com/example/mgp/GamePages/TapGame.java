@@ -137,6 +137,19 @@ public class TapGame implements StateBase {
         if(GameTime<=0.f||lives<=0)
         {
             StateManager.Instance.ChangeState("MainGame");
+
+            //saving the values
+            GameSystem.Instance.SaveEditBegin();
+            GameSystem.Instance.SetIntInSave("tapgameCount", GameSystem.Instance.GetIntFromSave("tapgameCount") + 1);
+            GameSystem.Instance.SetIntInSave("tapgame"+GameSystem.Instance.GetIntFromSave("tapgameCount"), score);
+            GameSystem.Instance.SaveEditEnd();
+
+            //get value
+            for(int i = 0 ;i < GameSystem.Instance.GetIntFromSave("tapgameCount"); ++i){
+                //GameSystem.Instance.Remove("tapgame"+i);
+                String test=String.valueOf(GameSystem.Instance.GetIntFromSave("tapgame"+i));
+                System.out.println(test);
+            }
         }
     }
 }
