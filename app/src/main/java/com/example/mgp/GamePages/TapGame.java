@@ -31,8 +31,7 @@ public class TapGame implements StateBase {
 
     float GameTime;
     float CDTimer;
-    int score;
-    int lives;
+    int score,lives,combo;
 
     @Override
     public String GetName() {
@@ -58,6 +57,7 @@ public class TapGame implements StateBase {
         GameSystem.Instance.SaveEditBegin();
         score = 0;
         lives = 3;
+        combo = 0;
     }
 
     @Override
@@ -76,7 +76,7 @@ public class TapGame implements StateBase {
             CDTimer -= _dt;
         }
 
-        if(CDTimer<=0){
+        if(CDTimer <= 0){
             hackerman.SetRender(true);
             hackerman.SetRespawn(false);
             hackerman.SetPos();
@@ -85,14 +85,27 @@ public class TapGame implements StateBase {
 
         EntityManager.Instance.Update(_dt);
 
-
-        if(hackerman.GetScored()==true){
-            score++;
+        if(hackerman.GetScored() == true){
+            combo++;
+            if(combo > 2 && combo < 5){
+                score += 2;
+            }
+            else if(combo > 5 && combo < 8){
+                score += 3;
+            }
+            else if(combo > 10){
+                score += 3;
+                GameTime+=1;
+            }
+            else{
+                score++;
+            }
             hackerman.SetScored(false);
         }
 
         if(hackerman.GetDied()){
             lives--;
+            combo = 0;
             hackerman.SetDied();
         }
 

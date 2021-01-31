@@ -59,7 +59,7 @@ public class EntityHackerMan implements EntityBase, Collidable {
         // then when the user touch the smurf on the screen, new smurfs will be render at
         // another position.
         ranGen = new Random();
-        lifeTime = 2.f;
+        lifeTime = 5.f;
         //_view.getWidth(); -- will give the length of the view = surfaceview = screen
         // because we using a state, we created our own surfaceview = screen
         // ranGen will produce random x values based on the view size
@@ -98,7 +98,7 @@ public class EntityHackerMan implements EntityBase, Collidable {
 
                     respawn = true;
                     scored = true;
-
+                    lifeTime = 5.f;
                     AudioManager.Instance.PlayAudio(R.raw.damage);
 
                 }
@@ -110,12 +110,14 @@ public class EntityHackerMan implements EntityBase, Collidable {
         //spritesheet.Update(_dt);
 
         // Lifetime .. meant to check if time is up, destroy the image created.
-        lifeTime -= _dt;
+        //if(respawn == false){
+            lifeTime -= _dt;
+        //}
         if (lifeTime < 0.0f)
         {
             died = true;
             respawn = true;
-            lifeTime = ranGen.nextFloat() * 5;
+            lifeTime = 5.f;
         }
 
     }
