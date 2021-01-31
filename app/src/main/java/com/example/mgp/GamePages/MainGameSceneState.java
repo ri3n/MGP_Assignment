@@ -46,6 +46,7 @@ public class MainGameSceneState implements StateBase {
     RenderTextEntity FPSText;
     RenderTextEntity WelcomeText;
     RenderTextEntity ScoreEntity;
+    RenderTextEntity ObstacleGameScoreEntity;
 
     private float ChangeTextTimer = 10;
 
@@ -72,6 +73,7 @@ public class MainGameSceneState implements StateBase {
         enter_button = EnterButton.Create();
         house = EntityHouse.Create();
         ScoreEntity = RenderTextEntity.Create("Highscore: "+ GameSystem.Instance.GetIntFromSave("Score"),70 ,_view.getWidth()/2 -(6*35), _view.getHeight()/2 - 150, false);
+        ObstacleGameScoreEntity = RenderTextEntity.Create("Highscore: " + GameSystem.Instance.GetIntFromSave("ObstacleGameScore"),70,(_view.getWidth() - 150) - (6*35),_view.getHeight()/2 - 150,false);
         float xPos=0;
     }
 
@@ -139,6 +141,7 @@ public class MainGameSceneState implements StateBase {
             portal_tapgame.SetMoveValue(Background.moveValue);
             portal_obstaclegame.SetMoveValue(Background.moveValue);
             house.SetMoveValue(Background.moveValue);
+            ObstacleGameScoreEntity.SetMoveValue(Background.moveValue);
         }
         //if (Collision.Quad(smurf.GetPosX(), smurf.GetPosY(), smurf.GetRadius() * 2, smurf.GetRadius() * 2, portal.GetPosX(), portal.GetPosY()))
         if (Collision.SphereToSphere(player.GetPosX(),player.GetPosY(),player.GetRadius() , portal_tapgame.GetPosX(), portal_tapgame.GetPosY(), portal_tapgame.GetRadius())) {

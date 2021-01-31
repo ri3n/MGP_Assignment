@@ -13,6 +13,8 @@ import com.example.mgp.ResourceManager;
 import com.example.mgp.ScreenConstants;
 import com.example.mgp.Sprite;
 
+import java.util.Random;
+
 public class EntityPowerUp implements EntityBase, Collidable {
 
     public enum POWERUP_TYPE
@@ -57,6 +59,7 @@ public class EntityPowerUp implements EntityBase, Collidable {
         return PlayerHasPowerUp;
     }
 
+    private Bitmap slowdownframe;
 
     public static EntityPowerUp Create()
     {
@@ -167,7 +170,7 @@ public class EntityPowerUp implements EntityBase, Collidable {
         posY = screenHeight / 3;
         posX = screenWidth + (scaleX * bmp_INVINCIBILITY.getWidth());
 
-        type = POWERUP_TYPE.INVINCIBILITY;
+        RandomiseType();
         sineValue = 0;
         cooldownTimer = 7;
 
@@ -176,6 +179,9 @@ public class EntityPowerUp implements EntityBase, Collidable {
         //ScreenConstants.GetQuadWidth(_view),ScreenConstants.GetQuadHeight(_view)
         QuadWidth = ScreenConstants.GetQuadWidth(_view);
         QuadHeight = ScreenConstants.GetQuadHeight(_view);
+
+        slowdownframe = Bitmap.createScaledBitmap(ResourceManager.Instance.GetBitmap(R.drawable.slowdownframe),ScreenConstants.GetQuadWidth(_view),ScreenConstants.GetQuadHeight(_view),false);
+
     }
 
     @Override
@@ -209,7 +215,19 @@ public class EntityPowerUp implements EntityBase, Collidable {
     public void Render(Canvas _canvas) {
         if(PlayerHasPowerUp)
         {
+            if (type == POWERUP_TYPE.INVINCIBILITY)
             invincibilityframe.Render(_canvas,(int)playerX,(int)playerY,1,1);
+            else if (type == POWERUP_TYPE.SLOWDOWN)
+            {
+                float _x = playerX - 0.5f * (slowdownframe.getWidth());
+                float _y = playerY - 0.5f * (slowdownframe.getHeight());
+                // RECT
+                //Rect(int left, int top, int right, int bottom)
+                //Create a new rectangle with the specified coordinates.
+                Rect src = new Rect(0, 0, slowdownframe.getWidth(), slowdownframe.getHeight());
+                Rect dst = new Rect((int) _x, (int) _y, (int) _x + (slowdownframe.getWidth()), (int) _y + (slowdownframe.getHeight()));
+                    _canvas.drawBitmap(slowdownframe, src, dst, null);
+            }
         }
 
         if (!IsActive) return;

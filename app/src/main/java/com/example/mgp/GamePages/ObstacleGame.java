@@ -100,6 +100,7 @@ public class ObstacleGame implements StateBase {
         PauseButton.Create();
         PowerUpTimer = 0;
 
+        GameSystem.Instance.SaveEditBegin();
 
 
     }
@@ -107,6 +108,7 @@ public class ObstacleGame implements StateBase {
     @Override
     public void OnExit() {
         EntityManager.Instance.Clean();
+        GameSystem.Instance.SaveEditEnd();
     }
 
     @Override
@@ -253,6 +255,10 @@ public class ObstacleGame implements StateBase {
                 break;
 
             case END:
+                if(GameSystem.Instance.GetIntFromSave("ObstacleGameScore") < score)
+                {
+                    GameSystem.Instance.SetIntInSave("ObstacleGameScore", score);
+                }
                 powerUp.SetMoveValue(0);
                 background.isMoving = false;
                 coin.SetMoveValue(0);
