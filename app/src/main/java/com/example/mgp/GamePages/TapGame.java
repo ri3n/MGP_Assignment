@@ -7,6 +7,7 @@ import com.example.mgp.*;
 import com.example.mgp.Entities.EntityHackerMan;
 import com.example.mgp.Entities.EntityManager;
 import com.example.mgp.Entities.EntitySmurf;
+import com.example.mgp.Entities.EntityTrap;
 import com.example.mgp.Entities.PauseButton;
 import com.example.mgp.Entities.RenderBackground;
 import com.example.mgp.Entities.RenderTextEntity;
@@ -20,17 +21,19 @@ import java.util.Random;
 public class TapGame implements StateBase {
     RenderBackground Background;
     EntityHackerMan hackerman;
+    EntityTrap trap;
     RenderTextEntity FPSText;
     RenderTextEntity ScoreText;
     RenderTextEntity TimerText;
     RenderTextEntity LifeText;
+    RenderTextEntity ComboText;
 
     Random random;
 
     private int ScreenWidth,ScreenHeight;
 
     float GameTime;
-    float CDTimer;
+    float CDTimer, TrapTimer;
     int score,lives,combo;
 
     @Override
@@ -45,15 +48,18 @@ public class TapGame implements StateBase {
 
         Background = RenderBackground.Create(R.drawable.gamepage);
         hackerman = EntityHackerMan.Create();
+        trap = EntityTrap.Create();
         FPSText = RenderTextEntity.Create("FPS: ", 70, 35 , 80, true);
         ScoreText = RenderTextEntity.Create("Score: ", 70 , 1000 , 80, true);
         TimerText = RenderTextEntity.Create("" , 70 , ScreenWidth/2 - 2 , ScreenHeight, true);
         LifeText = RenderTextEntity.Create("life: ", 70, ScreenWidth / 50 , ScreenHeight , true);
+        ComboText = RenderTextEntity.Create("Combo: ",70, ScreenWidth - 300 , ScreenHeight , true);
         PauseButton.Create();
 
         random = new Random();
         GameTime = 60.f;
         CDTimer = random.nextFloat();
+        TrapTimer = 5.f;
         GameSystem.Instance.SaveEditBegin();
         score = 0;
         lives = 3;
@@ -72,7 +78,7 @@ public class TapGame implements StateBase {
     @Override
     public void Update(float _dt)
     {
-        if(hackerman.GetRespawn()) {
+        if(hackerman.GetRespawn()==true) {
             CDTimer -= _dt;
         }
 
@@ -80,7 +86,14 @@ public class TapGame implements StateBase {
             hackerman.SetRender(true);
             hackerman.SetRespawn(false);
             hackerman.SetPos();
-            CDTimer = random.nextFloat();
+            CDTimer = 2.f;
+        }
+
+        if(trap.GetActive() == false){
+            TrapTimer -= _dt;
+        }
+        if(TrapTimer <= 0){
+            trap.SetActive(true);
         }
 
         EntityManager.Instance.Update(_dt);
@@ -109,6 +122,18 @@ public class TapGame implements StateBase {
             hackerman.SetDied();
         }
 
+        if(trap.GetActive() == false){
+            if(trap.GetTapped()==true){
+                GameTime -= 5.f;
+                trap.SetTapped(false);
+                combo = 0;
+                TrapTimer = 5.f;
+            }
+            else{
+                TrapTimer = 5.f;
+            }
+        }
+
         if(GameSystem.Instance.GetIsPaused()==false)
         {
             GameTime -= _dt;
@@ -123,6 +148,8 @@ public class TapGame implements StateBase {
 
         //LifeText Updates
         LifeText.text = "Life: "+ String.valueOf(lives);
+
+        ComboText.text = "Combo: " + String.valueOf(combo);
 
         if(GameSystem.Instance.GetIntFromSave("Score") < score)
         {

@@ -25,6 +25,7 @@ public interface EntityBase
          ENT_OBSTACLE,
          ENT_COIN,
          ENT_POWERUP,
+         ENT_TRAP,
          ENT_DEFAULT
      }
 
