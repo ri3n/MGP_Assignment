@@ -57,28 +57,31 @@ public class EntityTrap implements EntityBase, Collidable {
         bmp = Bitmap.createScaledBitmap(bmp, ScreenConstants.GetQuadWidth(_view), ScreenConstants.GetQuadHeight(_view), true);
         active=true;
         isInit = true;
+        isDone = false;
     }
 
     @Override
     public void Update(float _dt) {
 
-        if (TouchManager.Instance.IsPress()) {
             // 0.0f, xPos, yPos, imgRadius ---> Checking collision of finger w the image
             if (Collision.SphereToSphere(TouchManager.Instance.GetPosX(), TouchManager.Instance.GetPosY(), 0.0f, xPos, yPos, bmp.getWidth())) {
                 xPos = ranGen.nextFloat() * ScreenWidth;
+                System.out.println("xPos: " + xPos);
                 yPos = ranGen.nextFloat() * ScreenHeight;
+                System.out.println("yPos: " + yPos);
                 lifeTime = 5.f;
                 tapped = true;
-                active = false;
+                //active = false;
                 AudioManager.Instance.PlayAudio(R.raw.damage);
+
             }
-        }
+
         // Lifetime .. meant to check if time is up, destroy the image created.
         if(active == true){
             lifeTime -= _dt;
         }
         if (lifeTime < 0.0f) {
-            active = false;
+            //active = false;
             lifeTime = 5.f;
         }
 

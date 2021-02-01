@@ -86,6 +86,7 @@ public class EntityHackerMan implements EntityBase, Collidable {
     public void Update(float _dt) {
         if(render == true) {
             if (TouchManager.Instance.IsPress()) {
+
                 // 0.0f, xPos, yPos, imgRadius ---> Checking collision of finger w the image
 
                 if (Collision.SphereToSphere(TouchManager.Instance.GetPosX(), TouchManager.Instance.GetPosY(), 0.0f, xPos, yPos, bmp.getWidth())) {

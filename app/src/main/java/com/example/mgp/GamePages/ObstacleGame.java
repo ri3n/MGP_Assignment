@@ -290,12 +290,22 @@ public class ObstacleGame implements StateBase {
 
     }
 
+    private float CalculateForceNeeded()
+    {
+        float heightTravelled = GROUND_LEVEL - (0 + player.GetRadius());
+        //Assuming mass is 1
+
+        float toReturn = 2.f * heightTravelled;
+        return toReturn;
+    }
+
     private void Jump()
     {
         if (player_IsInAir) return;
 
         AudioManager.Instance.PlayAudio(R.raw.jump);
-        float JumpForce = 1000;
+        //Let mass be 1
+        float JumpForce = CalculateForceNeeded();
         netForce = JumpForce;
         player_IsInAir = true;
     }

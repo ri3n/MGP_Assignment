@@ -6,7 +6,7 @@
     android:background="@drawable/optionsbg">
 
 
-    <Button
+    <Switch
         android:id="@+id/btn_togglebgm"
         android:layout_width="217dp"
         android:layout_height="73dp"
@@ -15,12 +15,13 @@
         android:layout_marginTop="132dp"
         android:layout_marginEnd="480dp"
         android:background="@drawable/button"
-        android:text="ON/OFF"
+        android:text="  ON/OFF"
+        android:checked="true"
         android:textColor="#bdfcf2"
         android:textSize="36dp" />
 
 
-    <Button
+    <Switch
         android:id="@+id/btn_togglesfx"
         android:layout_width="217dp"
         android:layout_height="73dp"
@@ -29,22 +30,12 @@
         android:layout_marginTop="132dp"
         android:layout_marginEnd="50dp"
         android:background="@drawable/button"
-        android:text="ON/OFF"
+        android:text="  ON/OFF"
         android:textColor="#bdfcf2"
+        android:checked="true"
         android:textSize="36dp" />
 
-    <Button
-        android:id="@+id/btn_togglevibrations"
-        android:layout_width="217dp"
-        android:layout_height="73dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="265dp"
-        android:layout_marginEnd="480dp"
-        android:background="@drawable/button"
-        android:text="ON/OFF"
-        android:textColor="#bdfcf2"
-        android:textSize="36dp" />
+
 
     <Button
         android:id="@+id/btn_back"
@@ -58,5 +49,21 @@
         android:text="BACK"
         android:textColor="#bdfcf2"
         android:textSize="36dp" />
+
+    <Switch
+        android:id="@+id/btn_togglevibrations"
+        android:layout_width="217dp"
+        android:layout_height="73dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="265dp"
+        android:layout_marginEnd="480dp"
+        android:background="@drawable/button"
+        android:text="  ON/OFF"
+        android:textColor="#bdfcf2"
+        android:checked="true"
+        android:textSize="36dp" />
+
+
 
 </RelativeLayout>

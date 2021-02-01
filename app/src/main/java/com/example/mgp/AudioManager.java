@@ -6,8 +6,7 @@ import android.view.SurfaceView;
 
 import java.util.HashMap;
 
-public class AudioManager
-{
+public class AudioManager {
     private SurfaceView view = null;
     private Resources res = null;
 
@@ -17,9 +16,20 @@ public class AudioManager
 
     public final static AudioManager Instance = new AudioManager();
 
-    private AudioManager()
-    {
+    private boolean IsMuted = false;
 
+    private AudioManager() {
+
+    }
+
+    public void SetIsMuted(boolean muted)
+    {
+        IsMuted = muted;
+    }
+
+    public boolean GetIsMuted()
+    {
+        return IsMuted;
     }
 
     public void Init(SurfaceView _view)
@@ -30,6 +40,8 @@ public class AudioManager
 
     public void PlayAudio(int _id)
     {
+        if (IsMuted) return;
+
         if (audioMap.containsKey(_id))   //Hashmap using a key -- _id
         {
             audioMap.get(_id).reset();
