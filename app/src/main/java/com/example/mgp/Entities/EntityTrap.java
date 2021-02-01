@@ -30,7 +30,8 @@ public class EntityTrap implements EntityBase, Collidable {
     private int renderLayer = LayerConstants.GAMEOBJECTS_LAYER;
     private int ScreenWidth, ScreenHeight;
     Random ranGen;
-    private boolean tapped,active;
+    //private boolean tapped,active;
+    boolean scored, died, render,respawn;
 
     @Override
     public boolean IsDone() {
@@ -55,7 +56,13 @@ public class EntityTrap implements EntityBase, Collidable {
         ScreenWidth = ScreenConstants.GetScreenWidth(_view);
         ScreenHeight = ScreenConstants.GetScreenHeight(_view);
         bmp = Bitmap.createScaledBitmap(bmp, ScreenConstants.GetQuadWidth(_view), ScreenConstants.GetQuadHeight(_view), true);
-        active=true;
+
+        scored = false;
+        died = false;
+        render = true;
+        respawn = false;
+        isInit = true;
+
         isInit = true;
         isDone = false;
     }
@@ -69,19 +76,21 @@ public class EntityTrap implements EntityBase, Collidable {
                 System.out.println("xPos: " + xPos);
                 yPos = ranGen.nextFloat() * ScreenHeight;
                 System.out.println("yPos: " + yPos);
+
+                respawn = true;
+                scored = true;
                 lifeTime = 5.f;
-                tapped = true;
-                //active = false;
                 AudioManager.Instance.PlayAudio(R.raw.damage);
 
             }
 
         // Lifetime .. meant to check if time is up, destroy the image created.
-        if(active == true){
-            lifeTime -= _dt;
-        }
-        if (lifeTime < 0.0f) {
-            //active = false;
+        lifeTime -= _dt;
+        //}
+        if (lifeTime < 0.0f)
+        {
+            died = true;
+            respawn = true;
             lifeTime = 5.f;
         }
 
@@ -90,7 +99,7 @@ public class EntityTrap implements EntityBase, Collidable {
     // Render
     @Override
     public void Render(Canvas _canvas) {
-        if(active == true){
+        if(render == true){
             _canvas.drawBitmap(bmp, xPos - bmp.getWidth() * 0.5f, yPos - bmp.getHeight() * 0.5f, null);
         }
     }
@@ -154,9 +163,19 @@ public class EntityTrap implements EntityBase, Collidable {
         }
     }
 
-    public void SetActive(boolean _active){ active = _active;}
-    public boolean GetActive(){ return active;}
+    public boolean GetScored() { return scored; }
+    public void SetScored(boolean _scored) { scored = _scored; }
 
-    public void SetTapped(boolean _tapped){ tapped = _tapped;}
-    public boolean GetTapped(){ return tapped;}
+    public boolean GetDied() { return died; }
+    public void SetDied() { died = false; }
+
+    public void SetRender(boolean _render){render = _render; }
+
+    public void SetRespawn(boolean _respawn){ respawn =  _respawn; }
+    public boolean GetRespawn(){return respawn;}
+
+    public void SetPos(){
+        xPos=ranGen.nextFloat() * ScreenWidth;
+        yPos=ranGen.nextFloat() * ScreenHeight;
+    }
 }

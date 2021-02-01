@@ -53,7 +53,7 @@ public class TapGame implements StateBase {
         ScoreText = RenderTextEntity.Create("Score: ", 70 , 1000 , 80, true);
         TimerText = RenderTextEntity.Create("" , 70 , ScreenWidth/2 - 2 , ScreenHeight, true);
         LifeText = RenderTextEntity.Create("life: ", 70, ScreenWidth / 50 , ScreenHeight , true);
-        ComboText = RenderTextEntity.Create("Combo: ",70, ScreenWidth - 300 , ScreenHeight , true);
+        ComboText = RenderTextEntity.Create("Combo: ",70, ScreenWidth - 350 , ScreenHeight , true);
         PauseButton.Create();
 
         random = new Random();
@@ -78,7 +78,7 @@ public class TapGame implements StateBase {
     @Override
     public void Update(float _dt)
     {
-        if(hackerman.GetRespawn()==true) {
+        if(hackerman.GetRespawn() == true) {
             CDTimer -= _dt;
         }
 
@@ -89,12 +89,23 @@ public class TapGame implements StateBase {
             CDTimer = 2.f;
         }
 
-        if(trap.GetActive() == false){
+        if(trap.GetRespawn() == true) {
             TrapTimer -= _dt;
         }
+
         if(TrapTimer <= 0){
-            trap.SetActive(true);
+            trap.SetRender(true);
+            trap.SetRespawn(false);
+            trap.SetPos();
+            TrapTimer = 5.f;
         }
+
+//        if(trap.GetActive() == false){
+//            TrapTimer -= _dt;
+//        }
+//        if(TrapTimer <= 0){
+//            trap.SetActive(true);
+//        }
 
         EntityManager.Instance.Update(_dt);
 
@@ -122,16 +133,14 @@ public class TapGame implements StateBase {
             hackerman.SetDied();
         }
 
-        if(trap.GetActive() == false){
-            if(trap.GetTapped()==true){
-                GameTime -= 5.f;
-                trap.SetTapped(false);
-                combo = 0;
-                TrapTimer = 5.f;
-            }
-            else{
-                TrapTimer = 5.f;
-            }
+        if(trap.GetScored() == true){
+            GameTime -= 5.f;
+            combo = 0;
+            trap.SetScored(false);
+        }
+
+        if(trap.GetDied()){
+            trap.SetDied();
         }
 
         if(GameSystem.Instance.GetIsPaused()==false)
