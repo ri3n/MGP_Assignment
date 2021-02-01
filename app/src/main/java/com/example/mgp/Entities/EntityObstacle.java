@@ -59,7 +59,7 @@ public class EntityObstacle implements EntityBase, Collidable {
     @Override
     public void Init(SurfaceView _view) {
         bmp = ResourceManager.Instance.GetBitmap(bitmapID);
-        bmp = Bitmap.createScaledBitmap(bmp, ScreenConstants.GetQuadWidth(_view) - 100, ScreenConstants.GetQuadHeight(_view),true);
+        bmp = Bitmap.createScaledBitmap(bmp, ScreenConstants.GetQuadWidth(_view) - 150, ScreenConstants.GetQuadHeight(_view) - 100,true);
 
         moveValue = 0;
         isVisible = false;

@@ -67,6 +67,8 @@ public class ObstacleGame implements StateBase {
 
     private float prevBackgroundMoveSpeed;
 
+    private float maxHeightTimer;
+
     @Override
     public String GetName() {
         return "MINIGAME_OBSTACLEGAME";
@@ -106,7 +108,7 @@ public class ObstacleGame implements StateBase {
         GameSystem.Instance.SaveEditBegin();
 
         prevBackgroundMoveSpeed = 0;
-
+        maxHeightTimer = 0;
     }
 
     @Override
@@ -181,6 +183,12 @@ public class ObstacleGame implements StateBase {
                     //if player hits the top of the screen
                     if (newY <= player.GetRadius())
                     {
+                        maxHeightTimer += _dt;
+                        if (maxHeightTimer >= 10 && netForce > 0)
+                        {
+                            maxHeightTimer = 0;
+                            netForce = 0;
+                        }
                         //netForce = 0;
                         newY = player.GetRadius();
                     }
