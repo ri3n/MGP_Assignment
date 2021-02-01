@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -25,6 +26,8 @@ import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.facebook.login.widget.ProfilePictureView;
 import com.facebook.share.Share;
+import com.facebook.share.model.ShareContent;
+import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.model.SharePhoto;
 import com.facebook.share.model.SharePhotoContent;
 import com.facebook.share.widget.ShareDialog;
@@ -133,14 +136,15 @@ public class Facebookpage extends Activity implements View.OnClickListener {
     }
 
     public void shareScore(){
-        Bitmap image = BitmapFactory.decodeResource(getResources(), R.drawable.ship2_3);
+        Bitmap image = BitmapFactory.decodeResource(getResources(), R.drawable.mainmenu);
 
 
         if (ShareDialog.canShow(SharePhotoContent.class)){
             System.out.println("photo shown");
+
             SharePhoto photo = new SharePhoto.Builder()
                     .setBitmap(image)
-                    .setCaption("Thank you for playing MGP2020. Your final score is " + 5/*highscore*/)
+                    .setCaption("Thank you for playing MGP2020. Your final score is ")
                     .build();
             SharePhotoContent content = new SharePhotoContent.Builder()
                     .addPhoto(photo)
