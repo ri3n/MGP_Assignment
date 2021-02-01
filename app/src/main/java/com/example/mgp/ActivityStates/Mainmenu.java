@@ -54,8 +54,6 @@ public class Mainmenu extends Activity implements OnClickListener, StateBase
     private ShareDialog shareDialog;
     private int PICK_IMAGE_REQUEST = 1;
 
-    ProfilePictureView profilePictureView;
-
     private boolean isRender = true;
 
     @Override
@@ -192,20 +190,5 @@ public class Mainmenu extends Activity implements OnClickListener, StateBase
         callbackManager.onActivityResult(requestCode,resultCode,data);
     }
 
-    public void shareScore(){
-        Bitmap image = BitmapFactory.decodeResource(getResources(), R.drawable.ship2_3);
 
-        if (ShareDialog.canShow(SharePhotoContent.class)){
-            System.out.println("photo shown");
-            SharePhoto photo = new SharePhoto.Builder()
-                    .setBitmap(image)
-                    .setCaption("Thank you for playing MGP2020. Your final score is " + 5/*highscore*/)
-                    .build();
-            SharePhotoContent content = new SharePhotoContent.Builder()
-                    .addPhoto(photo)
-                    .build();
-
-            shareDialog.show(content);
-        }
-    }
 }

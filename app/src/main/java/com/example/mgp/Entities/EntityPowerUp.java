@@ -61,6 +61,8 @@ public class EntityPowerUp implements EntityBase, Collidable {
 
     private Bitmap slowdownframe;
 
+    Random random;
+
     public static EntityPowerUp Create()
     {
         EntityPowerUp result = new EntityPowerUp();
@@ -99,11 +101,9 @@ public class EntityPowerUp implements EntityBase, Collidable {
 
     public void RandomiseType()
     {
-        double randomiser = Math.random();
-        if (randomiser <= 0.5)
-            type = POWERUP_TYPE.SLOWDOWN;
-        else
-            type = POWERUP_TYPE.INVINCIBILITY;
+        if (type == POWERUP_TYPE.INVINCIBILITY) type = POWERUP_TYPE.SLOWDOWN;
+        else type = POWERUP_TYPE.INVINCIBILITY;
+
     }
 
     public void SetMoveValue(int moveValue)
@@ -176,6 +176,8 @@ public class EntityPowerUp implements EntityBase, Collidable {
         QuadHeight = ScreenConstants.GetQuadHeight(_view);
 
         slowdownframe = Bitmap.createScaledBitmap(ResourceManager.Instance.GetBitmap(R.drawable.slowdownframe),ScreenConstants.GetQuadWidth(_view),ScreenConstants.GetQuadHeight(_view),false);
+
+        random = new Random();
 
     }
 

@@ -19,6 +19,8 @@ import com.example.mgp.Entities.RenderSideScrollingBackground;
 import com.example.mgp.Entities.RenderTextEntity;
 import com.example.mgp.Entities.EntityCoin;
 
+import java.util.Random;
+
 import static com.example.mgp.Entities.EntityPowerUp.*;
 import static com.example.mgp.Entities.EntityPowerUp.POWERUP_TYPE.*;
 
@@ -104,6 +106,7 @@ public class ObstacleGame implements StateBase {
         GameSystem.Instance.SaveEditBegin();
 
         prevBackgroundMoveSpeed = 0;
+
     }
 
     @Override
@@ -228,6 +231,7 @@ public class ObstacleGame implements StateBase {
                     //buff timer on player
                     if(PowerUpTimer <= 0)
                     {
+                        powerUp.RandomiseType();
                         powerUp.SetPlayerHasPowerUp(false);
                         player.SetHasPowerUp(false);
                         player.SetIsInvincible(false);

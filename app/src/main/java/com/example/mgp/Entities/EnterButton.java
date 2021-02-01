@@ -83,6 +83,7 @@ public class EnterButton implements EntityBase{
                     StateManager.Instance.ChangeState(nextScene);
                     if (nextScene == "Mainmenu")
                     {
+                        EntityManager.Instance.Clean();
                         Gamepage.Instance.finish();
                     }
 

@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.view.SurfaceView;
 
+import com.example.mgp.ActivityStates.Gamepage;
 import com.example.mgp.Collision;
 import com.example.mgp.Entities.EnterButton;
 import com.example.mgp.Entities.EntityCharacter;
