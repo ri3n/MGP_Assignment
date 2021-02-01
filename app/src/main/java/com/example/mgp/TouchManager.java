@@ -63,7 +63,9 @@ public class TouchManager {
                 status = TouchState.NONE;
                 isDownPreviously = false;
                 break;
-
+            case MotionEvent.ACTION_SCROLL:
+                System.out.println("scrolling");
+                break;
         }
     }
 }

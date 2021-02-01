@@ -32,4 +32,15 @@
         android:layout_marginLeft="57dp"
         android:layout_marginTop="84dp" />
 
+    <Button
+        android:id="@+id/sharebutton"
+        android:layout_width="171dp"
+        android:layout_height="64dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="238dp"
+        android:layout_marginTop="96dp"
+        android:text="SHARE"
+        android:textSize="36dp" />
+
 </RelativeLayout>

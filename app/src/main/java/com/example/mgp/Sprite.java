@@ -37,6 +37,7 @@ public class Sprite{
 
         endFrame = _col * _row;
     }
+
     // Update running vs delta time (Same as your ACG)
     public void Update(float _dt)
     {

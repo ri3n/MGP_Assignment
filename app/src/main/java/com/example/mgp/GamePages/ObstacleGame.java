@@ -19,6 +19,8 @@ import com.example.mgp.Entities.RenderSideScrollingBackground;
 import com.example.mgp.Entities.RenderTextEntity;
 import com.example.mgp.Entities.EntityCoin;
 
+import java.util.Random;
+
 import static com.example.mgp.Entities.EntityPowerUp.*;
 import static com.example.mgp.Entities.EntityPowerUp.POWERUP_TYPE.*;
 
@@ -63,6 +65,7 @@ public class ObstacleGame implements StateBase {
 
     private float PowerUpTimer;
 
+    private float prevBackgroundMoveSpeed;
 
     @Override
     public String GetName() {
@@ -100,13 +103,16 @@ public class ObstacleGame implements StateBase {
         PauseButton.Create();
         PowerUpTimer = 0;
 
+        GameSystem.Instance.SaveEditBegin();
 
+        prevBackgroundMoveSpeed = 0;
 
     }
 
     @Override
     public void OnExit() {
         EntityManager.Instance.Clean();
+        GameSystem.Instance.SaveEditEnd();
     }
 
     @Override
@@ -200,6 +206,7 @@ public class ObstacleGame implements StateBase {
                         Collision.Quad(player.GetPosX(),player.GetPosY(),player.GetRadius(),player.GetRadius(),coin.GetPosX(),coin.GetPosY(),coin.GetRadius(),coin.GetRadius()))
                 {
                     ++score;
+                    AudioManager.Instance.PlayAudio(R.raw.coin_pickup);
                     coin.SetActive(false);
                 }
 
@@ -211,20 +218,27 @@ public class ObstacleGame implements StateBase {
                     switch(powerUp.getPowerUpType())
                     {
                         case INVINCIBILITY:
+                            System.out.println("Player has invincibility powerup");
                             player.SetIsInvincible(true);
                             break;
                         case SLOWDOWN:
-                            background.moveValue += 100;
-                            if (background.moveValue >= 0) background.moveValue = -1;
+                            background.moveSpeed += 10;
+                            if (background.moveSpeed >= 0) background.moveSpeed = -1;
                             break;
                     }
 
                     PowerUpTimer -= _dt;
+                    //buff timer on player
                     if(PowerUpTimer <= 0)
                     {
+                        powerUp.RandomiseType();
                         powerUp.SetPlayerHasPowerUp(false);
                         player.SetHasPowerUp(false);
                         player.SetIsInvincible(false);
+                        background.moveSpeed = -500;
+                        System.out.println("BackgroundMoveSpeed: " + background.moveSpeed);
+
+
                     }
 
                 }
@@ -253,6 +267,10 @@ public class ObstacleGame implements StateBase {
                 break;
 
             case END:
+                if(GameSystem.Instance.GetIntFromSave("ObstacleGameScore") < score)
+                {
+                    GameSystem.Instance.SetIntInSave("ObstacleGameScore", score);
+                }
                 powerUp.SetMoveValue(0);
                 background.isMoving = false;
                 coin.SetMoveValue(0);
@@ -276,6 +294,7 @@ public class ObstacleGame implements StateBase {
     {
         if (player_IsInAir) return;
 
+        AudioManager.Instance.PlayAudio(R.raw.jump);
         float JumpForce = 1000;
         netForce = JumpForce;
         player_IsInAir = true;
