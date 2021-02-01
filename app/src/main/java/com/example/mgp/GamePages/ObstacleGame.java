@@ -122,6 +122,8 @@ public class ObstacleGame implements StateBase {
 
     @Override
     public void Update(float _dt) {
+        FPSCounter.Instance.Update(_dt);
+
         EntityManager.Instance.Update(_dt);
 
         switch(curr_GameState)
@@ -179,7 +181,7 @@ public class ObstacleGame implements StateBase {
                     //if player hits the top of the screen
                     if (newY <= player.GetRadius())
                     {
-                        netForce = 0;
+                        //netForce = 0;
                         newY = player.GetRadius();
                     }
                     player.SetPosY(newY);
@@ -295,7 +297,11 @@ public class ObstacleGame implements StateBase {
         float heightTravelled = GROUND_LEVEL - (0 + player.GetRadius());
         //Assuming mass is 1
 
-        float toReturn = 2.f * heightTravelled;
+        float toReturn;
+
+        if (FPSCounter.Instance.fps <= 30) toReturn = 2.f * heightTravelled;
+        else toReturn = 2.f * heightTravelled * 1.5f;
+
         return toReturn;
     }
 
