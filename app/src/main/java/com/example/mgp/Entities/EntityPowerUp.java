@@ -99,16 +99,11 @@ public class EntityPowerUp implements EntityBase, Collidable {
 
     public void RandomiseType()
     {
-        int randomiser = (int)Math.random() % 2;
-        switch(randomiser)
-        {
-            case 0:
-                type = POWERUP_TYPE.SLOWDOWN;
-                break;
-            case 1:
-                type = POWERUP_TYPE.INVINCIBILITY;
-                break;
-        }
+        double randomiser = Math.random();
+        if (randomiser <= 0.5)
+            type = POWERUP_TYPE.SLOWDOWN;
+        else
+            type = POWERUP_TYPE.INVINCIBILITY;
     }
 
     public void SetMoveValue(int moveValue)
